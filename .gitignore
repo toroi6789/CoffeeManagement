@@ -1,0 +1,48 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+*.exe
+*.dll
+*.pdb
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET
+App_Data/
+appsettings.Development.json
+project.lock.json
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+*.nupkg
+
+# Rider / JetBrains
+.idea/
+
+# Backup & temp
+*.bak
+*.tmp
+*.log
+~$*
+
+# Publish
+publish/
+dist/
+
+# OS files
+Thumbs.db
+.DS_Store
