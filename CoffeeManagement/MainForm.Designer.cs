@@ -37,6 +37,7 @@
             this.banHangToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quanLyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hoaDonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.danhSáchHóaĐơnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nhanVienToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nhapKhoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sanPhamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -165,29 +166,38 @@
             // 
             // hoaDonToolStripMenuItem
             // 
+            this.hoaDonToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.danhSáchHóaĐơnToolStripMenuItem});
             this.hoaDonToolStripMenuItem.Name = "hoaDonToolStripMenuItem";
-            this.hoaDonToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.hoaDonToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.hoaDonToolStripMenuItem.Text = "Hóa đơn";
             this.hoaDonToolStripMenuItem.Click += new System.EventHandler(this.hoaDonToolStripMenuItem_Click);
+            // 
+            // danhSáchHóaĐơnToolStripMenuItem
+            // 
+            this.danhSáchHóaĐơnToolStripMenuItem.Name = "danhSáchHóaĐơnToolStripMenuItem";
+            this.danhSáchHóaĐơnToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.danhSáchHóaĐơnToolStripMenuItem.Text = "Danh sách hóa đơn";
+            this.danhSáchHóaĐơnToolStripMenuItem.Click += new System.EventHandler(this.DSHoaDonToolStripMenuItem_Click);
             // 
             // nhanVienToolStripMenuItem
             // 
             this.nhanVienToolStripMenuItem.Name = "nhanVienToolStripMenuItem";
-            this.nhanVienToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.nhanVienToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.nhanVienToolStripMenuItem.Text = "Nhân viên";
             this.nhanVienToolStripMenuItem.Click += new System.EventHandler(this.nhanVienToolStripMenuItem_Click);
             // 
             // nhapKhoToolStripMenuItem
             // 
             this.nhapKhoToolStripMenuItem.Name = "nhapKhoToolStripMenuItem";
-            this.nhapKhoToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.nhapKhoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.nhapKhoToolStripMenuItem.Text = "Nhập kho";
             this.nhapKhoToolStripMenuItem.Click += new System.EventHandler(this.nhapKhoToolStripMenuItem_Click);
             // 
             // sanPhamToolStripMenuItem
             // 
             this.sanPhamToolStripMenuItem.Name = "sanPhamToolStripMenuItem";
-            this.sanPhamToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
+            this.sanPhamToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.sanPhamToolStripMenuItem.Text = "Sản phẩm";
             this.sanPhamToolStripMenuItem.Click += new System.EventHandler(this.sanPhamToolStripMenuItem_Click);
             // 
@@ -225,6 +235,8 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1080, 653);
             this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel1.SizeChanged += new System.EventHandler(this.flowLayoutPanel1_SizeChanged);
+            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // MainForm
             // 
@@ -239,6 +251,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.pnlTitle.ResumeLayout(false);
             this.pnlTitle.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -269,6 +283,7 @@
         private System.Windows.Forms.ToolStripMenuItem nhapKhoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem đặtBànToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sanPhamToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem danhSáchHóaĐơnToolStripMenuItem;
     }
 }
 
