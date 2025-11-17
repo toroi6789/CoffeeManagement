@@ -22,11 +22,22 @@ namespace CoffeeManagement
         const int WM_NCLBUTTONDOWN = 0xA1;
         const int HT_CAPTION = 0x2;
 
+        GUI.BanHangGUI banHang = new GUI.BanHangGUI();
+        GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
+
+
         public MainForm()
         {
             InitializeComponent();
-            
+
             EnableDraggingContent();
+
+            banHang.Dock = DockStyle.Fill;
+            dSHoaDon.Dock = DockStyle.Fill;
+            //tạo control user BanHangGUI để lắng nghe sự kiện thay đổi panel body
+            banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
+            //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
+            dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
         }
 
         private void EnableDraggingContent()
@@ -43,7 +54,10 @@ namespace CoffeeManagement
 
         private void banHangToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Mở giao diện bán hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.pnlBody.Controls.Clear();
+            banHang.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(banHang);
+            //MessageBox.Show("Mở giao diện bán hàng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // TODO: Thay bằng code mở UserControl hoặc Form bán hàng
             // Ví dụ:
@@ -68,7 +82,7 @@ namespace CoffeeManagement
 
         private void hoaDonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Quản lý hóa đơn!");
+            //MessageBox.Show("Quản lý hóa đơn!");
         }
 
         private void nhanVienToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,6 +127,77 @@ namespace CoffeeManagement
         private void btnMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void DSHoaDonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            // Tạo và thêm UserControl DSHoaDon vào pnlBody
+            this.pnlBody.Controls.Add(dSHoaDon);
+            dSHoaDon.Dock = DockStyle.Fill;
+        }
+
+        private void flowLayoutPanel1_SizeChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            this.pnlBody.Size = new Size(this.Width, this.Height - 64);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            banHang.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(banHang);
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        //
+        //lắng nghe sự kiện thay đổi panel body trong control user 
+        //
+        //thanh toan
+        public void OnPnlBodyChangedToThanhToan( int HoaDonID)
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            // Tạo và thêm UserControl Thanh toan vào pnlBody
+            GUI.ThanhToanGUI thanhToan = new GUI.ThanhToanGUI(HoaDonID);
+            thanhToan.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(thanhToan);
+            //lắng nghe sự kiện thay đổi panel body từ control user ThanhToanGUI
+            thanhToan.RequestPnlBodyToBanHang += OnPnlBodyChangedToBanHang;
+        }
+        //ban hang
+        public void OnPnlBodyChangedToBanHang()
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            banHang.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(banHang);
+        }
+
+        // lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
+        public void OnRequestOpenCTHoaDon(int ID)
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            GUI.CTHoaDonGUI cTHoaDon = new GUI.CTHoaDonGUI(ID);
+            cTHoaDon.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(cTHoaDon);
+        }
+        
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
