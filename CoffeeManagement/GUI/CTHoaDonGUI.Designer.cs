@@ -9,8 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace QLCP
+namespace CoffeeManagement.GUI
 {
+
     partial class CTHoaDonGUI
     {
         /// <summary> 
@@ -72,7 +73,7 @@ namespace QLCP
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label1.Location = new System.Drawing.Point(222, 8);
+            this.label1.Location = new System.Drawing.Point(222, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(283, 38);
             this.label1.TabIndex = 0;
@@ -87,7 +88,7 @@ namespace QLCP
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.txtID_HD);
             this.panel1.Controls.Add(this.txtTotal);
-            this.panel1.Location = new System.Drawing.Point(47, 54);
+            this.panel1.Location = new System.Drawing.Point(47, 80);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(294, 355);
@@ -100,6 +101,7 @@ namespace QLCP
             this.HoaDon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.HoaDon.MultiSelect = false;
             this.HoaDon.Name = "HoaDon";
+            this.HoaDon.ReadOnly = true;
             this.HoaDon.RowHeadersWidth = 51;
             this.HoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.HoaDon.Size = new System.Drawing.Size(286, 203);
@@ -163,7 +165,7 @@ namespace QLCP
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.pictureBox1);
-            this.panel2.Location = new System.Drawing.Point(386, 54);
+            this.panel2.Location = new System.Drawing.Point(386, 80);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(294, 355);
@@ -171,56 +173,56 @@ namespace QLCP
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(111, 189);
+            this.txtPrice.Location = new System.Drawing.Point(162, 189);
             this.txtPrice.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.ReadOnly = true;
-            this.txtPrice.Size = new System.Drawing.Size(168, 22);
+            this.txtPrice.Size = new System.Drawing.Size(117, 22);
             this.txtPrice.TabIndex = 2;
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(121, 237);
+            this.txtQuantity.Location = new System.Drawing.Point(172, 237);
             this.txtQuantity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.ReadOnly = true;
-            this.txtQuantity.Size = new System.Drawing.Size(158, 22);
+            this.txtQuantity.Size = new System.Drawing.Size(107, 22);
             this.txtQuantity.TabIndex = 2;
             // 
             // txtIDType
             // 
-            this.txtIDType.Location = new System.Drawing.Point(154, 214);
+            this.txtIDType.Location = new System.Drawing.Point(205, 214);
             this.txtIDType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtIDType.Name = "txtIDType";
             this.txtIDType.ReadOnly = true;
-            this.txtIDType.Size = new System.Drawing.Size(125, 22);
+            this.txtIDType.Size = new System.Drawing.Size(74, 22);
             this.txtIDType.TabIndex = 2;
             // 
             // txtDescribe
             // 
-            this.txtDescribe.Location = new System.Drawing.Point(96, 164);
+            this.txtDescribe.Location = new System.Drawing.Point(147, 164);
             this.txtDescribe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDescribe.Name = "txtDescribe";
             this.txtDescribe.ReadOnly = true;
-            this.txtDescribe.Size = new System.Drawing.Size(183, 22);
+            this.txtDescribe.Size = new System.Drawing.Size(132, 22);
             this.txtDescribe.TabIndex = 2;
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(135, 139);
+            this.txtStatus.Location = new System.Drawing.Point(186, 139);
             this.txtStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
-            this.txtStatus.Size = new System.Drawing.Size(144, 22);
+            this.txtStatus.Size = new System.Drawing.Size(93, 22);
             this.txtStatus.TabIndex = 2;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(101, 114);
+            this.txtName.Location = new System.Drawing.Point(152, 114);
             this.txtName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
-            this.txtName.Size = new System.Drawing.Size(178, 22);
+            this.txtName.Size = new System.Drawing.Size(127, 22);
             this.txtName.TabIndex = 2;
             // 
             // label9
@@ -235,11 +237,11 @@ namespace QLCP
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(63, 90);
+            this.txtID.Location = new System.Drawing.Point(114, 90);
             this.txtID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
-            this.txtID.Size = new System.Drawing.Size(216, 22);
+            this.txtID.Size = new System.Drawing.Size(165, 22);
             this.txtID.TabIndex = 2;
             // 
             // label6

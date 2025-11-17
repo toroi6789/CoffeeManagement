@@ -62,7 +62,7 @@ namespace CoffeeManagement.GUI
             HoaDonBUS.TaoHoaDon(nhanVienID, banID, ngayLap, tongTienDecimal, "Đang phục vụ");
 
             // Cập nhật trạng thái bàn
-            BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
+            //BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
 
             //lấy ID hóa đơn vừa tạo
             int HoaDonID = TaoID.LayHoaDonIDMoiNhat();

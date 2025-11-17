@@ -93,5 +93,10 @@ namespace CoffeeManagement.GUI
             }
             PnlBodyChangedToThanhToan?.Invoke(HoaDonID);
         }
+
+        private void orderGUI1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

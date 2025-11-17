@@ -46,7 +46,9 @@
             this.orderGUI1.Name = "orderGUI1";
             this.orderGUI1.Size = new System.Drawing.Size(387, 606);
             this.orderGUI1.TabIndex = 1;
+            this.orderGUI1.Load += new System.EventHandler(this.orderGUI1_Load);
             this.orderGUI1.RequestChangeToThanhToan += OnOrderRequestPnlBodyChangedToThanhToan;
+
             // 
             // BanHangGUI
             // 

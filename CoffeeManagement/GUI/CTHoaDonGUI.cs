@@ -8,23 +8,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CoffeeManagement.BUS;
 
-namespace QLCP
+namespace CoffeeManagement.GUI
 {
     public partial class CTHoaDonGUI : UserControl
     {
-        public CTHoaDonGUI( )
+        public int hoaDonID;
+        public CTHoaDonGUI()
         {
             InitializeComponent();
+        }
+        public CTHoaDonGUI(int id)
+        {
+            InitializeComponent();
+            hoaDonID = id;
         }
 
         private void Order_Load(object sender, EventArgs e)
         {
-            //HoaDon.DataSource = HoaDonBLL.ChiTietHoaDonID(hoaDonID);
+            HoaDon.DataSource = HoaDonBUS.ChiTietHoaDonID(hoaDonID);
+            txtID_HD.Text = hoaDonID.ToString();
             int total = 0;
             foreach (DataGridViewRow row in HoaDon.Rows)
             {
-                total +=( Convert.ToInt32(row.Cells["ThanhTien"].Value) * Convert.ToInt32(row.Cells["Soluong"].Value));
+                total +=( Convert.ToInt32(row.Cells["GiaBan"].Value) * Convert.ToInt32(row.Cells["Soluong"].Value));
             }
             txtTotal.Text = total.ToString();
         }
@@ -33,15 +41,18 @@ namespace QLCP
         {
             label1.Location = new Point((this.Width - label1.Width) / 2, label1.Location.Y);
 
-            panel1.Size = new Size(this.Width/2 - 50, this.Height - 60);
+            panel1.Size = new Size(this.Width/2 - 50, this.Height - 110);
             panel1.Location = new Point((this.Width  / 2 ) - panel1.Width - 25, panel1.Location.Y);
 
-            panel2.Size = new Size(this.Width / 2 - 50, this.Height  - 60);
+            panel2.Size = new Size(this.Width / 2 - 50, this.Height  - 110);
             panel2.Location = new Point(this.Width - panel2.Width - 25 , panel2.Location.Y);
 
             HoaDon.Width = panel1.Width - 6;
 
             pictureBox1.Width = panel2.Width - 6;
+
+            txtID_HD.Location = new Point((panel1.Width - txtID_HD.Width) / 2, txtID_HD.Location.Y);
+            txtTotal.Location = new Point((panel1.Width - txtTotal.Width) / 2, txtTotal.Location.Y);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,8 +80,8 @@ namespace QLCP
                 if (row.Cells["SanPhamID"].Value == DBNull.Value) return;
                 int soluong = Convert.ToInt32(row.Cells["SoLuong"].Value);
                 int IDsp = Convert.ToInt32(row.Cells["SanPhamID"].Value);
-                //DataTable dt = SanPhamBLL.SanPhamTheoID(IDsp);
-                /*if (dt.Rows.Count > 0)
+                DataTable dt = SanPhamBUS.SanPhamTheoID(IDsp);
+                if (dt.Rows.Count > 0)
                 {
                     DataRow dr = dt.Rows[0];
                     txtQuantity.Text = soluong.ToString();
@@ -80,7 +91,7 @@ namespace QLCP
                     txtStatus.Text = dr["TrangThai"].ToString();
                     txtDescribe.Text = dr["MoTa"].ToString();
                     txtIDType.Text = dr["DanhMucID"].ToString();
-                }*/
+                }
             }
         }
 

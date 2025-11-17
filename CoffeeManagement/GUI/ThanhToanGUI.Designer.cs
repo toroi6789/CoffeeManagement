@@ -29,14 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.btn_ThanhToan = new System.Windows.Forms.Button();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtNgay = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.txtIDNV = new System.Windows.Forms.TextBox();
@@ -44,13 +47,24 @@
             this.txtTongTien = new System.Windows.Forms.MaskedTextBox();
             this.txtTienThoi = new System.Windows.Forms.MaskedTextBox();
             this.txtTienNhan = new System.Windows.Forms.MaskedTextBox();
-            this.btn_ThanhToan = new System.Windows.Forms.Button();
-            this.txtNgay = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // btn_ThanhToan
+            // 
+            this.btn_ThanhToan.Location = new System.Drawing.Point(74, 472);
+            this.btn_ThanhToan.Name = "btn_ThanhToan";
+            this.btn_ThanhToan.Size = new System.Drawing.Size(220, 36);
+            this.btn_ThanhToan.TabIndex = 5;
+            this.btn_ThanhToan.Text = "Xac Nhan Thanh Toan";
+            this.btn_ThanhToan.UseVisualStyleBackColor = true;
+            this.btn_ThanhToan.Click += new System.EventHandler(this.btn_ThanhToan_Click);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // label1
             // 
@@ -83,6 +97,30 @@
             this.label3.Size = new System.Drawing.Size(112, 23);
             this.label3.TabIndex = 1;
             this.label3.Text = "ID Hoa Don";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label8.ForeColor = System.Drawing.Color.Black;
+            this.label8.Location = new System.Drawing.Point(15, 58);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(55, 23);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Ngay";
+            this.label8.Click += new System.EventHandler(this.label8_Click);
+            // 
+            // txtNgay
+            // 
+            this.txtNgay.AutoSize = true;
+            this.txtNgay.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.txtNgay.ForeColor = System.Drawing.Color.Black;
+            this.txtNgay.Location = new System.Drawing.Point(84, 58);
+            this.txtNgay.Name = "txtNgay";
+            this.txtNgay.Size = new System.Drawing.Size(55, 23);
+            this.txtNgay.TabIndex = 1;
+            this.txtNgay.Text = "Ngay";
+            this.txtNgay.Click += new System.EventHandler(this.label8_Click);
             // 
             // label4
             // 
@@ -127,18 +165,6 @@
             this.label7.Size = new System.Drawing.Size(72, 23);
             this.label7.TabIndex = 1;
             this.label7.Text = "Thoi lai";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(15, 58);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(55, 23);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Ngay";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 
@@ -201,28 +227,7 @@
             this.txtTienNhan.Name = "txtTienNhan";
             this.txtTienNhan.Size = new System.Drawing.Size(126, 22);
             this.txtTienNhan.TabIndex = 4;
-            // 
-            // btn_ThanhToan
-            // 
-            this.btn_ThanhToan.Location = new System.Drawing.Point(83, 454);
-            this.btn_ThanhToan.Name = "btn_ThanhToan";
-            this.btn_ThanhToan.Size = new System.Drawing.Size(220, 36);
-            this.btn_ThanhToan.TabIndex = 5;
-            this.btn_ThanhToan.Text = "Xac Nhan Thanh Toan";
-            this.btn_ThanhToan.UseVisualStyleBackColor = true;
-            this.btn_ThanhToan.Click += new System.EventHandler(this.btn_ThanhToan_Click);
-            // 
-            // txtNgay
-            // 
-            this.txtNgay.AutoSize = true;
-            this.txtNgay.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.txtNgay.ForeColor = System.Drawing.Color.Black;
-            this.txtNgay.Location = new System.Drawing.Point(84, 58);
-            this.txtNgay.Name = "txtNgay";
-            this.txtNgay.Size = new System.Drawing.Size(55, 23);
-            this.txtNgay.TabIndex = 1;
-            this.txtNgay.Text = "Ngay";
-            this.txtNgay.Click += new System.EventHandler(this.label8_Click);
+            this.txtTienNhan.TextChanged += new System.EventHandler(this.txtTienNhan_TextChanged);
             // 
             // groupBox1
             // 
@@ -248,10 +253,6 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
-            // 
             // ThanhToanGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -262,33 +263,32 @@
             this.Size = new System.Drawing.Size(384, 534);
             this.Load += new System.EventHandler(this.ThanhToan_Load);
             this.SizeChanged += new System.EventHandler(this.ThanhToanGUI_SizeChanged);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox txtIDNV;
-        private System.Windows.Forms.MaskedTextBox txtIDHD;
-        private System.Windows.Forms.MaskedTextBox txtTongTien;
-        private System.Windows.Forms.MaskedTextBox txtTienThoi;
-        private System.Windows.Forms.MaskedTextBox txtTienNhan;
         private System.Windows.Forms.Button btn_ThanhToan;
-        private System.Windows.Forms.Label txtNgay;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.MaskedTextBox txtTienNhan;
+        private System.Windows.Forms.MaskedTextBox txtTienThoi;
+        private System.Windows.Forms.MaskedTextBox txtTongTien;
+        private System.Windows.Forms.MaskedTextBox txtIDHD;
+        private System.Windows.Forms.TextBox txtIDNV;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label txtNgay;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

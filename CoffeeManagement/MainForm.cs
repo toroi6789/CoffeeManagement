@@ -23,7 +23,8 @@ namespace CoffeeManagement
         const int HT_CAPTION = 0x2;
 
         GUI.BanHangGUI banHang = new GUI.BanHangGUI();
-        GUI.ThanhToanGUI thanhToan = new GUI.ThanhToanGUI();
+        GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
+
 
         public MainForm()
         {
@@ -31,11 +32,12 @@ namespace CoffeeManagement
 
             EnableDraggingContent();
 
-
+            banHang.Dock = DockStyle.Fill;
+            dSHoaDon.Dock = DockStyle.Fill;
             //tạo control user BanHangGUI để lắng nghe sự kiện thay đổi panel body
             banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
-            //lắng nghe sự kiện thay đổi panel body từ control user ThanhToanGUI
-            thanhToan.RequestPnlBodyToBanHang += OnPnlBodyChangedToBanHang;
+            //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
+            dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
         }
 
         private void EnableDraggingContent()
@@ -132,8 +134,6 @@ namespace CoffeeManagement
             // Xóa nội dung hiện tại trong pnlBody
             this.pnlBody.Controls.Clear();
             // Tạo và thêm UserControl DSHoaDon vào pnlBody
-            GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
-            
             this.pnlBody.Controls.Add(dSHoaDon);
             dSHoaDon.Dock = DockStyle.Fill;
         }
@@ -172,6 +172,8 @@ namespace CoffeeManagement
             GUI.ThanhToanGUI thanhToan = new GUI.ThanhToanGUI(HoaDonID);
             thanhToan.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(thanhToan);
+            //lắng nghe sự kiện thay đổi panel body từ control user ThanhToanGUI
+            thanhToan.RequestPnlBodyToBanHang += OnPnlBodyChangedToBanHang;
         }
         //ban hang
         public void OnPnlBodyChangedToBanHang()
@@ -180,6 +182,22 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Clear();
             banHang.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(banHang);
+        }
+
+        // lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
+        public void OnRequestOpenCTHoaDon(int ID)
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            GUI.CTHoaDonGUI cTHoaDon = new GUI.CTHoaDonGUI(ID);
+            cTHoaDon.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(cTHoaDon);
+        }
+        
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

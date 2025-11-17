@@ -12,7 +12,7 @@ namespace CoffeeManagement.BUS
     {
         public static DataTable ChiTietHoaDonID(int ID)
         {
-            return HoaDonDAO.ChiTietHoaDonTheoID(ID);
+            return HoaDonDAO.LaySanPhamCuaHoaDon(ID);
         }
 
         public static DataTable HoaDonID(int ID)

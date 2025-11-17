@@ -163,6 +163,7 @@ namespace CoffeeManagement.GUI
             this.Size = new System.Drawing.Size(1080, 656);
             this.Load += new System.EventHandler(this.DSHoaDon_Load);
             this.SizeChanged += new System.EventHandler(this.DSHoaDon_SizeChanged);
+            this.ParentChanged += new System.EventHandler(this.DSHoaDonGUI_ParentChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

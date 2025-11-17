@@ -52,5 +52,11 @@ namespace CoffeeManagement.DAO
             string query = "SELECT * FROM hoadon;";
             return DBConnect.ExecuteQuery(query);
         }
+        //
+        public static DataTable LaySanPhamCuaHoaDon(int IDHoaDon)
+        {
+            string query = $"SELECT CTHD.SanPhamID,SP.TenSanPham,CTHD.SoLuong,SP.GiaBan FROM coffeemanagement.chitiethoadon as CTHD Join coffeemanagement.sanpham as SP ON CTHD.SanPhamID = SP.SanPhamID where CTHD.HoaDonID = {IDHoaDon};";
+            return DBConnect.ExecuteQuery(query);
+        }
     }
 }
