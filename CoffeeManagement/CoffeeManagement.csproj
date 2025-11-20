@@ -130,6 +130,12 @@
     <Compile Include="GUI\BanHangGUI.Designer.cs">
       <DependentUpon>BanHangGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ListSanPham.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\ListSanPham.Designer.cs">
+      <DependentUpon>ListSanPham.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\OrderGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +153,12 @@
     </Compile>
     <Compile Include="GUI\CTHoaDonGUI.Designer.cs">
       <DependentUpon>CTHoaDonGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Product.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Product.Designer.cs">
+      <DependentUpon>Product.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SanPhamADMIN.cs">
       <SubType>UserControl</SubType>
@@ -180,11 +192,17 @@
     <EmbeddedResource Include="GUI\DSHoaDonGUI.resx">
       <DependentUpon>DSHoaDonGUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ListSanPham.resx">
+      <DependentUpon>ListSanPham.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\CTHoaDonGUI.resx">
       <DependentUpon>CTHoaDonGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Product.resx">
+      <DependentUpon>Product.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SanPhamADMIN.resx">
       <DependentUpon>SanPhamADMIN.cs</DependentUpon>

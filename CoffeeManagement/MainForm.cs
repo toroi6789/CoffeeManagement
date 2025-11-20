@@ -25,6 +25,7 @@ namespace CoffeeManagement
         GUI.BanHangGUI banHang = new GUI.BanHangGUI();
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
+        GUI.ListSanPham listSanPham = new GUI.ListSanPham();
 
         public MainForm()
         {
@@ -100,7 +101,6 @@ namespace CoffeeManagement
             MessageBox.Show("Quản lý sản phẩm!");
             // Xóa nội dung hiện tại trong pnlBody
             this.pnlBody.Controls.Clear();
-            // Tạo và thêm UserControl DSHoaDon vào pnlBody
             this.pnlBody.Controls.Add(quanlySanPham);
             quanlySanPham.Dock = DockStyle.Fill;
         }
@@ -203,6 +203,15 @@ namespace CoffeeManagement
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void bánHàngDanhSáchSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Danh sách sản phẩm!");
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            listSanPham.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(listSanPham);
         }
     }
 }
