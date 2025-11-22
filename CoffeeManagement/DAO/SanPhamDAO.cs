@@ -130,13 +130,13 @@ namespace CoffeeManagement.DAO
         }
 
 
-        public bool daoXoaSanPham(int sanPhamID)
+        public bool daoCapNhatTrangThaiSanPham(int sanPhamID, string trangThaiMoi)
         {
-            string sql = "DELETE FROM SanPham WHERE SanPhamID = @ID";
-
+            string sql = "UPDATE SanPham SET TrangThai = @TrangThai WHERE SanPhamID = @ID";
             var parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@ID", sanPhamID)
+                new MySqlParameter("@ID", sanPhamID),
+                new MySqlParameter("@TrangThai", trangThaiMoi)
             };
 
             try
@@ -145,12 +145,7 @@ namespace CoffeeManagement.DAO
             }
             catch (MySqlException ex)
             {
-                // Nếu lỗi FK (đang dùng trong hóa đơn,...)
-                if (ex.Number == 1451) // MySQL Error: Cannot delete or update a parent row
-                {
-                    throw new Exception("Không thể xóa: Sản phẩm đang được sử dụng trong hóa đơn!");
-                }
-                throw;
+                throw new Exception("Lỗi cập nhật trạng thái sản phẩm: " + ex.Message);
             }
         }
     }

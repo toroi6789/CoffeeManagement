@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cmbDanhMuc = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txtDanhMucID = new System.Windows.Forms.TextBox();
@@ -53,8 +55,8 @@
             this.btnThemAnh = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.cmbDanhMuc = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -79,6 +81,8 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel4.Controls.Add(this.button2);
+            this.panel4.Controls.Add(this.button1);
             this.panel4.Controls.Add(this.label3);
             this.panel4.Controls.Add(this.cmbDanhMuc);
             this.panel4.Controls.Add(this.label2);
@@ -91,6 +95,29 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1111, 443);
             this.panel4.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(288, 395);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(138, 36);
+            this.label3.TabIndex = 17;
+            this.label3.Text = "Danh mục ID";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cmbDanhMuc
+            // 
+            this.cmbDanhMuc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbDanhMuc.FormattingEnabled = true;
+            this.cmbDanhMuc.Location = new System.Drawing.Point(432, 395);
+            this.cmbDanhMuc.Name = "cmbDanhMuc";
+            this.cmbDanhMuc.Size = new System.Drawing.Size(354, 36);
+            this.cmbDanhMuc.TabIndex = 22;
+            this.cmbDanhMuc.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -357,28 +384,29 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // cmbDanhMuc
+            // button1
             // 
-            this.cmbDanhMuc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbDanhMuc.FormattingEnabled = true;
-            this.cmbDanhMuc.Location = new System.Drawing.Point(432, 395);
-            this.cmbDanhMuc.Name = "cmbDanhMuc";
-            this.cmbDanhMuc.Size = new System.Drawing.Size(354, 36);
-            this.cmbDanhMuc.TabIndex = 22;
-            this.cmbDanhMuc.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(9, 395);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(218, 36);
+            this.button1.TabIndex = 23;
+            this.button1.Text = "Import";
+            this.button1.UseVisualStyleBackColor = false;
             // 
-            // label3
+            // button2
             // 
-            this.label3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(288, 395);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 36);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "Danh mục ID";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.Black;
+            this.button2.Location = new System.Drawing.Point(859, 395);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(200, 39);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "Export";
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // SanPhamADMIN
             // 
@@ -427,5 +455,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbDanhMuc;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }

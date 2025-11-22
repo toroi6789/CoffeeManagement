@@ -143,9 +143,11 @@ namespace CoffeeManagement.BUS
                 return false;
             }
             // GỌI DAL XÓA
-            bool kq = dao.daoXoaSanPham(sanPhamID);
+            bool kq = dao.daoCapNhatTrangThaiSanPham(sanPhamID,"Deleted");
             message = kq ? "Xóa sản phẩm thành công!" : "Xóa thất bại! Có thể sản phẩm đang được sử dụng.";
             return kq;
         }
+
+
     }
 }

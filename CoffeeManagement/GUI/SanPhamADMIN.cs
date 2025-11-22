@@ -47,19 +47,22 @@ namespace CoffeeManagement.GUI
 
 
             dtSanPham = new DataTable();
+            dtSanPham.Columns.Add("STT", typeof(int));
             dtSanPham.Columns.Add("SanPhamID", typeof(int));
             dtSanPham.Columns.Add("TenSanPham", typeof(string));
             dtSanPham.Columns.Add("GiaBan", typeof(decimal));
             dtSanPham.Columns.Add("MoTa", typeof(string));
             dtSanPham.Columns.Add("TrangThai", typeof(string));
             dtSanPham.Columns.Add("DanhMucID", typeof(int));
-            dtSanPham.Columns.Add("Hinh", typeof(string)); 
+            dtSanPham.Columns.Add("Hinh", typeof(string));
 
+            
 
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = dtSanPham;
-            LoadSanPhamVaoDataTable();
+            LocSanPham();
 
+            dataGridView1.Columns["STT"].HeaderText = "STT";
             dataGridView1.Columns["SanPhamID"].HeaderText = "Mã Sản Phẩm";
             dataGridView1.Columns["TenSanPham"].HeaderText = "Tên Sản Phẩm";
             dataGridView1.Columns["GiaBan"].HeaderText = "Giá Bán";
@@ -69,6 +72,17 @@ namespace CoffeeManagement.GUI
             dataGridView1.Columns["Hinh"].HeaderText = "Hinh";
 
             dataGridView1.EnableHeadersVisualStyles = false; // ⚠️ Bắt buộc để màu custom có hiệu lực
+
+            // ẨN CỘT SanPhamID(nếu không muốn hiện ID thật)
+            dataGridView1.Columns["SanPhamID"].Visible = false;
+
+            // Đặt lại tiêu đề và vị trí cột STT
+
+            dataGridView1.Columns["STT"].Width = 50;
+            dataGridView1.Columns["STT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            // Đưa cột STT ra đầu tiên
+            dataGridView1.Columns["STT"].DisplayIndex = 0;
 
             // Chỉ đọc (nếu bạn chỉ muốn hiển thị)
             dataGridView1.ReadOnly = true;
@@ -108,63 +122,7 @@ namespace CoffeeManagement.GUI
 
 
             LoadDanhMucVaoComboBox();
-
-        }
-
-        // Thêm 1 dòng mới vào DataTable
-        private void ThemVaoDataTable(SanPhamDTO sp)
-        {
-            DataRow newRow = dtSanPham.NewRow();
-            newRow["SanPhamID"] = sp.SanPhamID;
-            newRow["TenSanPham"] = sp.TenSanPham; 
-            newRow["GiaBan"] = sp.GiaBan;
-            newRow["MoTa"] = sp.MoTa ?? "";
-            newRow["TrangThai"] = sp.TrangThai ?? "";
-            newRow["DanhMucID"] = sp.DanhMucID;
-            newRow["Hinh"] = sp.Hinh ?? "";
-            dtSanPham.Rows.Add(newRow);
-        }
-
-        // Load sản phẩm vào DataTable
-        private void LoadSanPhamVaoDataTable()
-        {
-            dtSanPham.Clear();
-            var listSP = sp_bus.LayTatCaSanPham();
-            // DÙNG LINQ TO OBJECTS → CHUYỂN List<DTO> → DataRow
-            var rows = listSP.Select(sp => new object[]
-            {
-                sp.SanPhamID,
-                sp.TenSanPham,
-                sp.GiaBan,
-                sp.MoTa ?? "",
-                sp.TrangThai ?? "Còn hàng",
-                sp.DanhMucID,
-                sp.Hinh ?? ""
-            });
-
-            foreach (var values in rows)
-            {
-                dtSanPham.Rows.Add(values);
-            }
-        }
-
-        // Cập nhật lại DataTable Sau khi Sửa
-        private void CapNhatDongHienTai(SanPhamDTO sp)
-        {
-            if (dataGridView1.CurrentRow == null) return;
-            var cells = new (string name, object value)[]
-            {
-                ("TenSanPham", sp.TenSanPham),
-                ("GiaBan", sp.GiaBan),
-                ("MoTa", sp.MoTa ?? ""),
-                ("TrangThai", sp.TrangThai ?? "Còn hàng"),
-                ("DanhMucID", sp.DanhMucID),
-                ("Hinh", sp.Hinh ?? "")
-            };
-
-            cells.ToList().ForEach(c =>
-                dataGridView1.CurrentRow.Cells[c.name].Value = c.value
-            );
+            LocSanPham();
         }
 
         private void ClearForm()
@@ -356,8 +314,7 @@ namespace CoffeeManagement.GUI
                 if (sp_bus.busThemSanPham(sp, out string message, out string errorField))
                 {
                     MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ThemVaoDataTable(sp);
-                    LoadSanPhamVaoDataTable();
+                    LocSanPham();
                     ResetForm();
                     LocSanPham();
                 }
@@ -444,9 +401,7 @@ namespace CoffeeManagement.GUI
                 if (sp_bus.busSuaSanPham(sp, out string message, out string errorField))
                 {
                     MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CapNhatDongHienTai(sp);
-                    LoadSanPhamVaoDataTable(); // Cập nhật ảnh mới
-                    
+                    LocSanPham();
                     ResetForm();
                     LocSanPham();
                     this.ActiveControl = null;
@@ -601,15 +556,20 @@ namespace CoffeeManagement.GUI
             if (danhMucID > 0)
                 listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
 
-            // Đổ vào bảng
+            // === BẮT BUỘC: CHỈ HIỂN THỊ SẢN PHẨM "Hoạt động" ===
+            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động").ToList();
+
+            // ĐỔ DỮ LIỆU + TỰ ĐỘNG THÊM STT
+            int stt = 1;
             foreach (var sp in listSP)
             {
                 dtSanPham.Rows.Add(
+                    stt++,                           
                     sp.SanPhamID,
                     sp.TenSanPham,
                     sp.GiaBan,
                     sp.MoTa ?? "",
-                    sp.TrangThai ?? "Còn hàng",
+                    sp.TrangThai ?? "Hoạt động",
                     sp.DanhMucID,
                     sp.Hinh ?? ""
                 );

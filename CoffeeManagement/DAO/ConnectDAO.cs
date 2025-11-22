@@ -96,6 +96,7 @@ namespace CoffeeManagement.DAO
                 {
                     if (parameters != null)
                         cmd.Parameters.AddRange(parameters);
+                    conn.Open();
 
                     return cmd.ExecuteNonQuery();
                 }
