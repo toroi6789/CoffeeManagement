@@ -26,14 +26,29 @@ namespace CoffeeManagement.BUS
             HoaDonDAO.TaoHoaDon(NhanVienID, BanID, NgayLap, TongTien, trangthai);
         }
         //tao chi tiet hoa don
-        public static void TaoChiTietHoaDon(int SoLuong, decimal DonGia, int HoaDonID, int SanPhamID)
+        public static void TaoChiTietHoaDon(int SoLuong, decimal DonGia, int HoaDonID, int SanPhamID, int ThanhTien)
         {
-            HoaDonDAO.TaoChiTietHoaDon(SoLuong, DonGia, HoaDonID, SanPhamID);
+            HoaDonDAO.TaoChiTietHoaDon(SoLuong, DonGia, HoaDonID, SanPhamID, ThanhTien);
         }
         //lay tat ca hoa don
         public static DataTable TatCaHoaDon()
         {
             return HoaDonDAO.LayTatCaHoaDon();
+        }
+        // sua trang thai hoa don
+        public static void SuaTrangThai(int ID, string trangthai)
+        {
+            HoaDonDAO.SuaTrangThai(ID, trangthai);
+        }
+        // Cap nhat phuong thuc thanh toan
+        public static void Capnhatphuongthuc(int ID, string PhuongThuc)
+        {
+            HoaDonDAO.Capnhatphuongthuc(ID, PhuongThuc);
+        }
+        // xoa hoa don
+        public static void XoaHoaDon(int ID)
+        {
+            HoaDonDAO.XoaHoaDon(ID);
         }
 
     }

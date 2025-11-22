@@ -36,27 +36,45 @@ namespace CoffeeManagement.DAO
             DBConnect.ExecuteNonQuery(query);
         }
         // tạo chi tiết hóa đơn mới
-        public static void TaoChiTietHoaDon(int SoLuong, decimal DonGia, int HoaDonID, int SanPhamID)
+        public static void TaoChiTietHoaDon(int SoLuong, decimal DonGia, int HoaDonID, int SanPhamID, int ThanhTien)
         {
-            string query = $"INSERT INTO chitiethoadon (SoLuong, DonGia, HoaDonID, SanPhamID) VALUES ({SoLuong}, {DonGia}, {HoaDonID}, {SanPhamID});";
+            string query = $"INSERT INTO chitiethoadon (SoLuong, DonGia, HoaDonID, SanPhamID, ThanhTien) VALUES ({SoLuong}, {DonGia}, {HoaDonID}, {SanPhamID}, {ThanhTien});";
             DBConnect.ExecuteNonQuery(query);
         }
-        //tạo Thanh toán
-        public void ThanhToan(int ThanhToanID, decimal SoTienThanhToan, string PhuongThuc, DateTime NgayThanhToan, string TrangThai, int HoaDonID, int NhanVienID)
-        {
-            string query = $"ISERT INTO thanhtoan (ThanhToanID, SoTien, PhuongThuc, NgayThanhToan, TrangThai, HoaDonID, NhanVienID) VALUES ({ThanhToanID}, {SoTienThanhToan}, {PhuongThuc}, {NgayThanhToan}, {TrangThai}, {HoaDonID}, {NhanVienID});";
-        }
+
         // lấy tất cả hóa đơn
         public static DataTable LayTatCaHoaDon()
         {
             string query = "SELECT * FROM hoadon;";
             return DBConnect.ExecuteQuery(query);
         }
-        //
+        // LaySanPhamCuaHoaDon
         public static DataTable LaySanPhamCuaHoaDon(int IDHoaDon)
         {
             string query = $"SELECT CTHD.SanPhamID,SP.TenSanPham,CTHD.SoLuong,SP.GiaBan FROM coffeemanagement.chitiethoadon as CTHD Join coffeemanagement.sanpham as SP ON CTHD.SanPhamID = SP.SanPhamID where CTHD.HoaDonID = {IDHoaDon};";
             return DBConnect.ExecuteQuery(query);
+        }
+        //SuaTrangThai
+        public static void SuaTrangThai(int IDHoaDon , string TrangThai)
+        {
+            string query = $"UPDATE hoadon SET TrangThai = '{TrangThai}' WHERE HoaDonID = {IDHoaDon};";
+            DBConnect.ExecuteNonQuery(query);
+        }
+
+        // Cap nhat phuong thuc 
+        public static void Capnhatphuongthuc(int IDHoaDon, string PhuongThuc)
+        {
+            string query = $"UPDATE hoadon SET PhuongThucThanhToan = '{PhuongThuc}' WHERE HoaDonID = {IDHoaDon};";
+            DBConnect.ExecuteNonQuery(query);
+        }
+
+        // xoa Hoa Don 
+        public static void XoaHoaDon(int ID)
+        {
+            string query = $"delete FROM coffeemanagement.chitiethoadon where HoaDonID = '{ID}';" +
+                $"delete FROM coffeemanagement.thanhtoan where HoaDonID = '{ID}';" +
+                $"delete FROM coffeemanagement.hoadon where HoaDonID = '{ID}';";
+            DBConnect.ExecuteNonQuery(query);
         }
     }
 }

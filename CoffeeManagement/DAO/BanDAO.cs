@@ -16,7 +16,7 @@ namespace CoffeeManagement.DAO
         }
         public static DataTable LayTatCaBanHoatDong()
         {
-            string query = "SELECT BanID,TenBan FROM ban WHERE TrangThai = 'Hoạt động';";
+            string query = "SELECT BanID,TenBan FROM ban WHERE TrangThai = 'Trống';";
             return DBConnect.ExecuteQuery(query);
         }
 

@@ -54,8 +54,13 @@ namespace CoffeeManagement.GUI
                 Convert.ToDecimal(txtTongTien.Text),
                 comboBox1.SelectedItem.ToString(),
                 DateTime.Now,
-                "Đã thanh toán"
+                "Hoàn tất"
                 );
+
+            //sua hoa don
+            BUS.HoaDonBUS.SuaTrangThai(hoaDonID, "Đã thanh toán");
+            //cap nhat phuong thuc
+            BUS.HoaDonBUS.Capnhatphuongthuc(hoaDonID, comboBox1.SelectedItem.ToString());
 
             // Chuyen ve giao dien ban hang
             RequestPnlBodyToBanHang?.Invoke();

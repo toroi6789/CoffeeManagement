@@ -7,7 +7,7 @@ namespace CoffeeManagement.DAO
     public class DBConnect
     {
         private static string connectionString =
-            "server=localhost;port=3306;user id=root;password=jax123456;database=coffeemanagement;";
+            "server=localhost;port=3306;user id=root;password=123456789;database=coffeemanagement;";
 
         // Hàm trả về đối tượng kết nối MySQL
         public static MySqlConnection GetConnection()
