@@ -42,7 +42,9 @@ namespace CoffeeManagement.GUI
         // === HIỂN THỊ TẤT CẢ SẢN PHẨM ===
         private void HienThiTatCaSanPham()
         {
-            var listSP = sanPhamBUS.LayTatCaSanPham();
+            var listSP = sanPhamBUS.LayTatCaSanPham()
+            .Where(sp => string.IsNullOrEmpty(sp.TrangThai) || sp.TrangThai == "Hoạt động") // CHỈ HIỆN "HOẠT ĐỘNG"
+            .ToList();
             HienThiSanPham(listSP);
         }
 
@@ -112,6 +114,11 @@ namespace CoffeeManagement.GUI
         {
             // LẤY DỮ LIỆU TỪ BUS
             var tatCaSP = sanPhamBUS.LayTatCaSanPham();
+
+            // === BƯỚC QUAN TRỌNG: CHỈ LẤY SẢN PHẨM "HOẠT ĐỘNG" ===
+            tatCaSP = tatCaSP
+                .Where(sp => string.IsNullOrEmpty(sp.TrangThai) || sp.TrangThai == "Hoạt động")
+                .ToList();
 
             // LẤY DANH MỤC HIỆN TẠI
             var dm = cmbDanhMuc.SelectedItem as DanhMucDTO;
