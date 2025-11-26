@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
 using MySql.Data.MySqlClient;
 
@@ -6,8 +7,9 @@ namespace CoffeeManagement.DAO
 {
     public class DBConnect
     {
-        private static string connectionString =
-            "server=localhost;port=3306;user id=root;password=jax123456;database=coffeemanagement;";
+        private static string connectionString = 
+            ConfigurationManager.ConnectionStrings["CoffeeManagementDB"]?.ConnectionString 
+            ?? "server=localhost;port=3306;user id=root;password=;database=coffeemanagement;charset=utf8mb4;";
 
         // Hàm trả về đối tượng kết nối MySQL
         public static MySqlConnection GetConnection()
