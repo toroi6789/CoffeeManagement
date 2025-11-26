@@ -28,10 +28,76 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.pnlTitle = new System.Windows.Forms.Panel();
+            this.pnlBody = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlTitle.SuspendLayout();
+            this.pnlBody.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(364, 36);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "DANH SÁCH NHÂN VIÊN";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlTitle
+            // 
+            this.pnlTitle.AutoSize = true;
+            this.pnlTitle.BackColor = System.Drawing.Color.DarkCyan;
+            this.pnlTitle.Controls.Add(this.lblTitle);
+            this.pnlTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTitle.Location = new System.Drawing.Point(0, 0);
+            this.pnlTitle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlTitle.Name = "pnlTitle";
+            this.pnlTitle.Size = new System.Drawing.Size(1083, 36);
+            this.pnlTitle.TabIndex = 1;
+            // 
+            // pnlBody
+            // 
+            this.pnlBody.Controls.Add(this.flowLayoutPanel1);
+            this.pnlBody.Location = new System.Drawing.Point(6, 41);
+            this.pnlBody.Name = "pnlBody";
+            this.pnlBody.Size = new System.Drawing.Size(1074, 604);
+            this.pnlBody.TabIndex = 2;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 77);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1074, 527);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
+            // NhanVienUC
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.Controls.Add(this.pnlTitle);
+            this.Controls.Add(this.pnlBody);
+            this.Name = "NhanVienUC";
+            this.Size = new System.Drawing.Size(1083, 650);
+            this.pnlTitle.ResumeLayout(false);
+            this.pnlTitle.PerformLayout();
+            this.pnlBody.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Panel pnlTitle;
+        private System.Windows.Forms.Panel pnlBody;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

@@ -106,6 +106,7 @@
     <Compile Include="BUS\BanBUS.cs" />
     <Compile Include="BUS\DanhMucBUS.cs" />
     <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\NhanVienBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="BUS\TaoID.cs" />
     <Compile Include="BUS\ThanhToanBUS.cs" />
@@ -115,12 +116,14 @@
     <Compile Include="DAO\DanhMucDAO.cs" />
     <Compile Include="DAO\HoaDonDAO.cs" />
     <Compile Include="DAO\LayID.cs" />
+    <Compile Include="DAO\NhanVienDAO.cs" />
     <Compile Include="DAO\SanPhamDAO.cs" />
     <Compile Include="DAO\ThanhToanDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="DTO\DanhMucDTO.cs" />
     <Compile Include="DTO\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="DTO\NguyenLieuDTO.cs" />
+    <Compile Include="DTO\NhanVienDTO.cs" />
     <Compile Include="DTO\SanPhamDTO.cs" />
     <Compile Include="DTO\SanPhamNguyenLieuDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
@@ -194,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ListSanPham.resx">
       <DependentUpon>ListSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NhanVienUC.resx">
+      <DependentUpon>NhanVienUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>
