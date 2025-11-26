@@ -17,13 +17,44 @@ namespace CoffeeManagement.BUS
             return userDAO.GetAll();
         }
 
-        public bool Register(string username, string password)
+        // Đăng nhập
+        public UserDTO Login(string email, string password)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                return null;
+
+            UserDTO user = userDAO.GetUserByEmailAndPassword(email, password);
+            
+            if (user != null)
+            {
+                // Cập nhật ngày đăng nhập cuối
+                userDAO.UpdateLastLoginDate(user.UserID);
+            }
+
+            return user;
+        }
+
+        // Đăng ký (nếu cần)
+        public bool Register(string email, string password, int roleID = 2)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
                 return false;
 
-            userDAO.Add(new UserDTO { Username = username, Password = password });
-            return true;
+            try
+            {
+                userDAO.Add(new UserDTO 
+                { 
+                    Email = email, 
+                    MatKhau = password,
+                    RoleID = roleID,
+                    TrangThai = "Hoạt động"
+                });
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

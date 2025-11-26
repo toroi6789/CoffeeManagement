@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.pnlTitle = new System.Windows.Forms.Panel();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.btnLogout = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnMaximize = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
-            this.lblTitle = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.banHangToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bánHàngDanhSáchSảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +47,7 @@
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.pnlBody = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblUserInfo = new System.Windows.Forms.Label();
             this.pnlTitle.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -54,18 +56,49 @@
             // 
             // pnlTitle
             // 
-            this.pnlTitle.AutoSize = true;
             this.pnlTitle.BackColor = System.Drawing.Color.DarkCyan;
+            this.pnlTitle.Controls.Add(this.lblTitle);
+            this.pnlTitle.Controls.Add(this.lblUserInfo);
+            this.pnlTitle.Controls.Add(this.btnLogout);
             this.pnlTitle.Controls.Add(this.btnMinimize);
             this.pnlTitle.Controls.Add(this.btnMaximize);
             this.pnlTitle.Controls.Add(this.btnClose);
-            this.pnlTitle.Controls.Add(this.lblTitle);
             this.pnlTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTitle.Location = new System.Drawing.Point(0, 0);
             this.pnlTitle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlTitle.Name = "pnlTitle";
-            this.pnlTitle.Size = new System.Drawing.Size(1080, 36);
+            this.pnlTitle.Size = new System.Drawing.Size(1080, 45);
             this.pnlTitle.TabIndex = 0;
+            this.pnlTitle.Resize += new System.EventHandler(this.pnlTitle_Resize);
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.White;
+            this.lblTitle.Location = new System.Drawing.Point(15, 11);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(346, 32);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "QUẢN LÝ CỬA HÀNG CÀ PHÊ";
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogout.BackColor = System.Drawing.Color.DarkCyan;
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.btnLogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.Location = new System.Drawing.Point(854, 5);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(156, 35);
+            this.btnLogout.TabIndex = 5;
+            this.btnLogout.Text = "Đăng xuất";
+            this.btnLogout.UseVisualStyleBackColor = false;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnMinimize
             // 
@@ -78,7 +111,7 @@
             this.btnMinimize.Location = new System.Drawing.Point(921, 0);
             this.btnMinimize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMinimize.Name = "btnMinimize";
-            this.btnMinimize.Size = new System.Drawing.Size(53, 36);
+            this.btnMinimize.Size = new System.Drawing.Size(53, 45);
             this.btnMinimize.TabIndex = 3;
             this.btnMinimize.Text = "—";
             this.btnMinimize.UseVisualStyleBackColor = false;
@@ -95,7 +128,7 @@
             this.btnMaximize.Location = new System.Drawing.Point(974, 0);
             this.btnMaximize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnMaximize.Name = "btnMaximize";
-            this.btnMaximize.Size = new System.Drawing.Size(53, 36);
+            this.btnMaximize.Size = new System.Drawing.Size(53, 45);
             this.btnMaximize.TabIndex = 2;
             this.btnMaximize.Text = "▢";
             this.btnMaximize.UseVisualStyleBackColor = false;
@@ -113,24 +146,11 @@
             this.btnClose.Location = new System.Drawing.Point(1027, 0);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(53, 36);
+            this.btnClose.Size = new System.Drawing.Size(53, 45);
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "x";
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(433, 36);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "QUẢN LÝ CỬA HÀNG CÀ PHÊ";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // menuStrip1
             // 
@@ -141,7 +161,7 @@
             this.bánHàngDanhSáchSảnPhẩmToolStripMenuItem,
             this.quanLyToolStripMenuItem,
             this.đặtBànToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 36);
+            this.menuStrip1.Location = new System.Drawing.Point(0, 45);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1080, 28);
             this.menuStrip1.TabIndex = 1;
@@ -227,7 +247,7 @@
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1080, 64);
+            this.pnlHeader.Size = new System.Drawing.Size(1080, 73);
             this.pnlHeader.TabIndex = 2;
             // 
             // pnlBody
@@ -247,6 +267,17 @@
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.SizeChanged += new System.EventHandler(this.flowLayoutPanel1_SizeChanged);
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
+            // 
+            // lblUserInfo
+            // 
+            this.lblUserInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUserInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblUserInfo.ForeColor = System.Drawing.Color.White;
+            this.lblUserInfo.Location = new System.Drawing.Point(365, 12);
+            this.lblUserInfo.Name = "lblUserInfo";
+            this.lblUserInfo.Size = new System.Drawing.Size(512, 28);
+            this.lblUserInfo.TabIndex = 4;
+            this.lblUserInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
@@ -295,6 +326,8 @@
         private System.Windows.Forms.ToolStripMenuItem sanPhamToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem danhSáchHóaĐơnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bánHàngDanhSáchSảnPhẩmToolStripMenuItem;
+        private System.Windows.Forms.Button btnLogout;
+        private System.Windows.Forms.Label lblUserInfo;
     }
 }
 
