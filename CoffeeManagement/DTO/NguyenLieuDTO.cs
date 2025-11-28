@@ -16,7 +16,7 @@ namespace CoffeeManagement.DTO
         private string donVi;
         private int danhMucID;
         private string trangThai;
-
+        public string hinh;
         public int NguyenLieuID
         {
             get { return nguyenLieuID; }
@@ -41,10 +41,10 @@ namespace CoffeeManagement.DTO
             get { return giaNhap; }
             set
             {
-                if (value >=  0)
+                if (value >=  1000)
                     giaNhap = value;
                 else
-                    throw new ArgumentException("giá nhập phải từ 0 trở lên và không được để trống", "GiaNhap");
+                    throw new ArgumentException("giá nhập phải từ 1000 trở lên và không được để trống", "GiaNhap");
             }
         }
 
@@ -54,9 +54,9 @@ namespace CoffeeManagement.DTO
             set
             {
                 if (soLuongTon >= 0)
-                    giaNhap = value;
+                    soLuongTon = value;
                 else
-                    throw new ArgumentException("Số lượng tồn phải từ 1000 trở lên và không được để trống", "GiaBan");
+                    throw new ArgumentException("Số lượng tồn phải từ 0 trở lên và không được để trống", "SoLuongTon");
             }
         }
 
@@ -90,6 +90,12 @@ namespace CoffeeManagement.DTO
         {
             get { return trangThai; }
             set { trangThai = value; }
+        }
+
+        public string Hinh
+        {
+            get { return hinh; }
+            set { hinh = value; }
         }
     }
 }

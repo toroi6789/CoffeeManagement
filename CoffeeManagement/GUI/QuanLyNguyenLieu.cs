@@ -60,7 +60,7 @@ namespace CoffeeManagement.GUI
             dtNguyenLieu.Columns.Add("DanhMucID", typeof(int));
             dtNguyenLieu.Columns.Add("DonVi", typeof(string));
             dtNguyenLieu.Columns.Add("SoLuongTon", typeof(decimal));
-
+            dtNguyenLieu.Columns.Add("Hinh", typeof(string));
 
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = dtNguyenLieu;
@@ -75,6 +75,7 @@ namespace CoffeeManagement.GUI
             dataGridView1.Columns["DanhMucID"].HeaderText = "Mã Danh Mục";
             dataGridView1.Columns["DonVi"].HeaderText = "Đơn Vị";
             dataGridView1.Columns["SoLuongTon"].HeaderText = "Số lượng tồn";
+            dataGridView1.Columns["Hinh"].HeaderText = "Hình";
 
             dataGridView1.EnableHeadersVisualStyles = false; // ⚠️ Bắt buộc để màu custom có hiệu lực
 
@@ -229,7 +230,7 @@ namespace CoffeeManagement.GUI
                 row["DanhMucID"] = nl.DanhMucID;
                 row["DonVi"] = nl.DonVi;
                 row["SoLuongTon"] = nl.SoLuongTon;
-                //row["Hinh"] = nl.Hinh;
+                row["Hinh"] = nl.Hinh;
                 dtNguyenLieu.Rows.Add(row);
             }
         }
@@ -298,7 +299,7 @@ namespace CoffeeManagement.GUI
                             ws.Cells[1, 6].Value = "Danh Mục ID";
                             ws.Cells[1, 7].Value = "Đơn Vị";
                             ws.Cells[1, 8].Value = "Số Lượng Tồn";
-                            //ws.Cells[1, 9].Value = "Hình";
+                            ws.Cells[1, 9].Value = "Hình";
 
                             // Format tiêu đề
                             using (var range = ws.Cells[1, 1, 1, 9])
@@ -382,7 +383,7 @@ namespace CoffeeManagement.GUI
                                     int danhMucID = ws.Cells[row, 6].GetValue<int>();
                                     string donVi = ws.Cells[row, 7].GetValue<string>()?.Trim();
                                     decimal soLuongTon = ws.Cells[row, 8].GetValue<decimal>();
-                                    //string hinh = ws.Cells[row, 9].GetValue<string>()?.Trim();
+                                    string hinh = ws.Cells[row, 9].GetValue<string>()?.Trim();
 
                                     // VALIDATE DỮ LIỆU
                                     if (string.IsNullOrWhiteSpace(tenNL))
@@ -414,7 +415,7 @@ namespace CoffeeManagement.GUI
                                         DanhMucID = danhMucID,
                                         DonVi = donVi,
                                         SoLuongTon = soLuongTon,
-                                        //Hinh = string.IsNullOrWhiteSpace(hinh) ? null : hinh
+                                        Hinh = string.IsNullOrWhiteSpace(hinh) ? null : hinh
                                     };
 
                                     // THÊM VÀO CSDL
@@ -505,7 +506,7 @@ namespace CoffeeManagement.GUI
                         DanhMucID = (int)cmbDanhMucID.SelectedValue,
                         DonVi = txtDonVi.Text.Trim(),
                         SoLuongTon = decimal.Parse(txtSLTon.Text),
-                        //Hinh = pictureBox2.Tag?.ToString()
+                        Hinh = pictureBox2.Tag?.ToString()
                     };
 
                     if (nl_bus.busThemNguyenLieu(nl, out string msg, out string err))
@@ -553,13 +554,13 @@ namespace CoffeeManagement.GUI
                     {
                         NguyenLieuID = int.Parse(txtID.Text),
                         TenNguyenLieu = txtTenNguyenLieu.Text.Trim(),
-                        GiaNhap = decimal.Parse(txtGiaNhap.Text),
+                        GiaNhap = decimal.Parse(txtGiaNhap.Text.Trim()), 
                         MoTa = txtMoTa.Text.Trim(),
                         TrangThai = cmbTrangThai.SelectedItem.ToString(),
                         DanhMucID = (int)cmbDanhMucID.SelectedValue,
                         DonVi = txtDonVi.Text.Trim(),
                         SoLuongTon = decimal.Parse(txtSLTon.Text),
-                        //Hinh = pictureBox2.Tag?.ToString()
+                        Hinh = pictureBox2.Tag?.ToString()
                     };
 
                     if (nl_bus.busSuaNguyenLieu(nl, out string msg, out string err))
@@ -637,8 +638,7 @@ namespace CoffeeManagement.GUI
                 cmbDanhMucID.SelectedValue = row.Cells["DanhMucID"].Value; // Chọn theo Value (ID)
 
                 // === HIỂN THỊ ẢNH ===
-                //string tenFileAnh = row.Cells["Hinh"].Value?.ToString(); // Lấy tên file từ DB
-                string tenFileAnh = null;
+                string tenFileAnh = row.Cells["Hinh"].Value?.ToString(); // Lấy tên file từ DB
                 string relativePath = @"Images\null.png";
                 string fullPathDefault = Path.Combine(Application.StartupPath, relativePath);
                 if (!string.IsNullOrEmpty(tenFileAnh))
@@ -666,6 +666,7 @@ namespace CoffeeManagement.GUI
                 btnXoa.Enabled = true;
                 btnSua.Enabled = true;
                 btnThem.Enabled = true;
+
             }
         }
 

@@ -16,7 +16,7 @@ namespace CoffeeManagement.DAO
         {
             List<NguyenLieuDTO> dsNL = new List<NguyenLieuDTO>();
             string sql = @"
-                    SELECT NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi
+                    SELECT NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh
                     FROM NguyenLieu ";
             DataTable dt = ExecuteQuery(sql);
 
@@ -32,6 +32,7 @@ namespace CoffeeManagement.DAO
                     DanhMucID = int.Parse(row["DanhMucID"].ToString()),
                     DonVi = row["DonVi"].ToString(),
                     SoLuongTon = (Decimal)float.Parse(row["SoLuongTon"].ToString()),
+                    Hinh = row["Hinh"].ToString(),
                 };
                 dsNL.Add(nl);
             }
@@ -63,9 +64,9 @@ namespace CoffeeManagement.DAO
         {
             string sql = @"
             INSERT INTO NguyenLieu 
-            (NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi) 
+            (NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh) 
             VALUES 
-            (@NguyenLieuID, @TenNguyenLieu, @GiaNhap, @MoTa, @TrangThai, @DanhMucID, @SoLuongTon, @DonVi)";
+            (@NguyenLieuID, @TenNguyenLieu, @GiaNhap, @MoTa, @TrangThai, @DanhMucID, @SoLuongTon, @DonVi, @Hinh)";
 
             var parameters = new MySqlParameter[]
             {
@@ -76,7 +77,8 @@ namespace CoffeeManagement.DAO
             new MySqlParameter("@TrangThai", MySqlDbType.VarChar) { Value = nl.TrangThai ?? "Hoạt động" },
             new MySqlParameter("@DanhMucID", MySqlDbType.Int32) { Value = nl.DanhMucID },
             new MySqlParameter("@DonVi", MySqlDbType.VarChar) { Value = nl.DonVi ?? (object)DBNull.Value },
-            new MySqlParameter("@SoLuongTon", MySqlDbType.Decimal) { Value = nl.SoLuongTon }
+            new MySqlParameter("@SoLuongTon", MySqlDbType.Decimal) { Value = nl.SoLuongTon },
+            new MySqlParameter("@Hinh", MySqlDbType.VarChar) { Value = nl.Hinh ?? (object)DBNull.Value }
             };
 
             try
@@ -101,8 +103,9 @@ namespace CoffeeManagement.DAO
                 MoTa = @MoTa, 
                 TrangThai = @TrangThai, 
                 DanhMucID = @DanhMuc, 
-                DonVi = @DonVi
-                SoLuongTon = @SoLuong
+                DonVi = @DonVi,
+                SoLuongTon = @SoLuong,
+                Hinh = @Hinh
             WHERE NguyenLieuID = @ID";
 
             var parameters = new MySqlParameter[]
@@ -114,6 +117,7 @@ namespace CoffeeManagement.DAO
                 new MySqlParameter("@TrangThai", nl.TrangThai ?? "Hoạt động"),
                 new MySqlParameter("@DanhMuc", nl.DanhMucID),
                 new MySqlParameter("@DonVi", nl.DonVi ?? (object)DBNull.Value),
+                new MySqlParameter("@Hinh", nl.Hinh ?? (object)DBNull.Value),
                 new MySqlParameter("@SoLuong", nl.SoLuongTon),
             };
 
