@@ -28,6 +28,7 @@ namespace CoffeeManagement
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
+        GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
 
         public MainForm()
         {
@@ -373,6 +374,15 @@ namespace CoffeeManagement
         private void pnlTitle_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void nguyênLiệuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Quản lý nguyên liệu!");
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            this.pnlBody.Controls.Add(quanLyNguyenLieu);
+            quanLyNguyenLieu.Dock = DockStyle.Fill;
         }
     }
 }

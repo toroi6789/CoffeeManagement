@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+
 
 namespace CoffeeManagement.GUI
 {
@@ -31,18 +34,23 @@ namespace CoffeeManagement.GUI
 
         private void SanPhamADMIN_Load(object sender, EventArgs e)
         {
+            //
+            List<string> trangThais = new List<string> { "Hoạt động", "Ngừng bán", "Deleted" };
+            cmbTrangThai.DataSource = trangThais;
+            cmbTrangThai.SelectedIndex = 0; // Mặc định "Hoạt động"
+
             btnSua.Enabled = false;
             btnXoa.Enabled = false;
             btnThoat.Visible = false;
             btnThemAnh.Enabled = false;
+            cmbDanhMucID.Enabled = false;
+            cmbTrangThai.Enabled = false;
 
             //
             txtID.ReadOnly = true;
             txtTenSP.ReadOnly = true;
             txtGia.ReadOnly = true;
-            txtDanhMucID.ReadOnly = true;
             txtMoTa.ReadOnly = true;
-            txtTrangThai.ReadOnly = true;
             
 
 
@@ -129,10 +137,10 @@ namespace CoffeeManagement.GUI
         {
             txtID.Clear();
             txtTenSP.Clear();
-            txtTrangThai.Clear();
             txtGia.Clear();
             txtMoTa.Clear();
-            txtDanhMucID.Clear();
+            cmbTrangThai.SelectedIndex = 0; // Mặc định "Hoạt động"
+            cmbDanhMucID.SelectedIndex = -1;
 
             string relativePath = @"Images\null.png";
             string fullPath = Path.Combine(Application.StartupPath, relativePath);
@@ -154,9 +162,9 @@ namespace CoffeeManagement.GUI
             txtID.ReadOnly = true;
             txtTenSP.ReadOnly = true;
             txtGia.ReadOnly = true;
-            txtDanhMucID.ReadOnly = true;
             txtMoTa.ReadOnly = true;
-            txtTrangThai.ReadOnly = true;
+            cmbTrangThai.Enabled = false;
+            cmbDanhMucID.Enabled = false;
 
             ClearForm();
             ClearErrorProvider();
@@ -175,14 +183,14 @@ namespace CoffeeManagement.GUI
                     return txtID;
                 case "TenSanPham":
                     return txtTenSP;
-                case "TrangThai":
-                    return txtTrangThai;
                 case "MoTa":
                     return txtMoTa;
                 case "GiaBan":
                     return txtGia;
+                case "TrangThai":
+                    return cmbTrangThai;
                 case "DanhMucID":
-                    return txtDanhMucID;
+                    return cmbDanhMucID;
                 default:
                     return null;
             }
@@ -195,10 +203,12 @@ namespace CoffeeManagement.GUI
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 txtID.Text = row.Cells["SanPhamID"].Value.ToString();
                 txtTenSP.Text = row.Cells["TenSanPham"].Value.ToString();
-                txtTrangThai.Text = row.Cells["TrangThai"].Value.ToString();
                 txtGia.Text = row.Cells["GiaBan"].Value.ToString();
                 txtMoTa.Text = row.Cells["MoTa"].Value.ToString();
-                txtDanhMucID.Text = row.Cells["DanhMucID"].Value.ToString();
+
+                // Set cho ComboBox
+                cmbTrangThai.SelectedItem = row.Cells["TrangThai"].Value.ToString(); // Chọn theo string
+                cmbDanhMucID.SelectedValue = row.Cells["DanhMucID"].Value; // Chọn theo Value (ID)
 
                 // === HIỂN THỊ ẢNH ===
                 string tenFileAnh = row.Cells["Hinh"].Value?.ToString(); // Lấy tên file từ DB
@@ -244,10 +254,8 @@ namespace CoffeeManagement.GUI
             {
                 new { Name = "txtID", Control = (Control)txtID },
                 new { Name = "txtTenSP", Control = (Control)txtTenSP },
-                new { Name = "txtTrangThai", Control = (Control)txtTrangThai },
                 new { Name = "txtMoTa", Control = (Control)txtMoTa },
-                new { Name = "txtGia", Control = (Control)txtGia },
-                new { Name = "txtDanhMucID", Control = (Control)txtDanhMucID }
+                new { Name = "txtGia", Control = (Control)txtGia }
             };
 
             // Tìm TextBox đang gõ → Xóa lỗi
@@ -263,84 +271,102 @@ namespace CoffeeManagement.GUI
         {
             if (btnThem.Text == "Thêm")
             {
-                ClearForm();
-                txtID.Focus();
+                // === CHUYỂN SANG CHẾ ĐỘ THÊM ===
                 btnThem.Text = "Lưu";
                 btnSua.Enabled = false;
                 btnXoa.Enabled = false;
                 btnThoat.Visible = true;
                 btnThemAnh.Enabled = true;
 
-                //
-                txtID.ReadOnly = false;
+                // Khóa txtID
+                txtID.ReadOnly = true;
+                txtID.BackColor = Color.FromArgb(240, 240, 240);
+                txtID.ForeColor = Color.Blue;
+                txtID.Font = new Font(txtID.Font, FontStyle.Bold);
+
+                // Tự động sinh ID mới
+                int idMoi = sp_bus.LaySanPhamIDLonNhat() + 1;
+                txtID.Text = idMoi.ToString();
+
+                // Mở các field để nhập
                 txtTenSP.ReadOnly = false;
                 txtGia.ReadOnly = false;
-                txtDanhMucID.ReadOnly = false;
                 txtMoTa.ReadOnly = false;
-                txtTrangThai.ReadOnly = false;
+                cmbTrangThai.Enabled = true;
+                cmbDanhMucID.Enabled = true;
+
+                // Reset form + giữ lại ID mới
+                ClearForm();
+                txtID.Text = idMoi.ToString();
+                txtTenSP.Focus();
                 return;
             }
 
-            var sp = new SanPhamDTO();
-
+            // =================== LƯU THÊM MỚI ===================
             try
             {
-                sp.SanPhamID = int.TryParse(txtID.Text.Trim(), out int id) ? id : 0;
-                if (sp.SanPhamID <= 0)
-                    throw new ArgumentException("Mã sản phẩm phải lớn hơn 0.", "SanPhamID");
-
-                sp.TenSanPham = txtTenSP.Text.Trim();
-                if (string.IsNullOrWhiteSpace(sp.TenSanPham))
-                    throw new ArgumentException("Tên sản phẩm không được để trống.", "TenSanPham");
-
-                sp.TrangThai = txtTrangThai.Text.Trim();
-                if (string.IsNullOrWhiteSpace(sp.TrangThai))
-                    throw new ArgumentException("Trạng thái không được để trống.", "TrangThai");
-
-                sp.MoTa = txtMoTa.Text.Trim();
-                if (string.IsNullOrWhiteSpace(sp.MoTa))
-                    throw new ArgumentException("MoTa không được để trống.", "MoTa");
-
-                sp.GiaBan = decimal.TryParse(txtGia.Text.Trim(), out decimal gia) ? gia : 0;
-                // → DTO sẽ tự ném lỗi nếu <= 0
-
-                sp.DanhMucID = int.TryParse(txtDanhMucID.Text.Trim(), out int dm) ? dm : 0;
-                if (sp.DanhMucID <= 0)
-                    throw new ArgumentException("Mã danh mục phải lớn hơn 0.", "DanhMucID");
-
-                sp.Hinh = pictureBox2.Tag?.ToString();
-
-                // GỌI BUS
-                if (sp_bus.busThemSanPham(sp, out string message, out string errorField))
+                // === LẤY ĐÚNG ID DANH MỤC TỪ SelectedValue (QUAN TRỌNG NHẤT) ===
+                int danhMucID = 0;
+                if (cmbDanhMucID.SelectedValue != null)
                 {
-                    MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LocSanPham();
-                    ResetForm();
-                    LocSanPham();
+                    // Ưu tiên lấy từ ValueMember → luôn là ID chính xác
+                    if (int.TryParse(cmbDanhMucID.SelectedValue.ToString(), out int id))
+                        danhMucID = id;
+                }
+
+                // Nếu người dùng chưa chọn gì (vẫn là "-- Chọn danh mục --") → báo lỗi
+                if (danhMucID <= 0)
+                    throw new ArgumentException("Vui lòng chọn danh mục hợp lệ!");
+
+                var sp = new SanPhamDTO
+                {
+                    SanPhamID = int.Parse(txtID.Text),
+                    TenSanPham = txtTenSP.Text.Trim(),
+                    GiaBan = decimal.TryParse(txtGia.Text.Trim(), out decimal gia) ? gia : 0,
+                    MoTa = txtMoTa.Text.Trim(),
+                    TrangThai = cmbTrangThai.Text.Trim(),
+                    DanhMucID = danhMucID, // ĐÚNG RỒI ĐÂY!
+                    Hinh = pictureBox2.Tag?.ToString()
+                };
+
+                // === VALIDATE ===
+                if (string.IsNullOrWhiteSpace(sp.TenSanPham))
+                    throw new ArgumentException("Tên sản phẩm không được để trống!");
+
+                if (sp.GiaBan <= 0)
+                    throw new ArgumentException("Giá bán phải lớn hơn 0!");
+
+                // DanhMucID đã kiểm tra ở trên rồi
+
+                // === GỌI BUS THÊM ===
+                if (sp_bus.busThemSanPham(sp, out string msg, out string err))
+                {
+                    MessageBox.Show($"Thêm sản phẩm thành công!\nID: {sp.SanPhamID}",
+                        "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    LocSanPham();  // Làm mới bảng
+                    ResetForm();   // Trở về trạng thái ban đầu
                 }
                 else
                 {
-                    throw new InvalidOperationException(message);
+                    MessageBox.Show("Thêm thất bại: " + msg, "Lỗi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Giá bán không đúng định dạng!", "Lỗi nhập liệu",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (ArgumentException ex)
             {
-                ClearErrorProvider();
-                MessageBox.Show(ex.Message, "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                // LẤY TÊN FIELD TỪ ParamName
-                string fieldName = ex.ParamName ?? "GiaBan";
-                Control ctrl = GetControlByErrorField(fieldName);
-
-                if (ctrl != null)
-                {
-                    ctrl.Focus();
-                    errorProvider1.SetError(ctrl, ex.Message); // HIỆN ICON ĐÚNG Ô
-                }
+                MessageBox.Show(ex.Message, "Lỗi nhập liệu",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi không xác định: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -356,55 +382,65 @@ namespace CoffeeManagement.GUI
                     return;
                 }
 
+                // === CHUYỂN SANG CHẾ ĐỘ SỬA ===
                 btnSua.Text = "Lưu";
                 btnThem.Enabled = false;
                 btnXoa.Enabled = false;
-                txtID.Enabled = false;
                 btnThoat.Visible = true;
                 btnThemAnh.Enabled = true;
 
-                //
-                txtID.ReadOnly = false;
+                txtID.ReadOnly = true; // ID không được sửa
                 txtTenSP.ReadOnly = false;
                 txtGia.ReadOnly = false;
-                txtDanhMucID.ReadOnly = false;
                 txtMoTa.ReadOnly = false;
-                txtTrangThai.ReadOnly = false;
+                cmbTrangThai.Enabled = true;
+                cmbDanhMucID.Enabled = true;
 
                 return;
             }
 
-            // === LƯU SỬA ===
-            var sp = new SanPhamDTO
-            {
-                SanPhamID = int.Parse(txtID.Text),
-                TenSanPham = txtTenSP.Text.Trim(),
-                GiaBan = decimal.TryParse(txtGia.Text.Trim(), out decimal gia) ? gia : 0,
-                MoTa = txtMoTa.Text.Trim(),
-                TrangThai = txtTrangThai.Text.Trim(),
-                DanhMucID = int.TryParse(txtDanhMucID.Text.Trim(), out int dm) ? dm : 0,
-                Hinh = pictureBox2.Tag?.ToString()
-                                    ?? dataGridView1.CurrentRow.Cells["Hinh"].Value?.ToString()
-            };
-
+            // =================== LƯU SỬA ===================
             try
             {
-                if (string.IsNullOrWhiteSpace(sp.TenSanPham))
-                    throw new ArgumentException("Tên sản phẩm không được để trống.", "TenSanPham");
-                if (sp.GiaBan <= 0)
-                    throw new ArgumentException("Giá bán phải lớn hơn 0.", "GiaBan");
-                if (sp.DanhMucID <= 0)
-                    throw new ArgumentException("Mã danh mục phải lớn hơn 0.", "DanhMucID");
+                // === LẤY ĐÚNG ID DANH MỤC TỪ SelectedValue (BẮT BUỘC) ===
+                int danhMucID = 0;
+                if (cmbDanhMucID.SelectedValue != null)
+                {
+                    if (int.TryParse(cmbDanhMucID.SelectedValue.ToString(), out int id))
+                        danhMucID = id;
+                }
 
-               
-                // === GỌI BUS ===
+                // Kiểm tra bắt buộc chọn danh mục hợp lệ
+                if (danhMucID <= 0)
+                    throw new ArgumentException("Vui lòng chọn danh mục hợp lệ!", "DanhMucID");
+
+                var sp = new SanPhamDTO
+                {
+                    SanPhamID = int.Parse(txtID.Text),
+                    TenSanPham = txtTenSP.Text.Trim(),
+                    GiaBan = decimal.TryParse(txtGia.Text.Trim(), out decimal gia) ? gia : 0,
+                    MoTa = txtMoTa.Text.Trim(),
+                    TrangThai = cmbTrangThai.Text.Trim(),
+                    DanhMucID = danhMucID, // ĐÚNG RỒI!
+                    Hinh = pictureBox2.Tag?.ToString()
+                           ?? dataGridView1.CurrentRow.Cells["Hinh"].Value?.ToString()
+                };
+
+                // === VALIDATE ===
+                if (string.IsNullOrWhiteSpace(sp.TenSanPham))
+                    throw new ArgumentException("Tên sản phẩm không được để trống!", "TenSanPham");
+
+                if (sp.GiaBan <= 0)
+                    throw new ArgumentException("Giá bán phải lớn hơn 0!", "GiaBan");
+
+                // DanhMucID đã kiểm tra ở trên
+
+                // === GỌI BUS SỬA ===
                 if (sp_bus.busSuaSanPham(sp, out string message, out string errorField))
                 {
                     MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LocSanPham();
                     ResetForm();
-                    LocSanPham();
-                    this.ActiveControl = null;
                 }
                 else
                 {
@@ -415,6 +451,7 @@ namespace CoffeeManagement.GUI
             {
                 ClearErrorProvider();
                 MessageBox.Show(ex.Message, "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                 string field = ex.ParamName ?? "GiaBan";
                 Control ctrl = GetControlByErrorField(field);
                 if (ctrl != null)
@@ -423,9 +460,13 @@ namespace CoffeeManagement.GUI
                     errorProvider1.SetError(ctrl, ex.Message);
                 }
             }
+            catch (FormatException)
+            {
+                MessageBox.Show("Giá bán không đúng định dạng số!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -488,7 +529,272 @@ namespace CoffeeManagement.GUI
         }
 
 
-        private void btnThemAnh_Click(object sender, EventArgs e)
+
+        private void LoadDanhMucVaoComboBox()
+        {
+            var danhMucList = danhMucBUS.LayTatCaDanhMuc(); // Lấy từ DB
+
+            // === 1. CHO cmbDanhMuc (dùng để lọc) ===
+            var listChoLoc = new List<DanhMucDTO>(danhMucList); // Copy để không ảnh hưởng
+            var allItem = new DanhMucDTO
+            {
+                DanhMucID = 0,
+                TenDanhMuc = "Tất cả danh mục",
+                TrangThai = "Hoạt động"
+            };
+            listChoLoc.Insert(0, allItem);
+
+            cmbDanhMuc.DataSource = listChoLoc;
+            cmbDanhMuc.DisplayMember = "TenDanhMuc";
+            cmbDanhMuc.ValueMember = "DanhMucID";
+            cmbDanhMuc.SelectedIndex = 0;
+
+            // === 2. CHO cmbDanhMucID (dùng khi thêm/sửa sản phẩm) ===
+            var listChoNhap = new List<DanhMucDTO>(danhMucList); // Copy riêng
+            var itemMacDinh = new DanhMucDTO
+            {
+                DanhMucID = 0,
+                TenDanhMuc = "-- Chọn danh mục --",  // Đặt tên rõ ràng
+                TrangThai = "Hoạt động"
+            };
+            listChoNhap.Insert(0, itemMacDinh);
+
+            cmbDanhMucID.DataSource = listChoNhap;
+            cmbDanhMucID.DisplayMember = "TenDanhMuc";
+            cmbDanhMucID.ValueMember = "DanhMucID";
+            cmbDanhMucID.SelectedIndex = 0; // Sẽ là "-- Chọn danh mục --"
+        }
+
+        private void LocSanPham()
+        {
+            dtSanPham.Clear();
+            var dm = cmbDanhMuc.SelectedItem as DanhMucDTO;
+            int danhMucID = dm?.DanhMucID ?? 0;
+            var listSP = sp_bus.LayTatCaSanPham();
+            // Lọc theo danh mục
+            if (danhMucID > 0)
+                listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
+
+            // === BẮT BUỘC: CHỈ HIỂN THỊ SẢN PHẨM "Hoạt động" ===
+            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "Ngừng bán" ).ToList();
+
+            // ĐỔ DỮ LIỆU + TỰ ĐỘNG THÊM STT
+            int stt = 1;
+            foreach (var sp in listSP)
+            {
+                dtSanPham.Rows.Add(
+                    stt++,                           
+                    sp.SanPhamID,
+                    sp.TenSanPham,
+                    sp.GiaBan,
+                    sp.MoTa ?? "",
+                    sp.TrangThai ?? "Hoạt động",
+                    sp.DanhMucID,
+                    sp.Hinh ?? ""
+                );
+            }
+            //this.ActiveControl = null;
+        }
+
+
+        // ==================== XUẤT RA EXCEL ====================
+        private void ExportExcel()
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Excel Workbook|*.xlsx";
+                sfd.Title = "Xuất danh sách sản phẩm";
+                sfd.FileName = "DanhSachSanPham_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xlsx";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var package = new ExcelPackage())
+                        {
+                            var ws = package.Workbook.Worksheets.Add("Sản Phẩm");
+
+                            // Tiêu đề cột (bỏ STT và SanPhamID nếu không muốn)
+                            ws.Cells[1, 1].Value = "STT";
+                            ws.Cells[1, 2].Value = "Tên Sản Phẩm";
+                            ws.Cells[1, 3].Value = "Giá Bán";
+                            ws.Cells[1, 4].Value = "Mô Tả";
+                            ws.Cells[1, 5].Value = "Trạng Thái";
+                            ws.Cells[1, 6].Value = "Mã Danh Mục";
+
+                            // Style tiêu đề
+                            using (var range = ws.Cells[1, 1, 1, 6])
+                            {
+                                range.Style.Font.Bold = true;
+                                range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                                range.Style.Fill.BackgroundColor.SetColor(Color.SteelBlue);
+                                range.Style.Font.Color.SetColor(Color.White);
+                                range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            }
+
+                            // Đổ dữ liệu từ DataGridView
+                            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                            {
+                                ws.Cells[i + 2, 1].Value = dataGridView1.Rows[i].Cells["STT"].Value;
+                                ws.Cells[i + 2, 2].Value = dataGridView1.Rows[i].Cells["TenSanPham"].Value;
+                                ws.Cells[i + 2, 3].Value = dataGridView1.Rows[i].Cells["GiaBan"].Value;
+                                ws.Cells[i + 2, 4].Value = dataGridView1.Rows[i].Cells["MoTa"].Value;
+                                ws.Cells[i + 2, 5].Value = dataGridView1.Rows[i].Cells["TrangThai"].Value;
+                                ws.Cells[i + 2, 6].Value = dataGridView1.Rows[i].Cells["DanhMucID"].Value;
+                            }
+
+                            // AutoFit cột
+                            ws.Cells[ws.Dimension.Address].AutoFitColumns();
+
+                            // Lưu file
+                            FileInfo fi = new FileInfo(sfd.FileName);
+                            package.SaveAs(fi);
+
+                            MessageBox.Show("Xuất file Excel thành công!\nĐường dẫn: " + sfd.FileName,
+                                "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi xuất Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        // ==================== NHẬP TỪ EXCEL ====================
+        private void ImportExcel()
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+                ofd.Title = "Chọn file Excel để nhập sản phẩm";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (var package = new ExcelPackage(new FileInfo(ofd.FileName)))
+                        {
+                            var ws = package.Workbook.Worksheets[0]; // Sheet đầu tiên
+                            int rowCount = ws.Dimension.Rows;
+
+                            if (rowCount < 2)
+                            {
+                                MessageBox.Show("File Excel không có dữ liệu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            int thanhCong = 0;
+                            int thatBai = 0;
+
+                            // Bắt đầu từ dòng 2 (dòng 1 là tiêu đề)
+                            for (int row = 2; row <= rowCount; row++)
+                            {
+                                try
+                                {
+                                    // ĐỌC ĐÚNG THỨ TỰ CỘT CỦA BẠN
+                                    string tenSP = ws.Cells[row, 2].GetValue<string>()?.Trim();
+                                    string trangThai = ws.Cells[row, 3].GetValue<string>()?.Trim();
+                                    string moTa = ws.Cells[row, 4].GetValue<string>()?.Trim();
+                                    decimal giaBan = ws.Cells[row, 5].GetValue<decimal>();
+                                    int danhMucID = ws.Cells[row, 6].GetValue<int>();
+                                    string hinh = ws.Cells[row, 7].GetValue<string>()?.Trim();
+
+                                    // VALIDATE DỮ LIỆU
+                                    if (string.IsNullOrWhiteSpace(tenSP))
+                                    {
+                                        thatBai++;
+                                        continue;
+                                    }
+                                    if (giaBan <= 0)
+                                    {
+                                        giaBan = 10000; // mặc định nếu sai
+                                    }
+                                    if (danhMucID <= 0)
+                                    {
+                                        danhMucID = 1; // mặc định danh mục "Đồ uống" hoặc bạn chọn
+                                    }
+                                    if (string.IsNullOrWhiteSpace(trangThai))
+                                        trangThai = "Hoạt động";
+
+                                    var sp = new SanPhamDTO
+                                    {
+                                        TenSanPham = tenSP,
+                                        GiaBan = giaBan,
+                                        MoTa = moTa,
+                                        TrangThai = trangThai,
+                                        DanhMucID = danhMucID,
+                                        Hinh = string.IsNullOrWhiteSpace(hinh) ? null : hinh
+                                    };
+
+                                    // THÊM VÀO CSDL
+                                    if (sp_bus.busThemSanPham(sp, out string msg, out string err))
+                                    {
+                                        thanhCong++;
+                                    }
+                                    else
+                                    {
+                                        thatBai++;
+                                        // Có thể log lỗi nếu cần: Console.WriteLine($"Lỗi dòng {row}: {msg}");
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    thatBai++;
+                                    // Bỏ qua dòng lỗi, tiếp tục dòng khác
+                                }
+                            }
+
+                            // LÀM MỚI BẢNG
+                            LocSanPham();
+
+                            MessageBox.Show($"Nhập Excel thành công!\n" +
+                                            $"Đã thêm: {thanhCong} sản phẩm\n" +
+                                            $"Bị lỗi: {thatBai} dòng",
+                                            "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi đọc file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            ImportExcel();
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            ExportExcel();
+        }
+
+        private void SanPhamADMIN_SizeChanged(object sender, EventArgs e)
+        {
+            //panel1.Size = new Size(this.Width, this.Height);
+            //dataGridView1.Size = new Size((int)(this.Width * 0.5), (int)(this.Height * 0.5));
+        }
+
+        private void cmbDanhMuc_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LocSanPham();
+        }
+
+        private void btnExport_Click_1(object sender, EventArgs e)
+        {
+            ExportExcel();
+        }
+
+        private void btnImport_Click_1(object sender, EventArgs e)
+        {
+            ImportExcel();
+        }
+
+        private void btnThemAnh_Click_1(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
@@ -525,61 +831,6 @@ namespace CoffeeManagement.GUI
                     pictureBox2.Tag = null;
                 }
             }
-        }
-
-        private void LoadDanhMucVaoComboBox()
-        {
-            var danhMucList = danhMucBUS.LayTatCaDanhMuc();
-
-            // Thêm mục "Tất cả"
-            var allItem = new DanhMucDTO
-            {
-                DanhMucID = 0,
-                TenDanhMuc = "Tất cả danh mục",
-                TrangThai = "Hoạt động"
-            };
-            danhMucList.Insert(0, allItem);
-
-            cmbDanhMuc.DataSource = danhMucList;
-            cmbDanhMuc.DisplayMember = "TenDanhMuc";  // Hiển thị tên
-            cmbDanhMuc.ValueMember = "DanhMucID";     // Lấy ID
-            cmbDanhMuc.SelectedIndex = 0;
-        }
-
-        private void LocSanPham()
-        {
-            dtSanPham.Clear();
-            var dm = cmbDanhMuc.SelectedItem as DanhMucDTO;
-            int danhMucID = dm?.DanhMucID ?? 0;
-            var listSP = sp_bus.LayTatCaSanPham();
-            // Lọc theo danh mục
-            if (danhMucID > 0)
-                listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
-
-            // === BẮT BUỘC: CHỈ HIỂN THỊ SẢN PHẨM "Hoạt động" ===
-            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động").ToList();
-
-            // ĐỔ DỮ LIỆU + TỰ ĐỘNG THÊM STT
-            int stt = 1;
-            foreach (var sp in listSP)
-            {
-                dtSanPham.Rows.Add(
-                    stt++,                           
-                    sp.SanPhamID,
-                    sp.TenSanPham,
-                    sp.GiaBan,
-                    sp.MoTa ?? "",
-                    sp.TrangThai ?? "Hoạt động",
-                    sp.DanhMucID,
-                    sp.Hinh ?? ""
-                );
-            }
-            //this.ActiveControl = null;
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LocSanPham();
         }
     }
 }
