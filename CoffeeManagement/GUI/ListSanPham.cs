@@ -48,41 +48,7 @@ namespace CoffeeManagement.GUI
             HienThiSanPham(listSP);
         }
 
-        // === TÌM KIẾM THEO TÊN  ===
-        //private void TimKiemSanPham()
-        //{
-        //    string tuKhoa = txtTim.Text.Trim();
-
-        //    // KIỂM TRA TRỐNG 
-        //    if (string.IsNullOrWhiteSpace(tuKhoa))
-        //    {
-        //        errorProvider1.SetError(txtTim, "Vui lòng nhập tên sản phẩm cần tìm!");
-        //        HienThiTatCaSanPham();
-        //        return;
-        //    }
-        //    else
-        //    {
-        //        errorProvider1.SetError(txtTim, ""); // XÓA LỖI
-        //    }
-
-        //    // LẤY TẤT CẢ SẢN PHẨM
-        //    var tatCaSP = sanPhamBUS.LayTatCaSanPham();
-
-        //    // LỌC THEO TÊN (không phân biệt hoa thường)
-        //    var ketQua = tatCaSP
-        //        .Where(sp => sp.TenSanPham.IndexOf(tuKhoa, StringComparison.OrdinalIgnoreCase) >= 0)
-        //        .ToList();
-
-        //    // HIỂN THỊ KẾT QUẢ
-        //    HienThiSanPham(ketQua);
-
-        //    // THÔNG BÁO NẾU KHÔNG TÌM THẤY
-        //    if (!ketQua.Any())
-        //    {
-        //        MessageBox.Show($"Không tìm thấy sản phẩm nào chứa '{tuKhoa}'!",
-        //            "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //}
+        
 
         // Load danh mục vào cmbDanhMuc
         private void LoadDanhMucVaoComboBox()
