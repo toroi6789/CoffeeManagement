@@ -58,16 +58,16 @@ namespace CoffeeManagement.BUS
             }
 
             // === 3. KIỂM TRA GIÁ BÁN ===
-            if (nl.GiaNhap <= 0)
+            if (nl.GiaNhap < 0)
             {
                 message = "Giá nhập phải lớn hơn 0.";
                 errorField = "GiaNhap";
                 return false;
             }
 
-            if (nl.SoLuongTon <= 0)
+            if (nl.SoLuongTon < 0)
             {
-                message = "Số lượng tồn phải lớn hơn 0.";
+                message = "Số lượng tồn phải lớn hơn hoặc bằng 0.";
                 errorField = "SoLuongTon";
                 return false;
             }
@@ -151,11 +151,11 @@ namespace CoffeeManagement.BUS
         }
 
         // LẤY ID LỚN NHẤT TRONG DATABASE + 1
-        public int LaySanPhamIDLonNhat()
+        public int LayNguyenLieuIDLonNhat()
         {
             try
             {
-                return dao.LayNguyenLieuIDLonNhat(); // Gọi thẳng DAO
+                return dao.LayNguyenLieuIDLonNhat();
             }
             catch (Exception ex)
             {

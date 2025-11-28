@@ -25,6 +25,7 @@ namespace CoffeeManagement.GUI
         private DataTable dtSanPham;
         private string originalImagePath = string.Empty;
         private DanhMucBUS danhMucBUS = new DanhMucBUS();
+        private bool DangThaoTac = false;
         public SanPhamADMIN()
         {
             InitializeComponent();
@@ -198,6 +199,13 @@ namespace CoffeeManagement.GUI
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (DangThaoTac)
+            {
+                MessageBox.Show("Đang ở chế độ thêm/sửa. Vui lòng Lưu hoặc Hủy trước khi chọn nguyên liệu khác!",
+                               "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
@@ -299,6 +307,8 @@ namespace CoffeeManagement.GUI
                 ClearForm();
                 txtID.Text = idMoi.ToString();
                 txtTenSP.Focus();
+
+                DangThaoTac = true;
                 return;
             }
 
@@ -325,7 +335,7 @@ namespace CoffeeManagement.GUI
                     GiaBan = decimal.TryParse(txtGia.Text.Trim(), out decimal gia) ? gia : 0,
                     MoTa = txtMoTa.Text.Trim(),
                     TrangThai = cmbTrangThai.Text.Trim(),
-                    DanhMucID = danhMucID, // ĐÚNG RỒI ĐÂY!
+                    DanhMucID = danhMucID, 
                     Hinh = pictureBox2.Tag?.ToString()
                 };
 
@@ -336,7 +346,7 @@ namespace CoffeeManagement.GUI
                 if (sp.GiaBan <= 0)
                     throw new ArgumentException("Giá bán phải lớn hơn 0!");
 
-                // DanhMucID đã kiểm tra ở trên rồi
+
 
                 // === GỌI BUS THÊM ===
                 if (sp_bus.busThemSanPham(sp, out string msg, out string err))
@@ -346,6 +356,7 @@ namespace CoffeeManagement.GUI
 
                     LocSanPham();  // Làm mới bảng
                     ResetForm();   // Trở về trạng thái ban đầu
+                    DangThaoTac = false;
                 }
                 else
                 {
@@ -396,6 +407,7 @@ namespace CoffeeManagement.GUI
                 cmbTrangThai.Enabled = true;
                 cmbDanhMucID.Enabled = true;
 
+                DangThaoTac = true;
                 return;
             }
 
@@ -441,6 +453,7 @@ namespace CoffeeManagement.GUI
                     MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LocSanPham();
                     ResetForm();
+                    DangThaoTac = false;
                 }
                 else
                 {
@@ -526,6 +539,7 @@ namespace CoffeeManagement.GUI
             this.ActiveControl = null;
             // THOÁT CHẾ ĐỘ THÊM / SỬA
             ResetForm();
+            DangThaoTac = false;
         }
 
 
@@ -550,11 +564,11 @@ namespace CoffeeManagement.GUI
             cmbDanhMuc.SelectedIndex = 0;
 
             // === 2. CHO cmbDanhMucID (dùng khi thêm/sửa sản phẩm) ===
-            var listChoNhap = new List<DanhMucDTO>(danhMucList); // Copy riêng
+            var listChoNhap = new List<DanhMucDTO>(danhMucList); 
             var itemMacDinh = new DanhMucDTO
             {
                 DanhMucID = 0,
-                TenDanhMuc = "-- Chọn danh mục --",  // Đặt tên rõ ràng
+                TenDanhMuc = "-- Chọn danh mục --",  
                 TrangThai = "Hoạt động"
             };
             listChoNhap.Insert(0, itemMacDinh);

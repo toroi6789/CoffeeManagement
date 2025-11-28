@@ -15,5 +15,6 @@ namespace CoffeeManagement.BUS
         {
             return dao.GetAll();
         }
+
     }
 }

@@ -21,6 +21,7 @@ namespace CoffeeManagement.GUI
         private DataTable dtNguyenLieu;
         private string originalImagePath = string.Empty;
         private DanhMucBUS danhMucBUS = new DanhMucBUS();
+        private bool DangThaoTac = false;
         public QuanLyNguyenLieu()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace CoffeeManagement.GUI
             cmbTrangThai.Enabled = false;
 
             //
-            //txtID.ReadOnly = true;
+            txtID.ReadOnly = true;
             txtTenNguyenLieu.ReadOnly = true;
             txtGiaNhap.ReadOnly = true;
             txtMoTa.ReadOnly = true;
@@ -471,7 +472,8 @@ namespace CoffeeManagement.GUI
                 btnSua.Enabled = false;
                 btnXoa.Enabled = false;
 
-                txtID.ReadOnly = false;
+                int idMoi = nl_bus.LayNguyenLieuIDLonNhat() + 1;
+
                 txtTenNguyenLieu.ReadOnly = false;
                 txtGiaNhap.ReadOnly = false;
                 txtMoTa.ReadOnly = false;
@@ -482,6 +484,12 @@ namespace CoffeeManagement.GUI
 
                 ClearForm();
                 ClearErrorProvider();
+
+                // Tự động sinh ID mới              
+                txtID.Text = idMoi.ToString();
+                txtTenNguyenLieu.Focus();
+
+                DangThaoTac = true;
             }
             else
             {
@@ -505,6 +513,7 @@ namespace CoffeeManagement.GUI
                         MessageBox.Show("Thêm nguyên liệu thành công!");
                         LocNguyenLieu();
                         ResetForm();
+                        DangThaoTac = false;
                     }
                     else
                     {
@@ -533,6 +542,8 @@ namespace CoffeeManagement.GUI
                 cmbTrangThai.Enabled = true;
                 cmbDanhMucID.Enabled = true;
                 txtID.ReadOnly = true; // Không sửa ID
+
+                DangThaoTac = true;
             }
             else
             {
@@ -556,6 +567,8 @@ namespace CoffeeManagement.GUI
                         MessageBox.Show("Sửa nguyên liệu thành công!");
                         LocNguyenLieu();
                         ResetForm();
+
+                        DangThaoTac = false;
                     }
                     else
                     {
@@ -598,10 +611,17 @@ namespace CoffeeManagement.GUI
             this.ActiveControl = null;
             // THOÁT CHẾ ĐỘ THÊM / SỬA
             ResetForm();
+            DangThaoTac = false;
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (DangThaoTac)
+            {
+                MessageBox.Show("Đang ở chế độ thêm/sửa. Vui lòng Lưu hoặc Hủy trước khi chọn nguyên liệu khác!",
+                               "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
