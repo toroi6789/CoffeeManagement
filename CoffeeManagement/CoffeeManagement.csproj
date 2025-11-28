@@ -105,7 +105,9 @@
   <ItemGroup>
     <Compile Include="BUS\BanBUS.cs" />
     <Compile Include="BUS\DanhMucBUS.cs" />
+    <Compile Include="BUS\DatBanBUS.cs" />
     <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\NCCBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="BUS\TaoID.cs" />
     <Compile Include="BUS\ThanhToanBUS.cs" />
@@ -113,29 +115,58 @@
     <Compile Include="DAO\BanDAO.cs" />
     <Compile Include="DAO\ConnectDAO.cs" />
     <Compile Include="DAO\DanhMucDAO.cs" />
+    <Compile Include="DAO\DatBanDAO.cs" />
     <Compile Include="DAO\HoaDonDAO.cs" />
     <Compile Include="DAO\LayID.cs" />
+    <Compile Include="DAO\NCCDAO.cs" />
     <Compile Include="DAO\SanPhamDAO.cs" />
     <Compile Include="DAO\ThanhToanDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DTO\BanDTO.cs" />
     <Compile Include="DTO\DanhMucDTO.cs" />
     <Compile Include="DTO\DataGridViewNumericUpDownColumn.cs" />
+    <Compile Include="DTO\DatBanDTO.cs" />
+    <Compile Include="DTO\NCCDTO.cs" />
     <Compile Include="DTO\NguyenLieuDTO.cs" />
     <Compile Include="DTO\SanPhamDTO.cs" />
     <Compile Include="DTO\SanPhamNguyenLieuDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="DTO\Session.cs" />
+    <Compile Include="GUI\BanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\BanGUI.Designer.cs">
+      <DependentUpon>BanGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\BanHangGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\BanHangGUI.Designer.cs">
       <DependentUpon>BanHangGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DanhMucGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMucGUI.Designer.cs">
+      <DependentUpon>DanhMucGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\DatBanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\DatBanGUI.Designer.cs">
+      <DependentUpon>DatBanGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ListSanPham.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\ListSanPham.Designer.cs">
       <DependentUpon>ListSanPham.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NCCGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\NCCGUI.Designer.cs">
+      <DependentUpon>NCCGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\OrderGUI.cs">
       <SubType>UserControl</SubType>
@@ -193,14 +224,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\BanGUI.resx">
+      <DependentUpon>BanGUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\BanHangGUI.resx">
       <DependentUpon>BanHangGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMucGUI.resx">
+      <DependentUpon>DanhMucGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DatBanGUI.resx">
+      <DependentUpon>DatBanGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DSHoaDonGUI.resx">
       <DependentUpon>DSHoaDonGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ListSanPham.resx">
       <DependentUpon>ListSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NCCGUI.resx">
+      <DependentUpon>NCCGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>
