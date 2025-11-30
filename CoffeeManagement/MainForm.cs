@@ -28,15 +28,11 @@ namespace CoffeeManagement
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
-<<<<<<< HEAD
         GUI.DanhMucGUI danhMuc = new GUI.DanhMucGUI();
         GUI.BanGUI ban = new GUI.BanGUI();
         GUI.NCCGUI NCCGUI = new GUI.NCCGUI();
         GUI.DatBanGUI datban = new GUI.DatBanGUI();
-        
-=======
         GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
->>>>>>> 4480848b6efa00e72e27f1eee3407df8954d318e
 
         public MainForm()
         {
@@ -386,7 +382,6 @@ namespace CoffeeManagement
 
         }
 
-<<<<<<< HEAD
         private void danhMụcToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.pnlBody.Controls.Clear();
@@ -406,7 +401,8 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Clear();
             NCCGUI.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(NCCGUI);
-=======
+
+        }
         private void nguyênLiệuToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Quản lý nguyên liệu!");
@@ -414,7 +410,6 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Clear();
             this.pnlBody.Controls.Add(quanLyNguyenLieu);
             quanLyNguyenLieu.Dock = DockStyle.Fill;
->>>>>>> 4480848b6efa00e72e27f1eee3407df8954d318e
         }
     }
 }

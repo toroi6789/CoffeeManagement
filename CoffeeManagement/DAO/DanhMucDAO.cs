@@ -1,6 +1,5 @@
 ﻿using CoffeeManagement.DTO;
-using CoffeeManagement.BUS; // Đảm bảo bạn đã thêm namespace này
-using CoffeeManagement.DTO;
+using CoffeeManagement.BUS; 
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;

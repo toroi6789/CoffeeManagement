@@ -9,7 +9,7 @@ namespace CoffeeManagement.DAO
     {
         private static string connectionString = 
             ConfigurationManager.ConnectionStrings["CoffeeManagement_full"]?.ConnectionString 
-            ?? "server=localhost;port=3306;user id=root;password=N241206h@;database=coffeemanagement;charset=utf8mb4;";
+            ?? "server=localhost;port=3306;user id=root;password=;database=coffeemanagement;charset=utf8mb4;";
 
         // Hàm trả về đối tượng kết nối MySQL
         public static MySqlConnection GetConnection()

@@ -61,6 +61,15 @@ CREATE TABLE Ban (
     TrangThai  VARCHAR(20) NULL
 ) ENGINE=InnoDB;
 
+CREATE TABLE DatBan (
+    DatBanID INT AUTO_INCREMENT PRIMARY KEY,
+    BanID INT NOT NULL,
+    Ngay DATE NOT NULL,
+    GioBatDau TIME NOT NULL,
+    GioKetThuc TIME NOT NULL,
+    FOREIGN KEY (BanID) REFERENCES Ban(BanID)
+);
+
 -- ======================================
 -- 4. DANH MỤC SẢN PHẨM / NGUYÊN LIỆU
 -- ======================================
@@ -343,3 +352,11 @@ INSERT INTO SanPhamNguyenLieu (SanPhamID, NguyenLieuID, SoLuongSuDung) VALUES
 INSERT INTO ThanhToan (SoTien, PhuongThuc, TrangThai, HoaDonID, NhanVienID) VALUES
 (60000, 'Tiền mặt', 'Hoàn tất', 1, 2),
 (55000, 'Chuyển khoản', 'Hoàn tất', 3, 2);
+
+-- 16. đặt bàn
+INSERT INTO DatBan (BanID, Ngay, GioBatDau, GioKetThuc) VALUES
+(1, '2026-05-20', '08:00:00', '09:00:00'),
+(2, '2026-05-20', '10:00:00', '11:00:00'),
+(3, '2026-05-21', '14:00:00', '15:00:00'),
+(4, '2026-05-21', '19:00:00', '20:00:00'),
+(5, '2026-05-22', '09:00:00', '10:00:00');

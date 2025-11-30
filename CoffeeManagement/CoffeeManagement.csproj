@@ -124,11 +124,8 @@
     <Compile Include="BUS\DanhMucBUS.cs" />
     <Compile Include="BUS\DatBanBUS.cs" />
     <Compile Include="BUS\HoaDonBUS.cs" />
-<<<<<<< HEAD
     <Compile Include="BUS\NCCBUS.cs" />
-=======
     <Compile Include="BUS\NguyenLieuBUS.cs" />
->>>>>>> 4480848b6efa00e72e27f1eee3407df8954d318e
     <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="BUS\TaoID.cs" />
     <Compile Include="BUS\ThanhToanBUS.cs" />
@@ -139,11 +136,8 @@
     <Compile Include="DAO\DatBanDAO.cs" />
     <Compile Include="DAO\HoaDonDAO.cs" />
     <Compile Include="DAO\LayID.cs" />
-<<<<<<< HEAD
     <Compile Include="DAO\NCCDAO.cs" />
-=======
     <Compile Include="DAO\NguyenLieuDAO.cs" />
->>>>>>> 4480848b6efa00e72e27f1eee3407df8954d318e
     <Compile Include="DAO\SanPhamDAO.cs" />
     <Compile Include="DAO\ThanhToanDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />

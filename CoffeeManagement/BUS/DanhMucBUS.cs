@@ -14,7 +14,6 @@ namespace CoffeeManagement.BUS
         {
             return dao.GetAll();
         }
-<<<<<<< HEAD
         // Lấy tất cả danh mục
         public List<DanhMucDTO> GetAllDanhMuc()
         {
@@ -90,8 +89,6 @@ namespace CoffeeManagement.BUS
 
             return list;
         }
-=======
 
->>>>>>> 4480848b6efa00e72e27f1eee3407df8954d318e
     }
 }
