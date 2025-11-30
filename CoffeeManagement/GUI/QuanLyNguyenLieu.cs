@@ -47,7 +47,7 @@ namespace CoffeeManagement.GUI
             txtTenNguyenLieu.ReadOnly = true;
             txtGiaNhap.ReadOnly = true;
             txtMoTa.ReadOnly = true;
-
+            txtSLTon.ReadOnly = true;
 
 
             dtNguyenLieu = new DataTable();
@@ -153,9 +153,9 @@ namespace CoffeeManagement.GUI
             txtTenNguyenLieu.Clear();
             txtGiaNhap.Clear();
             txtMoTa.Clear();
-            cmbTrangThai.SelectedIndex = 0; // Mặc định "Hoạt động"
+            txtSLTon.Clear();
+            cmbTrangThai.SelectedIndex = 0;
             cmbDanhMucID.SelectedIndex = -1;
-
             string relativePath = @"Images\null.png";
             string fullPath = Path.Combine(Application.StartupPath, relativePath);
             pictureBox2.LoadAsync(fullPath);
@@ -179,7 +179,7 @@ namespace CoffeeManagement.GUI
             txtMoTa.ReadOnly = true;
             cmbTrangThai.Enabled = false;
             cmbDanhMucID.Enabled = false;
-
+            txtSLTon.ReadOnly = true;
             ClearForm();
             ClearErrorProvider();
         }
