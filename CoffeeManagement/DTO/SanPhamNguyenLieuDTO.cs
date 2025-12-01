@@ -8,8 +8,8 @@ namespace CoffeeManagement.DTO
 {
     public class SanPhamNguyenLieuDTO
     {
-        public int SanPhamID { get; set; }
-        public int NguyenLieuID { get; set; }
-        public decimal SoLuongSuDung { get; set; }
+        public SanPhamDTO SanPham { get; set; } 
+        public NguyenLieuDTO NguyenLieu { get; set; } 
+        public decimal SoLuongSuDung { get; set; }   
     }
 }

@@ -127,6 +127,7 @@
     <Compile Include="BUS\NCCBUS.cs" />
     <Compile Include="BUS\NguyenLieuBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
+    <Compile Include="BUS\SanPhamNguyenLieu.cs" />
     <Compile Include="BUS\TaoID.cs" />
     <Compile Include="BUS\ThanhToanBUS.cs" />
     <Compile Include="BUS\UserBUS.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="DAO\NCCDAO.cs" />
     <Compile Include="DAO\NguyenLieuDAO.cs" />
     <Compile Include="DAO\SanPhamDAO.cs" />
+    <Compile Include="DAO\SanPhamNguyenLieuDAO.cs" />
     <Compile Include="DAO\ThanhToanDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="DTO\BanDTO.cs" />
@@ -211,6 +213,12 @@
     <Compile Include="GUI\Product.Designer.cs">
       <DependentUpon>Product.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\QuanLyCongThuc.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\QuanLyCongThuc.Designer.cs">
+      <DependentUpon>QuanLyCongThuc.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\QuanLyNguyenLieu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -278,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Product.resx">
       <DependentUpon>Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\QuanLyCongThuc.resx">
+      <DependentUpon>QuanLyCongThuc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\QuanLyNguyenLieu.resx">
       <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
