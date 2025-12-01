@@ -35,6 +35,20 @@ namespace CoffeeManagement.GUI
                 return;
             }
             errorProvider1.SetError(dataGridView1, "");
+            //kiểm tra số lượng 
+            int i = 0;
+            foreach(DataGridViewRow Row in dataGridView1.Rows)
+            {
+                
+                if (Convert.ToInt32( Row.Cells["SoLuong"].Value) == 0)
+                {
+                    errorProvider1.SetError(dataGridView1, "Nhap So Luong");
+                    return;
+                }
+                i++;
+                if (i >= dataGridView1.Rows.Count - 1) break;
+            }
+            errorProvider1.SetError(dataGridView1, "");
             // Kiểm tra chọn bàn
             if (comboBox1.SelectedItem == null)
             {
@@ -74,11 +88,12 @@ namespace CoffeeManagement.GUI
                 int soLuong = Convert.ToInt32(row.Cells["SoLuong"].Value);
                 decimal donGia = Convert.ToDecimal(row.Cells["GiaBan"].Value);
                 int sanPhamID = Convert.ToInt32(row.Cells["SanPhamID"].Value);
-                HoaDonBUS.TaoChiTietHoaDon(soLuong, donGia, HoaDonID, sanPhamID);
+                int ThanhTien = soLuong * (int)donGia;
+                HoaDonBUS.TaoChiTietHoaDon(soLuong, donGia, HoaDonID, sanPhamID, ThanhTien);
             }
 
             // Thông báo thành công
-            MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Xóa giỏ hàng
             dataGridView1.Rows.Clear();
@@ -120,6 +135,29 @@ namespace CoffeeManagement.GUI
                 string item = row["BanID"] + " - " + row["TenBan"];
                 comboBox1.Items.Add(item);
             }
+        }
+
+        private void OrderGUI_SizeChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Size = new Size((int)(this.Width * 0.8),(int)(this.Height * 0.5));
+            dataGridView1.Location = new Point((int)((this.Width - dataGridView1.Width) / 2), dataGridView1.Location.Y);
+
+            label1.Location = new Point((int)((this.Width - label1.Width) / 2), label1.Location.Y);
+            label2.Location = new Point((int)((this.Width - label2.Width) / 2), label2.Location.Y);
+            label3.Location = new Point((int)((this.Width - label3.Width) / 2), dataGridView1.Location.Y + dataGridView1.Size.Height + 20);
+
+            label5.Location = new Point(label5.Location.X, label3.Location.Y + 40);
+            label4.Location = new Point(label4.Location.X, label5.Location.Y + 40);
+            label5.Size = label5.Size;
+            label4.Size = label4.Size;
+
+
+            comboBox1.Location = new Point(label5.Location.X + label5.Width +30, label5.Location.Y);
+            txtTong.Location = new Point(label4.Location.X + label4.Width + 30, label4.Location.Y);
+            comboBox1.Size = new Size(this.Width - comboBox1.Location.X - 20, comboBox1.Size.Height);
+            txtTong.Size = new Size(this.Width - txtTong.Location.X - 20, txtTong.Size.Height);
+
+            btnThanhToan.Location = new  Point((int)((this.Width - btnThanhToan.Width) / 2), txtTong.Location.Y + 40);
         }
 
 

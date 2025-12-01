@@ -32,6 +32,7 @@ namespace CoffeeManagement.GUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,8 +42,10 @@ namespace CoffeeManagement.GUI
             this.txtSearch_ID = new System.Windows.Forms.TextBox();
             this.txtSoHD = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -147,6 +150,10 @@ namespace CoffeeManagement.GUI
             this.panel1.Size = new System.Drawing.Size(200, 100);
             this.panel1.TabIndex = 4;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // DSHoaDonGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -167,6 +174,7 @@ namespace CoffeeManagement.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,5 +191,6 @@ namespace CoffeeManagement.GUI
         private TextBox txtSearch_ID;
         private TextBox txtSoHD;
         private Panel panel1;
+        private ErrorProvider errorProvider1;
     }
 }

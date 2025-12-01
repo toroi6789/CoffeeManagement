@@ -83,7 +83,7 @@ namespace CoffeeManagement
 
         private void quanLyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Mở giao diện quản lý!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Mở giao diện quản lý!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // TODO: Mở giao diện quản lý
             // var formQuanLy = new QuanLyForm();

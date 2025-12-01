@@ -39,6 +39,10 @@ namespace CoffeeManagement.GUI
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.SanPhamID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TenSanPham = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SoLuong = new CoffeeManagement.DTO.DataGridViewNumericUpDownColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtTong = new System.Windows.Forms.TextBox();
@@ -49,10 +53,6 @@ namespace CoffeeManagement.GUI
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewNumericUpDownColumn1 = new CoffeeManagement.DTO.DataGridViewNumericUpDownColumn();
-            this.SanPhamID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TenSanPham = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SoLuong = new CoffeeManagement.DTO.DataGridViewNumericUpDownColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -96,6 +96,52 @@ namespace CoffeeManagement.GUI
             this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             this.dataGridView1.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowLeave);
             // 
+            // SanPhamID
+            // 
+            this.SanPhamID.HeaderText = "Mã Sản Phẩm";
+            this.SanPhamID.MinimumWidth = 6;
+            this.SanPhamID.Name = "SanPhamID";
+            this.SanPhamID.ReadOnly = true;
+            this.SanPhamID.Width = 125;
+            // 
+            // TenSanPham
+            // 
+            this.TenSanPham.HeaderText = "Tên Sản Phẩm";
+            this.TenSanPham.MinimumWidth = 6;
+            this.TenSanPham.Name = "TenSanPham";
+            this.TenSanPham.ReadOnly = true;
+            this.TenSanPham.Width = 125;
+            // 
+            // GiaBan
+            // 
+            this.GiaBan.HeaderText = "Giá Bán";
+            this.GiaBan.MinimumWidth = 6;
+            this.GiaBan.Name = "GiaBan";
+            this.GiaBan.ReadOnly = true;
+            this.GiaBan.Width = 125;
+            // 
+            // SoLuong
+            // 
+            this.SoLuong.HeaderText = "Số lượng";
+            this.SoLuong.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.SoLuong.Maximum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.SoLuong.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.SoLuong.MinimumWidth = 6;
+            this.SoLuong.Name = "SoLuong";
+            this.SoLuong.Width = 125;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -107,17 +153,17 @@ namespace CoffeeManagement.GUI
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label4.Location = new System.Drawing.Point(63, 506);
+            this.label4.Location = new System.Drawing.Point(7, 515);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 23);
+            this.label4.Size = new System.Drawing.Size(116, 33);
             this.label4.TabIndex = 0;
             this.label4.Text = "Tổng:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtTong
             // 
-            this.txtTong.Location = new System.Drawing.Point(129, 506);
+            this.txtTong.Location = new System.Drawing.Point(129, 515);
             this.txtTong.Name = "txtTong";
             this.txtTong.ReadOnly = true;
             this.txtTong.Size = new System.Drawing.Size(208, 22);
@@ -125,7 +171,7 @@ namespace CoffeeManagement.GUI
             // 
             // btnThanhToan
             // 
-            this.btnThanhToan.Location = new System.Drawing.Point(201, 544);
+            this.btnThanhToan.Location = new System.Drawing.Point(201, 565);
             this.btnThanhToan.Name = "btnThanhToan";
             this.btnThanhToan.Size = new System.Drawing.Size(136, 34);
             this.btnThanhToan.TabIndex = 4;
@@ -135,13 +181,13 @@ namespace CoffeeManagement.GUI
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.label5.Location = new System.Drawing.Point(63, 466);
+            this.label5.Location = new System.Drawing.Point(3, 466);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 23);
+            this.label5.Size = new System.Drawing.Size(110, 35);
             this.label5.TabIndex = 0;
             this.label5.Text = "Bàn:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // comboBox1
             // 
@@ -197,52 +243,6 @@ namespace CoffeeManagement.GUI
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
             this.dataGridViewNumericUpDownColumn1.Width = 125;
             // 
-            // SanPhamID
-            // 
-            this.SanPhamID.HeaderText = "Mã Sản Phẩm";
-            this.SanPhamID.MinimumWidth = 6;
-            this.SanPhamID.Name = "SanPhamID";
-            this.SanPhamID.ReadOnly = true;
-            this.SanPhamID.Width = 125;
-            // 
-            // TenSanPham
-            // 
-            this.TenSanPham.HeaderText = "Tên Sản Phẩm";
-            this.TenSanPham.MinimumWidth = 6;
-            this.TenSanPham.Name = "TenSanPham";
-            this.TenSanPham.ReadOnly = true;
-            this.TenSanPham.Width = 125;
-            // 
-            // GiaBan
-            // 
-            this.GiaBan.HeaderText = "Giá Bán";
-            this.GiaBan.MinimumWidth = 6;
-            this.GiaBan.Name = "GiaBan";
-            this.GiaBan.ReadOnly = true;
-            this.GiaBan.Width = 125;
-            // 
-            // SoLuong
-            // 
-            this.SoLuong.HeaderText = "Số lượng";
-            this.SoLuong.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.SoLuong.Maximum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.SoLuong.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.SoLuong.MinimumWidth = 6;
-            this.SoLuong.Name = "SoLuong";
-            this.SoLuong.Width = 125;
-            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
@@ -263,6 +263,7 @@ namespace CoffeeManagement.GUI
             this.Name = "OrderGUI";
             this.Size = new System.Drawing.Size(387, 650);
             this.Load += new System.EventHandler(this.OrderGUI_Load);
+            this.SizeChanged += new System.EventHandler(this.OrderGUI_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
