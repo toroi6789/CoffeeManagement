@@ -1,5 +1,4 @@
 ﻿using CoffeeManagement.BUS;
-using CoffeeManagement.BUS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,7 +42,7 @@ namespace CoffeeManagement.GUI
                 btn.Name = row["SanPhamID"].ToString();
                 //img
                 string img = row["Hinh"].ToString();
-                string path = Path.Combine(Application.StartupPath, @"Resources", img);
+                string path = Path.Combine(Application.StartupPath, @"Images", img);
                 Image img2 = Image.FromFile(path);
                 btn.Image = Compoment.ResizeImage(img2, 77, 77);
                 btn.Tag = path;
