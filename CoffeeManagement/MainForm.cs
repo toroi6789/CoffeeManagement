@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CoffeeManagement.DTO;
+using CoffeeManagement.GUI;
 
 namespace CoffeeManagement
 {
@@ -26,6 +28,11 @@ namespace CoffeeManagement
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
+        GUI.DanhMucGUI danhMuc = new GUI.DanhMucGUI();
+        GUI.BanGUI ban = new GUI.BanGUI();
+        GUI.NCCGUI NCCGUI = new GUI.NCCGUI();
+        GUI.DatBanGUI datban = new GUI.DatBanGUI();
+        GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
 
         public MainForm()
         {
@@ -39,6 +46,11 @@ namespace CoffeeManagement
             banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
             //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
             dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
+
+            // Đảm bảo layout được cập nhật khi form được hiển thị
+            this.Shown += (s, e) => {
+                UpdateTitleBarLayout();
+            };
         }
 
         private void EnableDraggingContent()
@@ -107,12 +119,42 @@ namespace CoffeeManagement
 
         private void datBanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Đặt bàn!");
+            this.pnlBody.Controls.Clear();
+            datban.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(datban);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Xóa session
+                Session.Logout();
+
+                // Ẩn MainForm
+                this.Hide();
+
+                // Hiển thị lại form đăng nhập
+                LoginForm loginForm = new LoginForm();
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Cập nhật thông tin user mới
+                    UpdateUserInfo();
+                    this.Show();
+                }
+                else
+                {
+                    Application.Exit();
+                }
+            }
         }
 
         private void btnMaximize_Click(object sender, EventArgs e)
@@ -150,19 +192,140 @@ namespace CoffeeManagement
 
         private void MainForm_SizeChanged(object sender, EventArgs e)
         {
-            this.pnlBody.Size = new Size(this.Width, this.Height - 64);
+            this.pnlBody.Size = new Size(this.Width, this.Height - 69);
+            // Cập nhật lại vị trí các controls trong title bar khi resize
+            UpdateTitleBarLayout();
+        }
+
+        private void UpdateTitleBarLayout()
+        {
+            try
+            {
+                if (this.Width <= 0 || btnLogout == null || lblUserInfo == null)
+                    return;
+
+                // Đảm bảo btnLogout luôn ở vị trí đúng (trước window controls)
+                int windowControlsWidth = 159; // 53*3 = 159 (minimize + maximize + close)
+                int newX = this.Width - windowControlsWidth - btnLogout.Width - 10;
+                
+                // Đảm bảo nút không bị cắt
+                if (newX < 300) // Nếu form quá nhỏ, đặt ở vị trí tối thiểu
+                {
+                    newX = 300;
+                }
+                
+                if (newX > 0 && newX < this.Width - windowControlsWidth)
+                {
+                    btnLogout.Location = new Point(newX, 5);
+                    btnLogout.Visible = true;
+                }
+                
+                // Đảm bảo lblUserInfo không overlap với btnLogout
+                if (btnLogout.Left > lblUserInfo.Left)
+                {
+                    int maxUserInfoWidth = btnLogout.Left - lblUserInfo.Left - 15;
+                    if (maxUserInfoWidth > 50)
+                    {
+                        if (maxUserInfoWidth < 500)
+                        {
+                            lblUserInfo.Width = maxUserInfoWidth;
+                        }
+                        else
+                        {
+                            lblUserInfo.Width = 490; // Giữ kích thước tối đa
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log error nếu cần
+                System.Diagnostics.Debug.WriteLine("Error in UpdateTitleBarLayout: " + ex.Message);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            // Hiển thị thông tin user đang đăng nhập
+            if (Session.IsLoggedIn && Session.CurrentUser != null)
+            {
+                UpdateUserInfo();
+            }
+            else
+            {
+                // Nếu chưa đăng nhập, quay lại form login
+                this.Hide();
+                LoginForm loginForm = new LoginForm();
+                if (loginForm.ShowDialog() != DialogResult.OK)
+                {
+                    Application.Exit();
+                    return;
+                }
+                UpdateUserInfo();
+                this.Show();
+            }
+
+            // Force update layout sau khi form đã load xong
+            this.BeginInvoke(new Action(() => {
+                UpdateTitleBarLayout();
+            }));
+
             this.pnlBody.Controls.Clear();
             banHang.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(banHang);
         }
 
+        private void UpdateUserInfo()
+        {
+            if (Session.IsLoggedIn && Session.CurrentUser != null)
+            {
+                // Hiển thị email và role - rút ngắn nếu cần
+                string email = Session.CurrentUser.Email;
+                string role = Session.CurrentUser.TenRole;
+                
+                // Rút ngắn email: chỉ hiển thị phần trước @ và rút ngắn domain
+                if (email.Contains("@"))
+                {
+                    string[] parts = email.Split('@');
+                    string emailPart = parts[0];
+                    string domainPart = parts[1];
+                    
+                    // Rút ngắn phần trước @
+                    if (emailPart.Length > 10)
+                    {
+                        emailPart = emailPart.Substring(0, 8) + "..";
+                    }
+                    
+                    // Rút ngắn domain
+                    if (domainPart.Length > 10)
+                    {
+                        domainPart = domainPart.Substring(0, 8) + "..";
+                    }
+                    
+                    email = emailPart + "@" + domainPart;
+                }
+                
+                // Rút ngắn role
+                if (role.Length > 10)
+                {
+                    role = role.Substring(0, 8) + "..";
+                }
+                
+                lblUserInfo.Text = $"{email} | {role}";
+                
+                // Cập nhật layout sau khi set text
+                UpdateTitleBarLayout();
+            }
+        }
+
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void pnlTitle_Resize(object sender, EventArgs e)
+        {
+            UpdateTitleBarLayout();
         }
 
         //
@@ -212,6 +375,41 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Clear();
             listSanPham.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(listSanPham);
+        }
+
+        private void pnlTitle_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void danhMụcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            danhMuc.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(danhMuc);
+        }
+
+        private void bànToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            ban.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(ban);
+        }
+
+        private void nhàCungCấpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            NCCGUI.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(NCCGUI);
+
+        }
+        private void nguyênLiệuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Quản lý nguyên liệu!");
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            this.pnlBody.Controls.Add(quanLyNguyenLieu);
+            quanLyNguyenLieu.Dock = DockStyle.Fill;
         }
     }
 }

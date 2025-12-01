@@ -143,9 +143,22 @@ namespace CoffeeManagement.BUS
                 return false;
             }
             // GỌI DAL XÓA
-            bool kq = dao.daoCapNhatTrangThaiSanPham(sanPhamID,"Deleted");
+            bool kq = dao.daoCapNhatTrangThaiSanPham(sanPhamID, "Deleted");
             message = kq ? "Xóa sản phẩm thành công!" : "Xóa thất bại! Có thể sản phẩm đang được sử dụng.";
             return kq;
+        }
+
+        // LẤY ID LỚN NHẤT TRONG DATABASE + 1
+        public int LaySanPhamIDLonNhat()
+        {
+            try
+            {
+                return dao.LaySanPhamIDLonNhat(); // Gọi thẳng DAO
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi BUS lấy ID lớn nhất: " + ex.Message);
+            }
         }
 
 

@@ -36,6 +36,12 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=8.3.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.8.3.0\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=8.1.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.8.1.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.Sharp, Version=6.6.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.6.6.0\lib\net472\FontAwesome.Sharp.dll</HintPath>
     </Reference>
@@ -54,6 +60,9 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.1\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=9.5.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.9.5.0\lib\net462\MySql.Data.dll</HintPath>
     </Reference>
@@ -63,6 +72,10 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -82,6 +95,10 @@
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Xml, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.8.0.2\lib\net462\System.Security.Cryptography.Xml.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -106,7 +123,10 @@
     <Compile Include="BUS\BanBUS.cs" />
     <Compile Include="BUS\Compoment.cs" />
     <Compile Include="BUS\DanhMucBUS.cs" />
+    <Compile Include="BUS\DatBanBUS.cs" />
     <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\NCCBUS.cs" />
+    <Compile Include="BUS\NguyenLieuBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="BUS\TaoID.cs" />
     <Compile Include="BUS\ThanhToanBUS.cs" />
@@ -114,28 +134,59 @@
     <Compile Include="DAO\BanDAO.cs" />
     <Compile Include="DAO\ConnectDAO.cs" />
     <Compile Include="DAO\DanhMucDAO.cs" />
+    <Compile Include="DAO\DatBanDAO.cs" />
     <Compile Include="DAO\HoaDonDAO.cs" />
     <Compile Include="DAO\LayID.cs" />
+    <Compile Include="DAO\NCCDAO.cs" />
+    <Compile Include="DAO\NguyenLieuDAO.cs" />
     <Compile Include="DAO\SanPhamDAO.cs" />
     <Compile Include="DAO\ThanhToanDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DTO\BanDTO.cs" />
     <Compile Include="DTO\DanhMucDTO.cs" />
     <Compile Include="DTO\DataGridViewNumericUpDownColumn.cs" />
+    <Compile Include="DTO\DatBanDTO.cs" />
+    <Compile Include="DTO\NCCDTO.cs" />
     <Compile Include="DTO\NguyenLieuDTO.cs" />
     <Compile Include="DTO\SanPhamDTO.cs" />
     <Compile Include="DTO\SanPhamNguyenLieuDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
+    <Compile Include="DTO\Session.cs" />
+    <Compile Include="GUI\BanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\BanGUI.Designer.cs">
+      <DependentUpon>BanGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\BanHangGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\BanHangGUI.Designer.cs">
       <DependentUpon>BanHangGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DanhMucGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\DanhMucGUI.Designer.cs">
+      <DependentUpon>DanhMucGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\DatBanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\DatBanGUI.Designer.cs">
+      <DependentUpon>DatBanGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ListSanPham.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\ListSanPham.Designer.cs">
       <DependentUpon>ListSanPham.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NCCGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\NCCGUI.Designer.cs">
+      <DependentUpon>NCCGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\OrderGUI.cs">
       <SubType>UserControl</SubType>
@@ -161,6 +212,12 @@
     <Compile Include="GUI\Product.Designer.cs">
       <DependentUpon>Product.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\QuanLyNguyenLieu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\QuanLyNguyenLieu.Designer.cs">
+      <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\SanPhamADMIN.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -179,6 +236,12 @@
     <Compile Include="GUI\DSHoaDonGUI.Designer.cs">
       <DependentUpon>DSHoaDonGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,14 +250,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\BanGUI.resx">
+      <DependentUpon>BanGUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\BanHangGUI.resx">
       <DependentUpon>BanHangGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DanhMucGUI.resx">
+      <DependentUpon>DanhMucGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DatBanGUI.resx">
+      <DependentUpon>DatBanGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DSHoaDonGUI.resx">
       <DependentUpon>DSHoaDonGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ListSanPham.resx">
       <DependentUpon>ListSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NCCGUI.resx">
+      <DependentUpon>NCCGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>
@@ -205,11 +280,17 @@
     <EmbeddedResource Include="GUI\Product.resx">
       <DependentUpon>Product.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\QuanLyNguyenLieu.resx">
+      <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\SanPhamADMIN.resx">
       <DependentUpon>SanPhamADMIN.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ThanhToanGUI.resx">
       <DependentUpon>ThanhToanGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

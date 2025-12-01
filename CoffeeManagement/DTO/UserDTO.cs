@@ -8,8 +8,12 @@ namespace CoffeeManagement.DTO
 {
     public class UserDTO
     {
-        public int Id { get; set; }
-        public string Username { get; set; } = "";
-        public string Password { get; set; } = "";
+        public int UserID { get; set; }
+        public string Email { get; set; } = "";
+        public string MatKhau { get; set; } = "";
+        public string TrangThai { get; set; } = "";
+        public int RoleID { get; set; }
+        public string TenRole { get; set; } = "";
+        public DateTime? NgayDangNhapCuoi { get; set; }
     }
 }
