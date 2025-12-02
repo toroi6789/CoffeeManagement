@@ -148,5 +148,27 @@ namespace CoffeeManagement.DAO
                 throw new Exception("Lỗi cập nhật trạng thái sản phẩm: " + ex.Message);
             }
         }
+
+        // SanPhamDAO.cs
+        public int LaySanPhamIDLonNhat()
+        {
+            try
+            {
+                string sql = "SELECT COALESCE(MAX(SanPhamID), 0) FROM SanPham";
+                // COALESCE = MySQL version của ISNULL
+                var dt = DBConnect.ExecuteQuery(sql);
+
+                if (dt.Rows.Count > 0)
+                {
+                    return Convert.ToInt32(dt.Rows[0][0]);
+                }
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi lấy ID lớn nhất: " + ex.Message);
+            }
+        }
+
     }
 }

@@ -14,7 +14,7 @@ namespace CoffeeManagement.DTO
         private string moTa;
         private int danhMucID;
         private string trangThai;
-        public string hinh;
+        private string hinh;
 
         public int SanPhamID
         {

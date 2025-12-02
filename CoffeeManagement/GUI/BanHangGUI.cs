@@ -1,13 +1,14 @@
-﻿using System;
+﻿using CoffeeManagement.BUS;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CoffeeManagement.BUS;
 
 namespace CoffeeManagement.GUI
 {
@@ -28,22 +29,40 @@ namespace CoffeeManagement.GUI
             DataTable sanPhamTable = SanPhamBUS.SanPham();
             foreach (DataRow row in sanPhamTable.Rows)
             {
+                //size
                 Button btn = new Button();
                 btn.BackColor = Color.BurlyWood;
                 btn.Width = 100;
                 btn.Height = 100;
                 btn.Margin = new Padding(10);
+                //text
                 btn.Text = row["TenSanPham"].ToString() + "\n" + row["GiaBan"].ToString() + " VND";
+                btn.TextAlign = ContentAlignment.BottomCenter;
+                btn.TextImageRelation = TextImageRelation.ImageAboveText;
                 btn.Name = row["SanPhamID"].ToString();
+                //img
+                string img = row["Hinh"].ToString();
+                string path = Path.Combine(Application.StartupPath, @"Images", img);
+                Image img2 = Image.FromFile(path);
+                btn.Image = Compoment.ResizeImage(img2, 77, 77);
+                btn.Tag = path;
+                //function
                 btn.Click += Btn_Click;
+                btn.SizeChanged += Btn_SizeChanged;
                 flowLayoutPanel1.Controls.Add(btn);
             }
         }
         // xử lý sự kiện khi thay đổi kích thước của BanHangGUI
         private void BanHangGUI_SizeChanged(object sender, EventArgs e)
         {
+            orderGUI1.Size = new Size((int)(this.Width * 0.3), this.Height );
             flowLayoutPanel1.Size = new Size(this.Width - orderGUI1.Width - 20, this.Height - 20);
-            orderGUI1.Location = new Point(flowLayoutPanel1.Width + 10, 3);
+            orderGUI1.Location = new Point(flowLayoutPanel1.Width , 3);
+            foreach(Button btn in flowLayoutPanel1.Controls)
+            {
+                btn.Width = (int)(flowLayoutPanel1.Width / 4);
+                btn.Height = btn.Width;
+            }
         }
         // xử lý sự kiện khi nhấn nút sản phẩm
         private void Btn_Click(object sender, EventArgs e)
@@ -83,7 +102,24 @@ namespace CoffeeManagement.GUI
 
         }
 
-        // xử lý sự kiện khi nhấn nút thanh toán trong OrderGUI
+        //
+        public void Btn_SizeChanged(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn.Width < 10) return;
+            Image img = Image.FromFile((btn.Tag).ToString());
+            btn.Image = Compoment.ResizeImage(img, (int)(btn.Width * 0.7), (int)(btn.Width * 0.7));
+            if (btn.Width > 200)
+            {
+                btn.Font = new Font("Times New Roman", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            }
+            else
+            {
+                btn.Font = new Font("Times New Roman", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            }
+        }
+
+        //xử lý sự kiện khi nhấn nút thanh toán trong OrderGUI
         public void OnOrderRequestPnlBodyChangedToThanhToan(int HoaDonID)
         {
             //restart button colors
@@ -95,6 +131,11 @@ namespace CoffeeManagement.GUI
         }
 
         private void orderGUI1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

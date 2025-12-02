@@ -86,5 +86,10 @@ namespace CoffeeManagement.DAO
 
             return ExecuteNonQuery(query, parameters) > 0;
         }
+        public static DataTable LayNV_userID(int IDuser)
+        {
+            string query = $"SELECT * FROM coffeemanagement.nhanvien where UserID = '{IDuser}';";
+            return DBConnect.ExecuteQuery(query) ;
+        }
     }
 }

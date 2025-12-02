@@ -29,6 +29,11 @@ namespace CoffeeManagement
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
         GUI.NhanVienGUI qlNhanVien = new GUI.NhanVienGUI();
+        GUI.DanhMucGUI danhMuc = new GUI.DanhMucGUI();
+        GUI.BanGUI ban = new GUI.BanGUI();
+        GUI.NCCGUI NCCGUI = new GUI.NCCGUI();
+        GUI.DatBanGUI datban = new GUI.DatBanGUI();
+        GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
 
         public MainForm()
         {
@@ -79,7 +84,7 @@ namespace CoffeeManagement
 
         private void quanLyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Mở giao diện quản lý!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Mở giao diện quản lý!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // TODO: Mở giao diện quản lý
             // var formQuanLy = new QuanLyForm();
@@ -117,7 +122,9 @@ namespace CoffeeManagement
 
         private void datBanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Đặt bàn!");
+            this.pnlBody.Controls.Clear();
+            datban.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(datban);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -376,6 +383,36 @@ namespace CoffeeManagement
         private void pnlTitle_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void danhMụcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            danhMuc.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(danhMuc);
+        }
+
+        private void bànToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            ban.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(ban);
+        }
+
+        private void nhàCungCấpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            NCCGUI.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(NCCGUI);
+
+        }
+        private void nguyênLiệuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Quản lý nguyên liệu!");
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            this.pnlBody.Controls.Add(quanLyNguyenLieu);
+            quanLyNguyenLieu.Dock = DockStyle.Fill;
         }
     }
 }
