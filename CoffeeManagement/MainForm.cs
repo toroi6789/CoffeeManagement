@@ -28,7 +28,7 @@ namespace CoffeeManagement
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
-        GUI.NhanVienUC qlNhanVien = new GUI.NhanVienUC();
+        GUI.NhanVienGUI qlNhanVien = new GUI.NhanVienGUI();
 
         public MainForm()
         {

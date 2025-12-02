@@ -146,11 +146,11 @@
     <Compile Include="GUI\OrderGUI.Designer.cs">
       <DependentUpon>OrderGUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\NhanVienUC.cs">
+    <Compile Include="GUI\NhanVienGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\NhanVienUC.Designer.cs">
-      <DependentUpon>NhanVienUC.cs</DependentUpon>
+    <Compile Include="GUI\NhanVienGUI.Designer.cs">
+      <DependentUpon>NhanVienGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\CTHoaDonGUI.cs">
       <SubType>UserControl</SubType>
@@ -205,8 +205,8 @@
     <EmbeddedResource Include="GUI\ListSanPham.resx">
       <DependentUpon>ListSanPham.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\NhanVienUC.resx">
-      <DependentUpon>NhanVienUC.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\NhanVienGUI.resx">
+      <DependentUpon>NhanVienGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>

@@ -12,16 +12,18 @@ using System.Windows.Forms;
 
 namespace CoffeeManagement.GUI
 {
-    public partial class NhanVienUC : UserControl
+    public partial class NhanVienGUI : UserControl
     {
         private NhanVienBUS nvBUS;
 
-        public NhanVienUC()
+        public NhanVienGUI()
         {
             InitializeComponent();
 
             // Khởi tạo BUS với DAO
             nvBUS = new NhanVienBUS(new NhanVienDAO());
+
+            LoadNhanVienData();
         }
 
         private void LoadNhanVienData()
