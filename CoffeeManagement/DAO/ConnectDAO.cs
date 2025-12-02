@@ -7,13 +7,10 @@ namespace CoffeeManagement.DAO
 {
     public class DBConnect
     {
-        private static string connectionString = 
-<<<<<<< HEAD
+        private static string connectionString =
              "server=localhost;port=3306;user id=root;password=123456;database=coffeemanagement;charset=utf8mb4;";
-=======
-            ConfigurationManager.ConnectionStrings["CoffeeManagement_full"]?.ConnectionString 
-            ?? "server=localhost;port=3306;user id=root;password=123456789;database=coffeemanagement;charset=utf8mb4;";
->>>>>>> 43c2d34e269f3c22361bb4a5a4321679e5468b6a
+            //ConfigurationManager.ConnectionStrings["CoffeeManagement_full"]?.ConnectionString 
+            //?? "server=localhost;port=3306;user id=root;password=123456789;database=coffeemanagement;charset=utf8mb4;";
 
         // Hàm trả về đối tượng kết nối MySQL
         public static MySqlConnection GetConnection()

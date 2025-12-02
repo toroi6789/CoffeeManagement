@@ -28,15 +28,12 @@ namespace CoffeeManagement
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
-<<<<<<< HEAD
         GUI.NhanVienGUI qlNhanVien = new GUI.NhanVienGUI();
-=======
         GUI.DanhMucGUI danhMuc = new GUI.DanhMucGUI();
         GUI.BanGUI ban = new GUI.BanGUI();
         GUI.NCCGUI NCCGUI = new GUI.NCCGUI();
         GUI.DatBanGUI datban = new GUI.DatBanGUI();
         GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
->>>>>>> 43c2d34e269f3c22361bb4a5a4321679e5468b6a
 
         public MainForm()
         {

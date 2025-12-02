@@ -1,22 +1,16 @@
 ﻿using CoffeeManagement.DAO;
-<<<<<<< HEAD
 using CoffeeManagement.DTO;
-using System;
-using System.Collections.Generic;
-=======
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
->>>>>>> 43c2d34e269f3c22361bb4a5a4321679e5468b6a
 
 namespace CoffeeManagement.BUS
 {
     public class NhanVienBUS
     {
-<<<<<<< HEAD
         private readonly NhanVienDAO dao;
 
         public NhanVienBUS(NhanVienDAO dao)
@@ -48,11 +42,10 @@ namespace CoffeeManagement.BUS
         public bool DeleteNhanVien(int id)
         {
             return dao.Delete(id);
-=======
+        }
         public static DataTable LayNV_userID(int UserID)
         {
             return NhanVienDAO.LayNV_userID(UserID);
->>>>>>> 43c2d34e269f3c22361bb4a5a4321679e5468b6a
         }
     }
 }
