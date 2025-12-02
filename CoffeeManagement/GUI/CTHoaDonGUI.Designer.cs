@@ -173,7 +173,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtPrice
             // 
-            this.txtPrice.Location = new System.Drawing.Point(162, 189);
+            this.txtPrice.Location = new System.Drawing.Point(162, 237);
             this.txtPrice.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.ReadOnly = true;
@@ -182,7 +182,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(172, 237);
+            this.txtQuantity.Location = new System.Drawing.Point(172, 285);
             this.txtQuantity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.ReadOnly = true;
@@ -191,7 +191,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtIDType
             // 
-            this.txtIDType.Location = new System.Drawing.Point(205, 214);
+            this.txtIDType.Location = new System.Drawing.Point(205, 262);
             this.txtIDType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtIDType.Name = "txtIDType";
             this.txtIDType.ReadOnly = true;
@@ -200,7 +200,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtDescribe
             // 
-            this.txtDescribe.Location = new System.Drawing.Point(147, 164);
+            this.txtDescribe.Location = new System.Drawing.Point(147, 212);
             this.txtDescribe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDescribe.Name = "txtDescribe";
             this.txtDescribe.ReadOnly = true;
@@ -209,7 +209,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(186, 139);
+            this.txtStatus.Location = new System.Drawing.Point(186, 187);
             this.txtStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
@@ -218,7 +218,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(152, 114);
+            this.txtName.Location = new System.Drawing.Point(152, 162);
             this.txtName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
@@ -229,7 +229,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(19, 238);
+            this.label9.Location = new System.Drawing.Point(19, 286);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(96, 23);
             this.label9.TabIndex = 1;
@@ -237,7 +237,7 @@ namespace CoffeeManagement.GUI
             // 
             // txtID
             // 
-            this.txtID.Location = new System.Drawing.Point(114, 90);
+            this.txtID.Location = new System.Drawing.Point(114, 138);
             this.txtID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
@@ -248,7 +248,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(19, 215);
+            this.label6.Location = new System.Drawing.Point(19, 263);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(129, 23);
             this.label6.TabIndex = 1;
@@ -258,7 +258,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(19, 190);
+            this.label7.Location = new System.Drawing.Point(19, 238);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(86, 23);
             this.label7.TabIndex = 1;
@@ -268,7 +268,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(19, 166);
+            this.label5.Location = new System.Drawing.Point(19, 214);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 23);
             this.label5.TabIndex = 1;
@@ -278,7 +278,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(19, 141);
+            this.label4.Location = new System.Drawing.Point(19, 189);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(110, 23);
             this.label4.TabIndex = 1;
@@ -288,7 +288,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(19, 116);
+            this.label3.Location = new System.Drawing.Point(19, 164);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 23);
             this.label3.TabIndex = 1;
@@ -298,7 +298,7 @@ namespace CoffeeManagement.GUI
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(19, 91);
+            this.label2.Location = new System.Drawing.Point(19, 139);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 23);
             this.label2.TabIndex = 1;
@@ -310,9 +310,10 @@ namespace CoffeeManagement.GUI
             this.pictureBox1.Location = new System.Drawing.Point(3, 2);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(288, 74);
+            this.pictureBox1.Size = new System.Drawing.Size(288, 118);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // CTHoaDonGUI
             // 

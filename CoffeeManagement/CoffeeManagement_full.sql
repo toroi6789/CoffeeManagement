@@ -1,6 +1,11 @@
 -- ======================================
 --  DATABASE: CoffeeManagement
 -- ======================================
+-- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '';
+-- FLUSH PRIVILEGES;
+
+
+
 DROP DATABASE IF EXISTS CoffeeManagement;
 CREATE DATABASE CoffeeManagement
     CHARACTER SET utf8mb4
@@ -65,7 +70,6 @@ CREATE TABLE DatBan (
     FOREIGN KEY (BanID) REFERENCES Ban(BanID)
 );
 
-
 -- ======================================
 -- 4. DANH MỤC SẢN PHẨM / NGUYÊN LIỆU
 -- ======================================
@@ -117,6 +121,7 @@ CREATE TABLE NguyenLieu (
     GiaNhap       DECIMAL(18,2) NOT NULL,
     SoLuongTon    INT          NOT NULL DEFAULT 0,
     DanhMucID     INT          NOT NULL,
+    Hinh 		VARCHAR(20) NULL,
     CONSTRAINT fk_nguyenlieu_danhmuc
         FOREIGN KEY (DanhMucID) REFERENCES DanhMuc(DanhMucID)
 ) ENGINE=InnoDB;
@@ -295,12 +300,12 @@ INSERT INTO NhaCungCap (TenNhaCungCap, DiaChi, SoDienThoai, Email, Website, Tran
 ('CTY Nguyên liệu B', '456 Đường 2, HCM', '0911222333', 'info@ctyb.vn', NULL, 'Hoạt động');
 
 -- 8. Nguyên liệu
-INSERT INTO NguyenLieu (TenNguyenLieu, TrangThai, MoTa, DonVi, GiaNhap, SoLuongTon, DanhMucID) VALUES
-('Cà phê hạt', 'Hoạt động', 'Nguyên liệu pha phin', 'kg', 180000, 20, 5),
-('Đào miếng', 'Hoạt động', 'Nguyên liệu trà đào', 'kg', 150000, 10, 5),
-('Xoài tươi', 'Hoạt động', 'Sinh tố xoài', 'kg', 40000, 15, 5),
-('Đường cát', 'Hoạt động', 'Sử dụng chung', 'kg', 20000, 30, 5),
-('Bột làm bánh', 'Hoạt động', 'Nguyên liệu bánh', 'kg', 50000, 12, 5);
+INSERT INTO NguyenLieu (TenNguyenLieu, TrangThai, MoTa, DonVi, GiaNhap, SoLuongTon, DanhMucID, Hinh) VALUES
+('Cà phê hạt', 'Hoạt động', 'Nguyên liệu pha phin', 'kg', 180000, 20, 5,'tradaocamsa.png'),
+('Đào miếng', 'Hoạt động', 'Nguyên liệu trà đào', 'kg', 150000, 10, 5,'tradaocamsa.png'),
+('Xoài tươi', 'Hoạt động', 'Sinh tố xoài', 'kg', 40000, 15, 5,'tradaocamsa.png'),
+('Đường cát', 'Hoạt động', 'Sử dụng chung', 'kg', 20000, 30, 5,'tradaocamsa.png'),
+('Bột làm bánh', 'Hoạt động', 'Nguyên liệu bánh', 'kg', 50000, 12, 5,'tradaocamsa.png');
 
 -- 9. Phiếu nhập
 INSERT INTO PhieuNhap (NgayNhap, TongTien, GhiChu, TrangThai, NhanVienID, NhaCungCapID) VALUES
@@ -355,4 +360,3 @@ INSERT INTO DatBan (BanID, Ngay, GioBatDau, GioKetThuc) VALUES
 (3, '2026-05-21', '14:00:00', '15:00:00'),
 (4, '2026-05-21', '19:00:00', '20:00:00'),
 (5, '2026-05-22', '09:00:00', '10:00:00');
-

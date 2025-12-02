@@ -34,11 +34,11 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(24, 39);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(681, 547);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(660, 511);
             this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // orderGUI1
             // 
@@ -48,7 +48,6 @@
             this.orderGUI1.TabIndex = 1;
             this.orderGUI1.Load += new System.EventHandler(this.orderGUI1_Load);
             this.orderGUI1.RequestChangeToThanhToan += OnOrderRequestPnlBodyChangedToThanhToan;
-
             // 
             // BanHangGUI
             // 
