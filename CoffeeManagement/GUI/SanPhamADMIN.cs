@@ -789,7 +789,7 @@ namespace CoffeeManagement.GUI
 
         private void SanPhamADMIN_SizeChanged(object sender, EventArgs e)
         {
-            //panel1.Size = new Size(this.Width, this.Height);
+            
             //dataGridView1.Size = new Size((int)(this.Width * 0.5), (int)(this.Height * 0.5));
         }
 

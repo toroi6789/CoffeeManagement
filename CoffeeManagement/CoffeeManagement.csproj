@@ -128,7 +128,7 @@
     <Compile Include="BUS\NCCBUS.cs" />
     <Compile Include="BUS\NguyenLieuBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
-    <Compile Include="BUS\SanPhamNguyenLieu.cs" />
+    <Compile Include="BUS\SanPhamNguyenLieuBUS.cs" />
     <Compile Include="BUS\TaoID.cs" />
     <Compile Include="BUS\ThanhToanBUS.cs" />
     <Compile Include="BUS\UserBUS.cs" />
@@ -278,6 +278,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\NCCGUI.resx">
       <DependentUpon>NCCGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NhanVienUC.resx">
+      <DependentUpon>NhanVienUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>

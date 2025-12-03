@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeManagement.BUS
 {
-    public class SanPhamNguyenLieu
+    public class SanPhamNguyenLieuBUS
     {
     }
 }

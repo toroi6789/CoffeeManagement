@@ -48,7 +48,7 @@ namespace CoffeeManagement.GUI
             txtGiaNhap.ReadOnly = true;
             txtMoTa.ReadOnly = true;
             txtSLTon.ReadOnly = true;
-
+            txtDonVi.ReadOnly = true;
 
             dtNguyenLieu = new DataTable();
             dtNguyenLieu.Columns.Add("STT", typeof(int));
