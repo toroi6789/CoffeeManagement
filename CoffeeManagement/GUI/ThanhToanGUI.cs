@@ -76,6 +76,7 @@ namespace CoffeeManagement.GUI
             DataTable hoaDon = BUS.HoaDonBUS.HoaDonID(hoaDonID);
             txtIDHD.Text = hoaDonID.ToString();
             txtIDNV.Text = hoaDon.Rows[0]["NhanVienID"].ToString();
+            txt_KM.Text = hoaDon.Rows[0]["KhuyenMaiID"].ToString();
             txtTongTien.Text = hoaDon.Rows[0]["TongTien"].ToString();
         }
 
@@ -91,13 +92,32 @@ namespace CoffeeManagement.GUI
         //tinh tien thoi
         private void txtTienNhan_TextChanged(object sender, EventArgs e)
         {
+            if (txtTienNhan.Text.Length <= 0) return; 
             txtTienThoi.Text = (Convert.ToDouble(txtTienNhan.Text) - Convert.ToDouble(txtTongTien.Text)).ToString();
         }
 
         private void ThanhToanGUI_SizeChanged(object sender, EventArgs e)
         {
-            groupBox1.Location = new Point((this.Width - groupBox1.Width) / 2, (this.Height - groupBox1.Height) / 2);
-            btn_ThanhToan.Location = new Point((this.Width - btn_ThanhToan.Width) / 2, groupBox1.Bottom + 20);
+            label1.Location= new Point((int)(this.Width - label1.Width) / 2, label1.Location.Y);
+            groupBox1.Size = new Size((int)(this.Width * 0.8), (int)(this.Height * 0.65));
+            groupBox1.Location = new Point((int)(this.Width - groupBox1.Width) / 2, label1.Location.Y + label1.Height + 20);
+            btn_ThanhToan.Location = new Point((int)(this.Width - btn_ThanhToan.Width) / 2, groupBox1.Height + groupBox1.Location.Y + 20);
+        }
+
+        private void groupBox1_SizeChanged(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

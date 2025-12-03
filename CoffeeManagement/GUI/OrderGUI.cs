@@ -1,15 +1,16 @@
-﻿using System;
+﻿using CoffeeManagement.BUS;
+using CoffeeManagement.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using CoffeeManagement.BUS;
-using CoffeeManagement.DTO;
+using System.Windows.Markup;
 
 
 
@@ -24,7 +25,7 @@ namespace CoffeeManagement.GUI
             InitializeComponent();
         }
 
-        int tongTien = 0;
+        Decimal tongTien = 0;
 
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
@@ -37,10 +38,10 @@ namespace CoffeeManagement.GUI
             errorProvider1.SetError(dataGridView1, "");
             //kiểm tra số lượng 
             int i = 0;
-            foreach(DataGridViewRow Row in dataGridView1.Rows)
+            foreach (DataGridViewRow Row in dataGridView1.Rows)
             {
-                
-                if (Convert.ToInt32( Row.Cells["SoLuong"].Value) == 0)
+
+                if (Convert.ToInt32(Row.Cells["SoLuong"].Value) == 0)
                 {
                     errorProvider1.SetError(dataGridView1, "Nhap So Luong");
                     return;
@@ -50,12 +51,12 @@ namespace CoffeeManagement.GUI
             }
             errorProvider1.SetError(dataGridView1, "");
             // Kiểm tra chọn bàn
-            if (comboBox1.SelectedItem == null)
+            if (cbb_Ban.SelectedItem == null)
             {
-                errorProvider1.SetError(comboBox1, "Vui lòng chọn bàn!");
+                errorProvider1.SetError(cbb_Ban, "Vui lòng chọn bàn!");
                 return;
             }
-            errorProvider1.SetError(comboBox1, "");
+            errorProvider1.SetError(cbb_Ban, "");
             //kiểm tra tổng tiền
             if (tongTien <= 0)
             {
@@ -68,12 +69,37 @@ namespace CoffeeManagement.GUI
             //
             // Tạo hóa đơn mới
             // 
-            string[] banInfo = comboBox1.SelectedItem.ToString().Split('-');
+            string[] banInfo = cbb_Ban.SelectedItem.ToString().Split('-');
             int banID = Convert.ToInt32(banInfo[0].Trim());
+
+            int KMID;
+            if (cbb_KM.SelectedIndex < 0)
+            {
+                KMID = 0;
+            }
+            else
+            {
+                string[] KMInfo = cbb_KM.SelectedItem.ToString().Split('-');
+                KMID = Convert.ToInt32(KMInfo[0].Trim());
+                DataTable DTKM = KhuyenMaiBUS.GetKM_ID(KMID);
+                if (DTKM.Rows[0]["LoaiKhuyenMai"].ToString() == "Phần trăm") {
+                    tongTien = tongTien - (tongTien * (Convert.ToDecimal(DTKM.Rows[0]["GiaTri"]) / 100));
+                }
+                else {
+                    tongTien = tongTien - Convert.ToInt32(DTKM.Rows[0]["GiaTri"]);
+                }
+
+            }
+
+
             DateTime ngayLap = DateTime.Now;
-            int nhanVienID = 1; // Giả sử ID nhân viên là 1
-            decimal tongTienDecimal = Convert.ToDecimal(tongTien);
-            HoaDonBUS.TaoHoaDon(nhanVienID, banID, ngayLap, tongTienDecimal, "Đang phục vụ");
+
+            int IDuser = Session.CurrentUser.UserID;
+            DataTable dt = new DataTable();
+            dt = NhanVienBUS.LayNV_userID(IDuser);
+            int nhanVienID = Convert.ToInt32(dt.Rows[0]["NhanVienID"]); 
+            decimal tongTienDecimal = tongTien;
+            HoaDonBUS.TaoHoaDon(nhanVienID, banID, ngayLap, tongTienDecimal, "Đang phục vụ", KMID);
 
             // Cập nhật trạng thái bàn
             //BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
@@ -98,7 +124,7 @@ namespace CoffeeManagement.GUI
             // Xóa giỏ hàng
             dataGridView1.Rows.Clear();
             txtTong.Text = "0";
-            comboBox1.SelectedItem = null;
+            cbb_Ban.SelectedItem = null;
 
             //request to change to thanh toan form
             RequestChangeToThanhToan?.Invoke(HoaDonID);
@@ -129,36 +155,53 @@ namespace CoffeeManagement.GUI
         private void OrderGUI_Load(object sender, EventArgs e)
         {
             DataTable banTable = BanBUS.LayTatCaBanHoatDong();
+            DataTable Km = KhuyenMaiBUS.GetAllKM();
              
             foreach (DataRow row in banTable.Rows)
             {
                 string item = row["BanID"] + " - " + row["TenBan"];
-                comboBox1.Items.Add(item);
+                cbb_Ban.Items.Add(item);
+            }
+            foreach (DataRow row in Km.Rows) 
+            {
+                string item = row["KhuyenMaiID"] + " - " + row["TenKhuyenMai"];
+                cbb_KM.Items.Add(item);
             }
         }
 
         private void OrderGUI_SizeChanged(object sender, EventArgs e)
         {
-            dataGridView1.Size = new Size((int)(this.Width * 0.8),(int)(this.Height * 0.5));
+            dataGridView1.Size = new Size((int)(this.Width * 0.8),(int)(this.Height * 0.45));
             dataGridView1.Location = new Point((int)((this.Width - dataGridView1.Width) / 2), dataGridView1.Location.Y);
 
             label1.Location = new Point((int)((this.Width - label1.Width) / 2), label1.Location.Y);
             label2.Location = new Point((int)((this.Width - label2.Width) / 2), label2.Location.Y);
             label3.Location = new Point((int)((this.Width - label3.Width) / 2), dataGridView1.Location.Y + dataGridView1.Size.Height + 20);
 
-            label5.Location = new Point(label5.Location.X, label3.Location.Y + 40);
-            label4.Location = new Point(label4.Location.X, label5.Location.Y + 40);
+            label5.Location = new Point(label5.Location.X, label3.Location.Y + 10);
+            label6.Location = new Point(label5.Location.X, label5.Location.Y + 40);
+            label4.Location = new Point(label4.Location.X, label6.Location.Y + 40);
             label5.Size = label5.Size;
+            label6.Size = label6.Size;
             label4.Size = label4.Size;
 
 
-            comboBox1.Location = new Point(label5.Location.X + label5.Width +30, label5.Location.Y);
+            cbb_Ban.Location = new Point(label5.Location.X + label5.Width +30, label5.Location.Y);
+            cbb_KM.Location = new Point(label6.Location.X + label6.Width + 30, label6.Location.Y);
             txtTong.Location = new Point(label4.Location.X + label4.Width + 30, label4.Location.Y);
-            comboBox1.Size = new Size(this.Width - comboBox1.Location.X - 20, comboBox1.Size.Height);
+            cbb_Ban.Size = new Size(this.Width - cbb_Ban.Location.X - 20, cbb_Ban.Size.Height);
+            cbb_KM.Size = new Size(this.Width - cbb_KM.Location.X - 20, cbb_KM.Size.Height);
             txtTong.Size = new Size(this.Width - txtTong.Location.X - 20, txtTong.Size.Height);
 
             btnThanhToan.Location = new  Point((int)((this.Width - btnThanhToan.Width) / 2), txtTong.Location.Y + 40);
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
 
 
 

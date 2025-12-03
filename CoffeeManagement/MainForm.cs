@@ -28,6 +28,7 @@ namespace CoffeeManagement
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
         GUI.ListSanPham listSanPham = new GUI.ListSanPham();
+        GUI.NhanVienGUI qlNhanVien = new GUI.NhanVienGUI();
         GUI.DanhMucGUI danhMuc = new GUI.DanhMucGUI();
         GUI.BanGUI ban = new GUI.BanGUI();
         GUI.NCCGUI NCCGUI = new GUI.NCCGUI();
@@ -100,7 +101,9 @@ namespace CoffeeManagement
 
         private void nhanVienToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Quản lý nhân viên!");
+            this.pnlBody.Controls.Clear();
+            qlNhanVien.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(qlNhanVien);
         }
 
         private void nhapKhoToolStripMenuItem_Click(object sender, EventArgs e)

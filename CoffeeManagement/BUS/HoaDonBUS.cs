@@ -21,9 +21,9 @@ namespace CoffeeManagement.BUS
         }
 
         //tao hoa don
-        public static void TaoHoaDon(int NhanVienID, int BanID, DateTime NgayLap, decimal TongTien, string trangthai)
+        public static void TaoHoaDon(int NhanVienID, int BanID, DateTime NgayLap, decimal TongTien, string trangthai, int IDKM)
         {
-            HoaDonDAO.TaoHoaDon(NhanVienID, BanID, NgayLap, TongTien, trangthai);
+            HoaDonDAO.TaoHoaDon(NhanVienID, BanID, NgayLap, TongTien, trangthai, IDKM);
         }
         //tao chi tiet hoa don
         public static void TaoChiTietHoaDon(int SoLuong, decimal DonGia, int HoaDonID, int SanPhamID, int ThanhTien)

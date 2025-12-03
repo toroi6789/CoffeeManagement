@@ -1,5 +1,4 @@
 ﻿using CoffeeManagement.BUS;
-using CoffeeManagement.BUS;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

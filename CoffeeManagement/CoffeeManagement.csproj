@@ -125,8 +125,10 @@
     <Compile Include="BUS\DanhMucBUS.cs" />
     <Compile Include="BUS\DatBanBUS.cs" />
     <Compile Include="BUS\HoaDonBUS.cs" />
+    <Compile Include="BUS\KhuyenMaiBUS.cs" />
     <Compile Include="BUS\NCCBUS.cs" />
     <Compile Include="BUS\NguyenLieuBUS.cs" />
+    <Compile Include="BUS\NhanVienBUS.cs" />
     <Compile Include="BUS\SanPhamBUS.cs" />
     <Compile Include="BUS\SanPhamNguyenLieuBUS.cs" />
     <Compile Include="BUS\TaoID.cs" />
@@ -137,9 +139,11 @@
     <Compile Include="DAO\DanhMucDAO.cs" />
     <Compile Include="DAO\DatBanDAO.cs" />
     <Compile Include="DAO\HoaDonDAO.cs" />
+    <Compile Include="DAO\KhuyenMaiDAO.cs" />
     <Compile Include="DAO\LayID.cs" />
     <Compile Include="DAO\NCCDAO.cs" />
     <Compile Include="DAO\NguyenLieuDAO.cs" />
+    <Compile Include="DAO\NhanVienDAO.cs" />
     <Compile Include="DAO\SanPhamDAO.cs" />
     <Compile Include="DAO\SanPhamNguyenLieuDAO.cs" />
     <Compile Include="DAO\ThanhToanDAO.cs" />
@@ -150,6 +154,7 @@
     <Compile Include="DTO\DatBanDTO.cs" />
     <Compile Include="DTO\NCCDTO.cs" />
     <Compile Include="DTO\NguyenLieuDTO.cs" />
+    <Compile Include="DTO\NhanVienDTO.cs" />
     <Compile Include="DTO\SanPhamDTO.cs" />
     <Compile Include="DTO\SanPhamNguyenLieuDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
@@ -196,11 +201,11 @@
     <Compile Include="GUI\OrderGUI.Designer.cs">
       <DependentUpon>OrderGUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\NhanVienUC.cs">
+    <Compile Include="GUI\NhanVienGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\NhanVienUC.Designer.cs">
-      <DependentUpon>NhanVienUC.cs</DependentUpon>
+    <Compile Include="GUI\NhanVienGUI.Designer.cs">
+      <DependentUpon>NhanVienGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\CTHoaDonGUI.cs">
       <SubType>UserControl</SubType>
@@ -279,8 +284,8 @@
     <EmbeddedResource Include="GUI\NCCGUI.resx">
       <DependentUpon>NCCGUI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\NhanVienUC.resx">
-      <DependentUpon>NhanVienUC.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\NhanVienGUI.resx">
+      <DependentUpon>NhanVienGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OrderGUI.resx">
       <DependentUpon>OrderGUI.cs</DependentUpon>
