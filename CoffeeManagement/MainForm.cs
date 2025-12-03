@@ -113,8 +113,6 @@ namespace CoffeeManagement
 
         private void sanPhamToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Quản lý sản phẩm!");
-            // Xóa nội dung hiện tại trong pnlBody
             this.pnlBody.Controls.Clear();
             this.pnlBody.Controls.Add(quanlySanPham);
             quanlySanPham.Dock = DockStyle.Fill;
@@ -373,8 +371,6 @@ namespace CoffeeManagement
 
         private void bánHàngDanhSáchSảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Danh sách sản phẩm!");
-            // Xóa nội dung hiện tại trong pnlBody
             this.pnlBody.Controls.Clear();
             listSanPham.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(listSanPham);
@@ -408,8 +404,6 @@ namespace CoffeeManagement
         }
         private void nguyênLiệuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Quản lý nguyên liệu!");
-            // Xóa nội dung hiện tại trong pnlBody
             this.pnlBody.Controls.Clear();
             this.pnlBody.Controls.Add(quanLyNguyenLieu);
             quanLyNguyenLieu.Dock = DockStyle.Fill;

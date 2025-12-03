@@ -70,9 +70,9 @@ namespace CoffeeManagement.BUS
             }
 
             // === 3. KIỂM TRA GIÁ BÁN ===
-            if (sp.GiaBan <= 0)
+            if (sp.GiaBan < 0)
             {
-                message = "Giá bán phải lớn hơn 0.";
+                message = "Giá bán phải lớn hơn hoặc 0.";
                 errorField = "GiaBan";
                 return false;
             }
@@ -113,9 +113,9 @@ namespace CoffeeManagement.BUS
                 return false;
             }
 
-            if (sp.GiaBan <= 0)
+            if (sp.GiaBan < 0)
             {
-                message = "Giá bán phải lớn hơn 0.";
+                message = "Giá bán phải lớn hơn hoặc bằng 0.";
                 errorField = "GiaBan";
                 return false;
             }

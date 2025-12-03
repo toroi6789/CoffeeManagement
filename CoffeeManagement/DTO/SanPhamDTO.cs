@@ -39,10 +39,10 @@ namespace CoffeeManagement.DTO
             get { return giaBan; }
             set
             {
-                if (value > 1000)
+                if (value >= 0)
                     giaBan = value;
                 else
-                    throw new ArgumentException("giá bán phải từ 1000 trở lên và không được để trống","GiaBan");
+                    throw new ArgumentException("giá bán phải từ 0 trở lên và không được để trống","GiaBan");
             }
         }
         public string MoTa

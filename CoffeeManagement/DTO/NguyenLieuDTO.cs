@@ -41,10 +41,10 @@ namespace CoffeeManagement.DTO
             get { return giaNhap; }
             set
             {
-                if (value >=  1000)
+                if (value >=  0)
                     giaNhap = value;
                 else
-                    throw new ArgumentException("giá nhập phải từ 1000 trở lên và không được để trống", "GiaNhap");
+                    throw new ArgumentException("giá nhập phải từ 0 trở lên và không được để trống", "GiaNhap");
             }
         }
 

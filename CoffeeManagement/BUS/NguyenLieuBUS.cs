@@ -60,7 +60,7 @@ namespace CoffeeManagement.BUS
             // === 3. KIỂM TRA GIÁ BÁN ===
             if (nl.GiaNhap < 0)
             {
-                message = "Giá nhập phải lớn hơn 0.";
+                message = "Giá nhập phải lớn hơn hoặc bằng 0.";
                 errorField = "GiaNhap";
                 return false;
             }
@@ -115,9 +115,9 @@ namespace CoffeeManagement.BUS
                 return false;
             }
 
-            if (nl.GiaNhap <= 0)
+            if (nl.GiaNhap < 0)
             {
-                message = "Giá nhập phải lớn hơn 0.";
+                message = "Giá nhập phải lớn hơn hoặc bằng 0.";
                 errorField = "GiaNhap";
                 return false;
             }

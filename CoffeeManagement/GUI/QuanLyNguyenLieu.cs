@@ -26,6 +26,13 @@ namespace CoffeeManagement.GUI
         {
             InitializeComponent();
             this.Load += QuanLyNguyenLieu_Load;
+            txtTenNguyenLieu.TextChanged += Control_TextChanged;
+            txtGiaNhap.TextChanged += Control_TextChanged;
+            txtMoTa.TextChanged += Control_TextChanged;
+            txtSLTon.TextChanged += Control_TextChanged;
+            txtDonVi.TextChanged += Control_TextChanged;
+            cmbDanhMucID.SelectedIndexChanged += Control_SelectionChanged;
+            cmbTrangThai.SelectedIndexChanged += Control_SelectionChanged;
         }
 
         private void QuanLyNguyenLieu_Load(object sender, EventArgs e)
@@ -189,26 +196,6 @@ namespace CoffeeManagement.GUI
             errorProvider1.Clear();
         }
 
-        private Control GetControlByErrorField(string errorField)
-        {
-            switch (errorField)
-            {
-                case "SanPhamID":
-                    return txtID;
-                case "TenSanPham":
-                    return txtTenNguyenLieu;
-                case "MoTa":
-                    return txtMoTa;
-                case "GiaBan":
-                    return txtGiaNhap;
-                case "TrangThai":
-                    return cmbTrangThai;
-                case "DanhMucID":
-                    return cmbDanhMucID;
-                default:
-                    return null;
-            }
-        }
 
         private void LocNguyenLieu()
         {
@@ -247,7 +234,7 @@ namespace CoffeeManagement.GUI
                 isValid = false;
             }
 
-            if (!decimal.TryParse(txtGiaNhap.Text, out decimal giaNhap) || giaNhap <= 0)
+            if (!decimal.TryParse(txtGiaNhap.Text, out decimal giaNhap) || giaNhap < 0)
             {
                 errorProvider1.SetError(txtGiaNhap, "Giá nhập phải là số dương!");
                 isValid = false;
@@ -270,6 +257,18 @@ namespace CoffeeManagement.GUI
                 errorProvider1.SetError(txtSLTon, "Số lượng tồn phải là số không âm!");
                 isValid = false;
             }
+            if (!isValid)
+            {
+                foreach (Control ctrl in new Control[] { txtTenNguyenLieu, cmbTrangThai,txtMoTa, txtGiaNhap, cmbDanhMucID,txtSLTon,txtDonVi  })
+                {
+                    if (!string.IsNullOrEmpty(errorProvider1.GetError(ctrl)))
+                    {
+                        ctrl.Focus();
+                        break;
+                    }
+                }
+            }
+
 
             return isValid;
         }
@@ -448,6 +447,22 @@ namespace CoffeeManagement.GUI
                         MessageBox.Show("Lỗi đọc file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+            }
+        }
+
+        private void Control_TextChanged(object sender, EventArgs e)
+        {
+            if (sender is System.Windows.Forms.TextBox tb)
+            {
+                errorProvider1.SetError(tb, "");
+            }
+        }
+
+        private void Control_SelectionChanged(object sender, EventArgs e)
+        {
+            if (sender is System.Windows.Forms.ComboBox cmb)
+            {
+                errorProvider1.SetError(cmb, "");
             }
         }
 
@@ -717,6 +732,37 @@ namespace CoffeeManagement.GUI
                     pictureBox2.Tag = null;
                 }
             }
+        }
+
+        private void QuanLyNguyenLieu_SizeChanged(object sender, EventArgs e)
+        {
+            int padding = 15;                    // Khoảng cách lề đẹp
+            int topHeaderHeight = 94;            // Chiều cao phần tiêu đề "QUẢN LÝ SẢN PHẨM" (theo Designer)
+            int leftPanelWidth = 263;            // Ảnh bên trái (giữ cố định hoặc scale nhẹ)
+            int rightPanelWidth = 250;           // Panel nút Thêm/Sửa/Xóa/Hủy
+
+            // === 1. PANEL TIÊU ĐỀ (label2) - giữ nguyên trên cùng ===
+            label2.Size = new Size(this.Width, topHeaderHeight);
+
+            // === 2. PANEL ẢNH BÊN TRÁI (panel3) ===
+            panel3.Location = new Point(0, topHeaderHeight);
+            panel3.Size = new Size(leftPanelWidth, this.Height - topHeaderHeight - padding);
+
+            // === 3. PANEL NÚT BÊN PHẢI (panel6) ===
+            panel6.Location = new Point(this.Width - rightPanelWidth - padding, topHeaderHeight);
+            panel6.Size = new Size(rightPanelWidth, this.Height - topHeaderHeight - padding);
+
+            // === 4. PANEL NHẬP LIỆU GIỮA (panel7) - TỰ ĐỘNG FILL ===
+            panel7.Location = new Point(leftPanelWidth + padding, topHeaderHeight + padding);
+            panel7.Size = new Size(
+                this.Width - leftPanelWidth - rightPanelWidth - padding * 2,
+                this.Height - topHeaderHeight - padding * 2
+            );
+
+            // === 5. DATAGRIDVIEW DƯỚI CÙNG - CHIẾM HẾT PHẦN DƯỚI ===
+            dataGridView1.Location = new Point(0, this.Height - (int)(this.Height * 0.30));
+            dataGridView1.Size = new Size(this.Width, (int)(this.Height * 0.30));
+            this.Refresh();
         }
     }
 }
