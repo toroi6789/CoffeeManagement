@@ -47,9 +47,9 @@ namespace CoffeeManagement
                 banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
                 //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
                 dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
-
-                // Đảm bảo layout được cập nhật khi form được hiển thị
-                this.Shown += (s, e) => {
+                quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+            // Đảm bảo layout được cập nhật khi form được hiển thị
+            this.Shown += (s, e) => {
                     UpdateTitleBarLayout();
                 };
             }

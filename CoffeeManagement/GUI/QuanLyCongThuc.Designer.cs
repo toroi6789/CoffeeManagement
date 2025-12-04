@@ -31,13 +31,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.NguyenLieuSP = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnXoa = new System.Windows.Forms.Button();
             this.txtID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtSearch_ID = new System.Windows.Forms.TextBox();
             this.btnSearch = new FontAwesome.Sharp.IconButton();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnThem = new System.Windows.Forms.Button();
             this.AllNguyenLieu = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.txtID_NL = new System.Windows.Forms.TextBox();
@@ -52,7 +52,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.NguyenLieuSP);
             this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.btnXoa);
             this.panel1.Controls.Add(this.txtID);
             this.panel1.Location = new System.Drawing.Point(27, 63);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -83,14 +83,15 @@
             this.label10.TabIndex = 1;
             this.label10.Text = "ID sản phẩm";
             // 
-            // button2
+            // btnXoa
             // 
-            this.button2.Location = new System.Drawing.Point(3, 80);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(81, 29);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Xóa";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnXoa.Location = new System.Drawing.Point(3, 80);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(81, 29);
+            this.btnXoa.TabIndex = 4;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.UseVisualStyleBackColor = true;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
             // 
             // txtID
             // 
@@ -117,7 +118,7 @@
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.txtSearch_ID);
             this.panel2.Controls.Add(this.btnSearch);
-            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.btnThem);
             this.panel2.Controls.Add(this.AllNguyenLieu);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.txtID_NL);
@@ -153,14 +154,15 @@
             this.btnSearch.TabIndex = 6;
             this.btnSearch.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnThem
             // 
-            this.button1.Location = new System.Drawing.Point(3, 80);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 31);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Thêm";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnThem.Location = new System.Drawing.Point(3, 80);
+            this.btnThem.Name = "btnThem";
+            this.btnThem.Size = new System.Drawing.Size(87, 31);
+            this.btnThem.TabIndex = 3;
+            this.btnThem.Text = "Thêm";
+            this.btnThem.UseVisualStyleBackColor = true;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
             // 
             // AllNguyenLieu
             // 
@@ -224,8 +226,8 @@
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnXoa;
+        private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.DataGridView AllNguyenLieu;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtID_NL;

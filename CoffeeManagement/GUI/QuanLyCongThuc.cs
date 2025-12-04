@@ -20,6 +20,7 @@ namespace CoffeeManagement.GUI
         private DataTable dtNguyenLieu;
         private DataTable dtNguyenLieuSP;
         private SanPhamNguyenLieuBUS spnl_bus = new SanPhamNguyenLieuBUS();
+        bool DangThaoTac = false;
         public QuanLyCongThuc()
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace CoffeeManagement.GUI
 
         private void QuanLyCongThuc_Load(object sender, EventArgs e)
         {
+            btnThem.Enabled = false;
             txtID.Text = sanphamID.ToString();
             txtID.ReadOnly = true;
             dtNguyenLieu = new DataTable();
@@ -133,11 +135,18 @@ namespace CoffeeManagement.GUI
 
         private void AllNguyenLieu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (DangThaoTac)
+            {
+                MessageBox.Show("Đang ở chế độ thêm/sửa. Vui lòng Lưu hoặc Hủy trước khi chọn nguyên liệu khác!",
+                               "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (e.RowIndex >= 0)
             {
+                btnThem.Enabled = true;
+                btnXoa.Enabled = NguyenLieuSP.Rows.Count > 0; 
                 DataGridViewRow row = AllNguyenLieu.Rows[e.RowIndex];
                 txtID_NL.Text = row.Cells["NguyenLieuID"].Value.ToString();
-                             
             }
         }
 
@@ -186,6 +195,67 @@ namespace CoffeeManagement.GUI
                     row["SoLuongSuDung"] = ct.SoLuongSuDung; 
                     dtNguyenLieuSP.Rows.Add(row);
                 }
+            }
+        }
+
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            // BẮT BUỘC phải chọn nguyên liệu từ bảng trái
+            if (AllNguyenLieu.CurrentRow == null || AllNguyenLieu.CurrentRow.Index < 0)
+            {
+                MessageBox.Show("Vui lòng chọn một nguyên liệu từ danh sách bên trái để thêm vào công thức!",
+                                "Chưa chọn nguyên liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int nguyenLieuID = Convert.ToInt32(AllNguyenLieu.CurrentRow.Cells["NguyenLieuID"].Value);
+
+            // Kiểm tra trùng: không cho thêm 2 lần cùng nguyên liệu
+            bool daTonTai = dtNguyenLieuSP.AsEnumerable()
+                .Any(row => row.Field<int>("NguyenLieuID") == nguyenLieuID);
+
+            if (daTonTai)
+            {
+                MessageBox.Show("Nguyên liệu này đã có trong công thức rồi!\nBạn có thể sửa số lượng bằng cách xóa và thêm lại.",
+                                "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Lấy thông tin nguyên liệu để thêm vào bảng phải
+            DataGridViewRow selectedRow = AllNguyenLieu.CurrentRow;
+            DataRow newRow = dtNguyenLieuSP.NewRow();
+            newRow["STT"] = dtNguyenLieuSP.Rows.Count + 1;
+            newRow["NguyenLieuID"] = selectedRow.Cells["NguyenLieuID"].Value;
+            newRow["TenNguyenLieu"] = selectedRow.Cells["TenNguyenLieu"].Value;
+            newRow["GiaNhap"] = selectedRow.Cells["GiaNhap"].Value;
+            newRow["TrangThai"] = selectedRow.Cells["TrangThai"].Value;
+            newRow["MoTa"] = selectedRow.Cells["MoTa"].Value;
+            newRow["DanhMucID"] = selectedRow.Cells["DanhMucID"].Value;
+            newRow["SoLuongTon"] = selectedRow.Cells["SoLuongTon"].Value;
+            newRow["DonVi"] = selectedRow.Cells["DonVi"].Value;
+            newRow["SoLuongSuDung"] = 0;
+            // Các cột khác giữ nguyên nếu cần
+            dtNguyenLieuSP.Rows.Add(newRow);
+            LocTatCaNguyenLieu();
+            // Reset ô nhập
+            AllNguyenLieu.CurrentRow.Selected = false; // bỏ chọn để người dùng chọn lại
+            btnThem.Enabled = false;
+            MessageBox.Show("Đã thêm nguyên liệu vào công thức!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (NguyenLieuSP.CurrentRow == null || NguyenLieuSP.CurrentRow.IsNewRow)
+            {
+                MessageBox.Show("Vui lòng chọn nguyên liệu trong công thức để xóa!");
+                return;
+            }
+
+            if (MessageBox.Show("Xóa nguyên liệu này khỏi công thức?", "Xác nhận",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                NguyenLieuSP.Rows.Remove(NguyenLieuSP.CurrentRow);
+                LocNguyenLieuCuaSanPham();
             }
         }
     }
