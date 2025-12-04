@@ -95,7 +95,6 @@ namespace CoffeeManagement.GUI
                 txtEmail.Focus();
                 return;
             }
-
             if (string.IsNullOrEmpty(password) || password == "Nhập mật khẩu")
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);

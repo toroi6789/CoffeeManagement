@@ -41,9 +41,31 @@ namespace CoffeeManagement.GUI
                 btn.TextImageRelation = TextImageRelation.ImageAboveText;
                 btn.Name = row["SanPhamID"].ToString();
                 //img
-                string img = row["Hinh"].ToString();
-                string path = Path.Combine(Application.StartupPath, @"Images", img);
-                Image img2 = Image.FromFile(path);
+                //string img = row["Hinh"].ToString();
+                //string path = Path.Combine(Application.StartupPath, @"Images", img);
+                //Image img2 = Image.FromFile(path);
+                //btn.Image = Compoment.ResizeImage(img2, 77, 77);
+                //btn.Tag = path;
+
+                string imgName = row["Hinh"].ToString();
+                if (string.IsNullOrWhiteSpace(imgName))
+                {
+                    imgName = "null.png";
+                }
+                string path = Path.Combine(Application.StartupPath, @"Images", imgName);
+                if (!File.Exists(path))
+                {
+                    path = Path.Combine(Application.StartupPath, @"Images", "null.png");
+                }
+                Image img2 = null;
+                if (File.Exists(path))
+                {
+                    using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    {
+                        img2 = Image.FromStream(stream);
+                    }
+                }
+
                 btn.Image = Compoment.ResizeImage(img2, 77, 77);
                 btn.Tag = path;
                 //function

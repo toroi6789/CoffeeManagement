@@ -24,7 +24,6 @@ namespace CoffeeManagement.DAO
             return DBConnect.ExecuteQuery(query);
         }
 
-        private static List<SanPhamDTO> dsSanPham = new List<SanPhamDTO>();
         public List<SanPhamDTO> GetAll()
         {
             List<SanPhamDTO> dsSP = new List<SanPhamDTO>();
@@ -54,12 +53,10 @@ namespace CoffeeManagement.DAO
         public bool IsSanPhamIdExists(int sanPhamId)
         {
             string sql = "SELECT COUNT(*) FROM SanPham WHERE SanPhamID = @id";
-
             var parameters = new MySqlParameter[]
             {
             new MySqlParameter("@id", MySqlDbType.Int32) { Value = sanPhamId }
             };
-
             DataTable dt = ExecuteQuery(sql, parameters);
             return Convert.ToInt32(dt.Rows[0][0]) > 0;
         }

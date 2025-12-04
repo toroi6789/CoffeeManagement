@@ -26,6 +26,7 @@ namespace CoffeeManagement.GUI
         private string originalImagePath = string.Empty;
         private DanhMucBUS danhMucBUS = new DanhMucBUS();
         private bool DangThaoTac = false;
+        public event Action<int> RequestOpenCTSP;
         public SanPhamADMIN()
         {
             InitializeComponent();
@@ -39,7 +40,6 @@ namespace CoffeeManagement.GUI
 
         private void SanPhamADMIN_Load(object sender, EventArgs e)
         {
-            //
             List<string> trangThais = new List<string> {"Trống","Hoạt động", "Ngừng bán", "Deleted" };
             cmbTrangThai.DataSource = trangThais;
             cmbTrangThai.SelectedIndex = 0; 
@@ -51,14 +51,11 @@ namespace CoffeeManagement.GUI
             cmbDanhMucID.Enabled = false;
             cmbTrangThai.Enabled = false;
 
-            //
             txtID.ReadOnly = true;
             txtTenSP.ReadOnly = true;
             txtGia.ReadOnly = true;
             txtMoTa.ReadOnly = true;
             
-
-
             dtSanPham = new DataTable();
             dtSanPham.Columns.Add("STT", typeof(int));
             dtSanPham.Columns.Add("SanPhamID", typeof(int));
@@ -69,10 +66,18 @@ namespace CoffeeManagement.GUI
             dtSanPham.Columns.Add("DanhMucID", typeof(int));
             dtSanPham.Columns.Add("Hinh", typeof(string));
 
-            
-
+          
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = dtSanPham;
+            if (!dataGridView1.Columns.Contains("btnView"))
+            {
+                DataGridViewButtonColumn btnView = new DataGridViewButtonColumn();
+                btnView.HeaderText = "Xem Nguyên Liệu";
+                btnView.Name = "btnView";
+                btnView.Text = "VIEW";
+                btnView.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(btnView);
+            }
             LocSanPham();
 
             dataGridView1.Columns["STT"].HeaderText = "STT";
@@ -90,7 +95,6 @@ namespace CoffeeManagement.GUI
             dataGridView1.Columns["SanPhamID"].Visible = false;
 
             // Đặt lại tiêu đề và vị trí cột STT
-
             dataGridView1.Columns["STT"].Width = 50;
             dataGridView1.Columns["STT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
@@ -106,12 +110,9 @@ namespace CoffeeManagement.GUI
             dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;     // Màu chữ
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold); // Font chữ
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;   // Căn giữa header
-
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false; // Chỉ chọn 1 dòng tại 1 thời điểm
-
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-
 
             string relativePath = @"Images\null.png";
             string fullPath = Path.Combine(Application.StartupPath, relativePath);
@@ -131,8 +132,6 @@ namespace CoffeeManagement.GUI
             {
                 MessageBox.Show("Lỗi tải hình ảnh: " + ex.Message);
             }
-
-
             LoadDanhMucVaoComboBox();
             LocSanPham();
         }
@@ -143,9 +142,8 @@ namespace CoffeeManagement.GUI
             txtTenSP.Clear();
             txtGia.Clear();
             txtMoTa.Clear();
-            cmbTrangThai.SelectedIndex = 0; // Mặc định "Hoạt động"
+            cmbTrangThai.SelectedIndex = 0; 
             cmbDanhMucID.SelectedIndex = -1;
-
             string relativePath = @"Images\null.png";
             string fullPath = Path.Combine(Application.StartupPath, relativePath);
             pictureBox2.LoadAsync(fullPath);
@@ -162,14 +160,12 @@ namespace CoffeeManagement.GUI
             btnSua.Enabled = false;  // TẮT SỬA
             btnXoa.Enabled = false;// TẮT XÓA
 
-            //
             txtID.ReadOnly = true;
             txtTenSP.ReadOnly = true;
             txtGia.ReadOnly = true;
             txtMoTa.ReadOnly = true;
             cmbTrangThai.Enabled = false;
             cmbDanhMucID.Enabled = false;
-
             ClearForm();
             ClearErrorProvider();
         }
@@ -183,22 +179,16 @@ namespace CoffeeManagement.GUI
         {
             bool isValid = true;
             ClearErrorProvider();
-
-            // 1. Tên sản phẩm - BẮT BUỘC
             if (string.IsNullOrWhiteSpace(txtTenSP.Text))
             {
                 errorProvider1.SetError(txtTenSP, "Tên sản phẩm không được để trống!");
                 isValid = false;
             }
-
-            // 2. Giá bán - phải là số dương
             if (!decimal.TryParse(txtGia.Text.Trim(), out decimal giaBan) || giaBan < 0)
             {
                 errorProvider1.SetError(txtGia, "Giá bán phải từ 0 trở lên!");
                 isValid = false;
             }
-
-            // 3. Danh mục - BẮT BUỘC chọn (không được để "-- Chọn danh mục --")
             if (cmbDanhMucID.SelectedValue == null ||
                 !int.TryParse(cmbDanhMucID.SelectedValue.ToString(), out int danhMucID) ||
                 danhMucID <= 0)
@@ -206,16 +196,11 @@ namespace CoffeeManagement.GUI
                 errorProvider1.SetError(cmbDanhMucID, "Vui lòng chọn một danh mục!");
                 isValid = false;
             }
-
-            // 4. Trạng thái - chỉ cần chọn 1 trong danh sách (luôn đúng nếu có DataSource)
             if (cmbTrangThai.SelectedIndex <= 0) //
             {
                 errorProvider1.SetError(cmbTrangThai, "Vui lòng chọn trạng thái hợp lệ!");
                 isValid = false;
             }
-
-
-            // Focus vào ô đầu tiên bị lỗi
             if (!isValid)
             {
                 foreach (Control ctrl in new Control[] { txtTenSP, txtGia, cmbDanhMucID, cmbTrangThai })
@@ -264,9 +249,8 @@ namespace CoffeeManagement.GUI
                 txtGia.Text = row.Cells["GiaBan"].Value.ToString();
                 txtMoTa.Text = row.Cells["MoTa"].Value.ToString();
 
-                // Set cho ComboBox
-                cmbTrangThai.SelectedItem = row.Cells["TrangThai"].Value.ToString(); // Chọn theo string
-                cmbDanhMucID.SelectedValue = row.Cells["DanhMucID"].Value; // Chọn theo Value (ID)
+                cmbTrangThai.SelectedItem = row.Cells["TrangThai"].Value.ToString(); 
+                cmbDanhMucID.SelectedValue = row.Cells["DanhMucID"].Value; 
 
                 // === HIỂN THỊ ẢNH ===
                 string tenFileAnh = row.Cells["Hinh"].Value?.ToString(); // Lấy tên file từ DB
@@ -293,43 +277,18 @@ namespace CoffeeManagement.GUI
                 }
 
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-
                 btnXoa.Enabled = true;
                 btnSua.Enabled = true;
                 btnThem.Enabled = true;
             }
         }
 
-        
-
-        private void textBox_TextChanged(object sender, EventArgs e)
-        {
-           
-            if (!(sender is System.Windows.Forms.TextBox tb)) return;
-
-            // Danh sách TextBox cần xóa lỗi
-            var controls = new[]
-            {
-                new { Name = "txtID", Control = (Control)txtID },
-                new { Name = "txtTenSP", Control = (Control)txtTenSP },
-                new { Name = "txtMoTa", Control = (Control)txtMoTa },
-                new { Name = "txtGia", Control = (Control)txtGia }
-            };
-
-            // Tìm TextBox đang gõ → Xóa lỗi
-            var matched = controls.FirstOrDefault(c => c.Name == tb.Name);
-            if (matched != null)
-            {
-                errorProvider1.SetError(matched.Control, "");
-            }
-        }
 
         // Nút Thêm ==============================================================================
         private void btnThem_Click(object sender, EventArgs e)
         {
             if (btnThem.Text == "Thêm")
             {
-                // Chuyển sang chế độ thêm
                 btnThem.Text = "Lưu";
                 btnSua.Enabled = false;
                 btnXoa.Enabled = false;
@@ -342,7 +301,6 @@ namespace CoffeeManagement.GUI
                 txtMoTa.ReadOnly = false;
                 cmbTrangThai.Enabled = true;
                 cmbDanhMucID.Enabled = true;
-
 
                 int idMoi = sp_bus.LaySanPhamIDLonNhat() + 1;
                 txtID.Text = idMoi.ToString();
@@ -439,18 +397,14 @@ namespace CoffeeManagement.GUI
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            // Kiểm tra có dòng được chọn không
             if (dataGridView1.CurrentRow == null)
             {
                 MessageBox.Show("Vui lòng chọn sản phẩm cần xóa!", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // Lấy ID từ dòng hiện tại
             int sanPhamID = Convert.ToInt32(dataGridView1.CurrentRow.Cells["SanPhamID"].Value);
 
-            // XÁC NHẬN XÓA
             DialogResult result = MessageBox.Show(
                 $"Bạn có chắc chắn muốn xóa sản phẩm ID: {sanPhamID}?",
                 "Xác nhận xóa",
@@ -466,7 +420,6 @@ namespace CoffeeManagement.GUI
                 MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
                 LocSanPham();
-                // Reset form
                 ClearForm();
                 ClearErrorProvider();
             }
@@ -478,7 +431,6 @@ namespace CoffeeManagement.GUI
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
-            // HỎI XÁC NHẬN (TÙY CHỌN)
             DialogResult result = MessageBox.Show(
                 "Bạn có muốn hủy thao tác hiện tại?",
                 "Xác nhận hủy",
@@ -489,19 +441,14 @@ namespace CoffeeManagement.GUI
                 return;
             
             this.ActiveControl = null;
-            // THOÁT CHẾ ĐỘ THÊM / SỬA
             ResetForm();
             DangThaoTac = false;
         }
 
-
-
         private void LoadDanhMucVaoComboBox()
         {
-            var danhMucList = danhMucBUS.LayTatCaDanhMuc(); // Lấy từ DB
-
-            // === 1. CHO cmbDanhMuc (dùng để lọc) ===
-            var listChoLoc = new List<DanhMucDTO>(danhMucList); // Copy để không ảnh hưởng
+            var danhMucList = danhMucBUS.LayTatCaDanhMuc(); 
+            var listChoLoc = new List<DanhMucDTO>(danhMucList); 
             var allItem = new DanhMucDTO
             {
                 DanhMucID = 0,
@@ -509,7 +456,6 @@ namespace CoffeeManagement.GUI
                 TrangThai = "Hoạt động"
             };
             listChoLoc.Insert(0, allItem);
-
             cmbDanhMuc.DataSource = listChoLoc;
             cmbDanhMuc.DisplayMember = "TenDanhMuc";
             cmbDanhMuc.ValueMember = "DanhMucID";
@@ -541,10 +487,7 @@ namespace CoffeeManagement.GUI
             if (danhMucID > 0)
                 listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
 
-            // === BẮT BUỘC: CHỈ HIỂN THỊ SẢN PHẨM "Hoạt động" ===
             listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "Ngừng bán" ).ToList();
-
-            // ĐỔ DỮ LIỆU + TỰ ĐỘNG THÊM STT
             int stt = 1;
             foreach (var sp in listSP)
             {
@@ -559,7 +502,6 @@ namespace CoffeeManagement.GUI
                     sp.Hinh ?? ""
                 );
             }
-            //this.ActiveControl = null;
         }
 
 
@@ -611,11 +553,9 @@ namespace CoffeeManagement.GUI
 
                             // AutoFit cột
                             ws.Cells[ws.Dimension.Address].AutoFitColumns();
-
                             // Lưu file
                             FileInfo fi = new FileInfo(sfd.FileName);
                             package.SaveAs(fi);
-
                             MessageBox.Show("Xuất file Excel thành công!\nĐường dẫn: " + sfd.FileName,
                                 "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -740,15 +680,15 @@ namespace CoffeeManagement.GUI
         }
 
         private IEnumerable<Control> GetAllControls(Control parent)
-{
-    var list = new List<Control>();
-    foreach (Control c in parent.Controls)
-    {
-        list.Add(c);
-        list.AddRange(GetAllControls(c));
-    }
-    return list;
-}
+        {
+            var list = new List<Control>();
+            foreach (Control c in parent.Controls)
+            {
+                list.Add(c);
+                list.AddRange(GetAllControls(c));
+            }
+            return list;
+        }
 
         private void SanPhamADMIN_SizeChanged(object sender, EventArgs e)
         {
@@ -757,14 +697,11 @@ namespace CoffeeManagement.GUI
             int topHeaderHeight = 94;            // Chiều cao phần tiêu đề "QUẢN LÝ SẢN PHẨM" (theo Designer)
             int leftPanelWidth = 263;            // Ảnh bên trái (giữ cố định hoặc scale nhẹ)
             int rightPanelWidth = 250;           // Panel nút Thêm/Sửa/Xóa/Hủy
-
             // === 1. PANEL TIÊU ĐỀ (label2) - giữ nguyên trên cùng ===
             label2.Size = new Size(this.Width, topHeaderHeight);
-
             // === 2. PANEL ẢNH BÊN TRÁI (panel3) ===
             panel3.Location = new Point(0, topHeaderHeight);
             panel3.Size = new Size(leftPanelWidth, this.Height - topHeaderHeight - padding);
-
             // === 3. PANEL NÚT BÊN PHẢI (panel6) ===
             panel6.Location = new Point(this.Width - rightPanelWidth - padding, topHeaderHeight);
             panel6.Size = new Size(rightPanelWidth, this.Height - topHeaderHeight - padding);
@@ -779,8 +716,6 @@ namespace CoffeeManagement.GUI
             // === 5. DATAGRIDVIEW DƯỚI CÙNG - CHIẾM HẾT PHẦN DƯỚI ===
             dataGridView1.Location = new Point(0, this.Height - (int)(this.Height * 0.30));
             dataGridView1.Size = new Size(this.Width, (int)(this.Height * 0.30));
-            //dataGridView1.Top = panel7.Bottom + padding;
-            //dataGridView1.Height = this.Height - dataGridView1.Top - padding;
             this.Refresh();
         }
 
@@ -835,6 +770,15 @@ namespace CoffeeManagement.GUI
                     originalImagePath = "";
                     pictureBox2.Tag = null;
                 }
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "btnView" && e.RowIndex >= 0)
+            {
+                int sanphamID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["SanPhamID"].Value);
+                RequestOpenCTSP?.Invoke(sanphamID);
             }
         }
     }
