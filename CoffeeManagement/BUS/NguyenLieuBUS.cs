@@ -162,5 +162,10 @@ namespace CoffeeManagement.BUS
                 throw new Exception("Lỗi BUS lấy ID lớn nhất: " + ex.Message);
             }
         }
+
+        public NguyenLieuDTO LayNguyenLieuTheoID(int id)
+        {
+            return dao.LayNguyenLieuTheoID(id); // Sẽ thêm ở DAO dưới đây
+        }
     }
 }

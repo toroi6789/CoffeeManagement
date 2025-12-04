@@ -109,7 +109,7 @@ namespace CoffeeManagement.GUI
 
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false; // Chỉ chọn 1 dòng tại 1 thời điểm
-
+            
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             //dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = Color.LightGray;
 
@@ -226,8 +226,6 @@ namespace CoffeeManagement.GUI
         {
             bool isValid = true;
             ClearErrorProvider();
-
-            // Validate tương tự SanPham, thêm cho DonVi và SoLuongTon
             if (string.IsNullOrWhiteSpace(txtTenNguyenLieu.Text))
             {
                 errorProvider1.SetError(txtTenNguyenLieu, "Tên nguyên liệu không được để trống!");
@@ -390,9 +388,9 @@ namespace CoffeeManagement.GUI
                                         thatBai++;
                                         continue;
                                     }
-                                    if (giaNhap <= 0)
+                                    if (giaNhap < 0)
                                     {
-                                        giaNhap = 10000; // mặc định nếu sai
+                                        giaNhap = 0; // mặc định nếu sai
                                     }
                                     if (danhMucID <= 0)
                                     {
@@ -401,7 +399,7 @@ namespace CoffeeManagement.GUI
                                     if (string.IsNullOrWhiteSpace(trangThai))
                                         trangThai = "Hoạt động";
                                     if (string.IsNullOrWhiteSpace(donVi))
-                                        donVi = "Cái"; // mặc định
+                                        donVi = "Cái"; 
                                     if (soLuongTon < 0)
                                         soLuongTon = 0;
 
@@ -625,7 +623,6 @@ namespace CoffeeManagement.GUI
                 return;
 
             this.ActiveControl = null;
-            // THOÁT CHẾ ĐỘ THÊM / SỬA
             ResetForm();
             DangThaoTac = false;
         }

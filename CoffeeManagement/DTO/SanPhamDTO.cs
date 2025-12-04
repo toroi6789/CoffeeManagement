@@ -15,7 +15,6 @@ namespace CoffeeManagement.DTO
         private int danhMucID;
         private string trangThai;
         private string hinh;
-
         public int SanPhamID
         {
             get { return sanPhamID; }

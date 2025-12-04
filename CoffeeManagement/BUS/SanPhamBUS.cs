@@ -23,7 +23,6 @@ namespace CoffeeManagement.BUS
 
         //====================================================
         private SanPhamDAO dao = new SanPhamDAO();
-
         public List<SanPhamDTO> LayTatCaSanPham()
         {
             return dao.GetAll();
@@ -153,14 +152,12 @@ namespace CoffeeManagement.BUS
         {
             try
             {
-                return dao.LaySanPhamIDLonNhat(); // Gọi thẳng DAO
+                return dao.LaySanPhamIDLonNhat(); 
             }
             catch (Exception ex)
             {
                 throw new Exception("Lỗi BUS lấy ID lớn nhất: " + ex.Message);
             }
         }
-
-
     }
 }

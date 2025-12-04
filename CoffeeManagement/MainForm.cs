@@ -47,9 +47,9 @@ namespace CoffeeManagement
                 banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
                 //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
                 dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
-
-                // Đảm bảo layout được cập nhật khi form được hiển thị
-                this.Shown += (s, e) => {
+                quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+            // Đảm bảo layout được cập nhật khi form được hiển thị
+            this.Shown += (s, e) => {
                     UpdateTitleBarLayout();
                 };
             }
@@ -362,7 +362,16 @@ namespace CoffeeManagement
             cTHoaDon.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(cTHoaDon);
         }
-        
+
+        public void OnRequestOpenCTSP(int ID)
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            GUI.QuanLyCongThuc congthuc = new GUI.QuanLyCongThuc(ID);
+            congthuc.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(congthuc);
+        }
+
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {

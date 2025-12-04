@@ -58,10 +58,8 @@ namespace CoffeeManagement.DAO
             List<SanPhamNguyenLieuDTO> ds = new List<SanPhamNguyenLieuDTO>();
             string sql = "SELECT SanPhamID, NguyenLieuID, SoLuongSuDung FROM SanPhamNguyenLieu";
             DataTable dt = ExecuteQuery(sql);
-
             var allSP = spDao.GetAll();
             var allNL = nlDao.GetAll();
-
             foreach (DataRow row in dt.Rows)
             {
                 int spId = Convert.ToInt32(row["SanPhamID"]);

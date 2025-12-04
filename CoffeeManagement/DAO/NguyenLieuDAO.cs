@@ -88,7 +88,6 @@ namespace CoffeeManagement.DAO
             }
             catch (Exception ex)
             {
-                // Ghi log nếu cần
                 Console.WriteLine("Lỗi INSERT NguyenLieu: " + ex.Message);
                 return false;
             }
@@ -150,7 +149,6 @@ namespace CoffeeManagement.DAO
             try
             {
                 string sql = "SELECT COALESCE(MAX(NguyenLieuID), 0) FROM NguyenLieu";
-                // COALESCE = MySQL version của ISNULL
                 var dt = DBConnect.ExecuteQuery(sql);
 
                 if (dt.Rows.Count > 0)
@@ -163,6 +161,37 @@ namespace CoffeeManagement.DAO
             {
                 throw new Exception("Lỗi lấy ID lớn nhất: " + ex.Message);
             }
+        }
+
+        public NguyenLieuDTO LayNguyenLieuTheoID(int id)
+        {
+            string sql = @"
+        SELECT NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh
+        FROM NguyenLieu 
+        WHERE NguyenLieuID = @id";
+
+            var parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@id", MySqlDbType.Int32) { Value = id }
+            };
+
+            DataTable dt = ExecuteQuery(sql, parameters);
+
+            if (dt.Rows.Count == 0) return null;
+
+            DataRow row = dt.Rows[0];
+            return new NguyenLieuDTO
+            {
+                NguyenLieuID = Convert.ToInt32(row["NguyenLieuID"]),
+                TenNguyenLieu = row["TenNguyenLieu"].ToString(),
+                GiaNhap = Convert.ToDecimal(row["GiaNhap"]),
+                MoTa = row["MoTa"].ToString(),
+                TrangThai = row["TrangThai"].ToString(),
+                DanhMucID = Convert.ToInt32(row["DanhMucID"]),
+                DonVi = row["DonVi"].ToString(),
+                SoLuongTon = Convert.ToDecimal(row["SoLuongTon"]),
+                Hinh = row["Hinh"].ToString()
+            };
         }
     }
 }
