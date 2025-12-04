@@ -42,29 +42,29 @@ namespace CoffeeManagement
             EnableDraggingContent();
 
             banHang.Dock = DockStyle.Fill;
-            dSHoaDon.Dock = DockStyle.Fill;
-            //tạo control user BanHangGUI để lắng nghe sự kiện thay đổi panel body
-            banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
-            //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
-            dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
+                dSHoaDon.Dock = DockStyle.Fill;
+                //tạo control user BanHangGUI để lắng nghe sự kiện thay đổi panel body
+                banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
+                //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
+                dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
 
-            // Đảm bảo layout được cập nhật khi form được hiển thị
-            this.Shown += (s, e) => {
-                UpdateTitleBarLayout();
-            };
-        }
+                // Đảm bảo layout được cập nhật khi form được hiển thị
+                this.Shown += (s, e) => {
+                    UpdateTitleBarLayout();
+                };
+            }
 
-        private void EnableDraggingContent()
-        {
-            pnlTitle.MouseDown += (s, e) =>
+            private void EnableDraggingContent()
             {
-                if (e.Button == MouseButtons.Left)
+                pnlTitle.MouseDown += (s, e) =>
                 {
-                    ReleaseCapture();
-                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                }
-            };
-        }
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        ReleaseCapture();
+                        SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                    }
+                };
+            }
 
         private void banHangToolStripMenuItem_Click(object sender, EventArgs e)
         {

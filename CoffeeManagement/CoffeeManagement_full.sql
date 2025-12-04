@@ -23,7 +23,7 @@ CREATE TABLE `Role` (
 
 CREATE TABLE `User` (
     UserID             INT AUTO_INCREMENT PRIMARY KEY,
-    TrangThai          VARCHAR(20)  NULL,
+    TrangThai          INT NOT NULL DEFAULT 1,
     Email              VARCHAR(100) NOT NULL UNIQUE,
     MatKhau            VARCHAR(100) NOT NULL,
     NgayDangNhapCuoi   DATETIME     NULL,
@@ -256,11 +256,11 @@ INSERT INTO `Role` (TenRole, MoTa) VALUES
 
 -- 2. User
 INSERT INTO `User` (TrangThai, Email, MatKhau, RoleID) VALUES
-('Hoạt động', 'admin@cafe.vn', '123456', 1),
-('Hoạt động', 'thungan1@cafe.vn', '123456', 2),
-('Hoạt động', 'phache1@cafe.vn', '123456', 3),
-('Hoạt động', 'phucvu1@cafe.vn', '123456', 4),
-('Hoạt động', 'kho1@cafe.vn', '123456', 5);
+(1, 'admin@cafe.vn', '123456', 1),
+(1, 'thungan1@cafe.vn', '123456', 2),
+(1, 'phache1@cafe.vn', '123456', 3),
+(1, 'phucvu1@cafe.vn', '123456', 4),
+(1, 'kho1@cafe.vn', '123456', 5);
 
 -- 3. Nhân viên
 INSERT INTO NhanVien (Ho, Ten, Phone, TrangThai, DateJoin, UserID) VALUES

@@ -18,7 +18,7 @@ namespace CoffeeManagement.DAO
                 SELECT u.UserID, u.Email, u.MatKhau, u.TrangThai, u.RoleID, u.NgayDangNhapCuoi, r.TenRole
                 FROM `User` u
                 INNER JOIN `Role` r ON u.RoleID = r.RoleID
-                WHERE u.Email = @Email AND u.MatKhau = @MatKhau AND u.TrangThai = 'Hoạt động'";
+                WHERE u.Email = @Email AND u.MatKhau = @MatKhau AND u.TrangThai =1";
 
             MySqlParameter[] parameters = new MySqlParameter[]
             {
@@ -36,7 +36,7 @@ namespace CoffeeManagement.DAO
                     UserID = Convert.ToInt32(row["UserID"]),
                     Email = row["Email"].ToString(),
                     MatKhau = row["MatKhau"].ToString(),
-                    TrangThai = row["TrangThai"].ToString(),
+                    TrangThai = Convert.ToInt32(row["TrangThai"]),
                     RoleID = Convert.ToInt32(row["RoleID"]),
                     TenRole = row["TenRole"].ToString(),
                     NgayDangNhapCuoi = row["NgayDangNhapCuoi"] != DBNull.Value ? Convert.ToDateTime(row["NgayDangNhapCuoi"]) : (DateTime?)null
@@ -75,7 +75,7 @@ namespace CoffeeManagement.DAO
                     UserID = Convert.ToInt32(row["UserID"]),
                     Email = row["Email"].ToString(),
                     MatKhau = row["MatKhau"].ToString(),
-                    TrangThai = row["TrangThai"].ToString(),
+                    TrangThai = Convert.ToInt32(row["TrangThai"]),
                     RoleID = Convert.ToInt32(row["RoleID"]),
                     TenRole = row["TenRole"].ToString(),
                     NgayDangNhapCuoi = row["NgayDangNhapCuoi"] != DBNull.Value ? Convert.ToDateTime(row["NgayDangNhapCuoi"]) : (DateTime?)null

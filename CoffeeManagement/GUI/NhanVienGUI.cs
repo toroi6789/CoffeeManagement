@@ -15,6 +15,7 @@ namespace CoffeeManagement.GUI
     public partial class NhanVienGUI : UserControl
     {
         private NhanVienBUS nvBUS;
+        private DataTable dtNhanVien;
 
         public NhanVienGUI()
         {
@@ -22,55 +23,116 @@ namespace CoffeeManagement.GUI
 
             // Khởi tạo BUS với DAO
             nvBUS = new NhanVienBUS(new NhanVienDAO());
+            dataGridViewNhanVien.DataBindingComplete += DataGridViewNhanVien_DataBindingComplete;
 
             LoadNhanVienData();
+        }
+        private void DataGridViewNhanVien_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            var dgv = dataGridViewNhanVien;
+
+            if (dgv.Columns["STT"] != null)
+            {
+                dgv.Columns["STT"].HeaderText = "STT";
+                dgv.Columns["STT"].Width = 50;
+                dgv.Columns["STT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dgv.Columns["STT"].DisplayIndex = 0;
+            }
+
+            if (dgv.Columns["NhanVienID"] != null)
+                dgv.Columns["NhanVienID"].Visible = false;
+
+            if (dgv.Columns["FullName"] != null)
+                dgv.Columns["FullName"].HeaderText = "Tên Nhân Viên";
+
+            if (dgv.Columns["Phone"] != null)
+                dgv.Columns["Phone"].HeaderText = "Số Điện Thoại";
+
+            if (dgv.Columns["TrangThai"] != null)
+                dgv.Columns["TrangThai"].HeaderText = "Trạng Thái";
+
+            // Chỉ đọc
+            dgv.ReadOnly = true;
+
+            // Header style
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.MultiSelect = false;
         }
 
         private void LoadNhanVienData()
         {
-            flowLayoutPanel1.Controls.Clear(); // Xóa các control cũ
+            dtNhanVien = new DataTable();
+            dtNhanVien.Columns.Add("STT", typeof(int));
+            dtNhanVien.Columns.Add("NhanVienID", typeof(int));
+            dtNhanVien.Columns.Add("FullName", typeof(string));
+            dtNhanVien.Columns.Add("Phone", typeof(string));
+            dtNhanVien.Columns.Add("TrangThai", typeof(string));
 
+            // Lấy danh sách nhân viên từ BUS
             var listNV = nvBUS.GetAllNhanVien();
 
+            int stt = 1;
             foreach (var nv in listNV)
             {
-                // Tạo panel cho mỗi nhân viên
-                Panel pnl = new Panel();
-                pnl.Width = 300;
-                pnl.Height = 100;
-                pnl.Margin = new Padding(10);
-                pnl.BackColor = Color.LightCyan;
-                pnl.BorderStyle = BorderStyle.FixedSingle;
-
-                // Label hiển thị tên đầy đủ
-                Label lblName = new Label();
-                lblName.Text = nv.FullName;
-                lblName.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Bold);
-                lblName.Location = new Point(10, 10);
-                lblName.AutoSize = true;
-
-                // Label hiển thị Phone
-                Label lblPhone = new Label();
-                lblPhone.Text = $"Phone: {nv.Phone}";
-                lblPhone.Font = new Font("Microsoft Sans Serif", 10);
-                lblPhone.Location = new Point(10, 40);
-                lblPhone.AutoSize = true;
-
-                // Label hiển thị Trạng thái
-                Label lblStatus = new Label();
-                lblStatus.Text = $"Trạng thái: {nv.TrangThai}";
-                lblStatus.Font = new Font("Microsoft Sans Serif", 10);
-                lblStatus.Location = new Point(10, 65);
-                lblStatus.AutoSize = true;
-
-                // Thêm các label vào panel
-                pnl.Controls.Add(lblName);
-                pnl.Controls.Add(lblPhone);
-                pnl.Controls.Add(lblStatus);
-
-                // Thêm panel vào flowLayoutPanel
-                flowLayoutPanel1.Controls.Add(pnl);
+                dtNhanVien.Rows.Add(
+                    stt++,
+                    nv.NhanVienID,
+                    nv.FullName,
+                    nv.Phone,
+                    nv.TrangThai
+                );
             }
+
+            dataGridViewNhanVien.AutoGenerateColumns = true;
+            dataGridViewNhanVien.DataSource = dtNhanVien;
+
+            // Đặt tên cột
+            dataGridViewNhanVien.Columns["STT"].HeaderText = "STT";
+            dataGridViewNhanVien.Columns["NhanVienID"].HeaderText = "Mã NV";
+            dataGridViewNhanVien.Columns["FullName"].HeaderText = "Tên Nhân Viên";
+            dataGridViewNhanVien.Columns["Phone"].HeaderText = "Số Điện Thoại";
+            dataGridViewNhanVien.Columns["TrangThai"].HeaderText = "Trạng Thái";
+
+            // Ẩn cột ID nếu không cần
+            dataGridViewNhanVien.Columns["NhanVienID"].Visible = false;
+
+            // Căn giữa STT
+            dataGridViewNhanVien.Columns["STT"].Width = 50;
+            dataGridViewNhanVien.Columns["STT"].DefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewNhanVien.Columns["STT"].DisplayIndex = 0;
+
+            // Chỉ đọc
+            dataGridViewNhanVien.ReadOnly = true;
+
+            // Định dạng header
+            dataGridViewNhanVien.EnableHeadersVisualStyles = false;
+            dataGridViewNhanVien.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue;
+            dataGridViewNhanVien.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridViewNhanVien.ColumnHeadersDefaultCellStyle.Font =
+                new Font("Segoe UI", 12, FontStyle.Bold);
+            dataGridViewNhanVien.ColumnHeadersDefaultCellStyle.Alignment =
+                DataGridViewContentAlignment.MiddleCenter;
+
+            // Tự điều chỉnh các cột
+            dataGridViewNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Chọn theo dòng
+            dataGridViewNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewNhanVien.MultiSelect = false;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

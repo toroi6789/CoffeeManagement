@@ -17,6 +17,10 @@ namespace CoffeeManagement.GUI
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.None;
             SetupCustomControls();
+
+            // TESTING ONLY
+            txtEmail.Text = "admin@cafe.vn";
+            txtPassword.Text = "123456";
         }
 
         private void SetupCustomControls()

@@ -11,7 +11,7 @@ namespace CoffeeManagement.DTO
         public int UserID { get; set; }
         public string Email { get; set; } = "";
         public string MatKhau { get; set; } = "";
-        public string TrangThai { get; set; } = "";
+        public int TrangThai { get; set; } = 1;
         public int RoleID { get; set; }
         public string TenRole { get; set; } = "";
         public DateTime? NgayDangNhapCuoi { get; set; }
