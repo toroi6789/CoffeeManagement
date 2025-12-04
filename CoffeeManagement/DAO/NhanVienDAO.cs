@@ -57,6 +57,8 @@ namespace CoffeeManagement.DAO
         // Update employee
         public bool Update(NhanVienDTO nv)
         {
+            Console.WriteLine("UPDATE ID = " + nv.NhanVienID);
+
             string query = @"UPDATE NhanVien 
                              SET Ho=@Ho, Ten=@Ten, Phone=@Phone, TrangThai=@TrangThai,
                                  DateJoin=@DateJoin, NgayCapNhat=@NgayCapNhat, UserID=@UserID

@@ -27,7 +27,7 @@ namespace CoffeeManagement.BUS
         // Add new employee (with validation if needed)
         public bool AddNhanVien(NhanVienDTO nv)
         {
-            nv.NgayCapNhat = DateTime.Now;
+            nv.NgayKhoiTao = DateTime.Now;
             return dao.Insert(nv);
         }
 
@@ -47,5 +47,41 @@ namespace CoffeeManagement.BUS
         {
             return NhanVienDAO.LayNV_userID(UserID);
         }
+
+        public NhanVienDTO GetNhanVienByID(int nhanVienID)
+        {
+            DataTable dt = NhanVienDAO.LayNV_userID(nhanVienID);
+
+            if (dt.Rows.Count == 0)
+                return null;
+
+            return ConvertRowToDTO(dt.Rows[0]);
+        }
+
+        private NhanVienDTO ConvertRowToDTO(DataRow row)
+        {
+            NhanVienDTO nv = new NhanVienDTO();
+
+            nv.NhanVienID = Convert.ToInt32(row["NhanVienID"]);
+            nv.Ho = row["Ho"].ToString();
+            nv.Ten = row["Ten"].ToString();
+            nv.Phone = row["Phone"].ToString();
+            nv.TrangThai = row["TrangThai"].ToString();
+
+            nv.DateJoin = row["DateJoin"] == DBNull.Value
+                ? (DateTime?)null
+                : (DateTime?)Convert.ToDateTime(row["DateJoin"]);
+
+            nv.NgayCapNhat = row["NgayCapNhat"] == DBNull.Value
+                ? (DateTime?)null
+                : (DateTime?)Convert.ToDateTime(row["NgayCapNhat"]);
+
+
+            nv.NgayKhoiTao = Convert.ToDateTime(row["NgayKhoiTao"]);
+            nv.UserID = Convert.ToInt32(row["UserID"]);
+
+            return nv;
+        }
+
     }
 }
