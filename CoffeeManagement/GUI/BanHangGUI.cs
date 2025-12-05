@@ -19,7 +19,7 @@ namespace CoffeeManagement.GUI
         {
             InitializeComponent();
 
-
+            
         }
 
 
@@ -104,7 +104,7 @@ namespace CoffeeManagement.GUI
                     // Thêm sản phẩm vào đơn hàng trong OrderGUI
 
 
-                    this.orderGUI1.dataGridView1.Rows.Add(maSanPham, tenSanPham, giaBan);
+                    this.orderGUI1.dataGridView1.Rows.Add(maSanPham, tenSanPham, giaBan, 1);
                 }
             }
             else

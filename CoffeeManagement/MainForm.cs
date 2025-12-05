@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CoffeeManagement.BUS;
 using CoffeeManagement.DTO;
 using CoffeeManagement.GUI;
 
@@ -42,12 +43,15 @@ namespace CoffeeManagement
             EnableDraggingContent();
 
             banHang.Dock = DockStyle.Fill;
-                dSHoaDon.Dock = DockStyle.Fill;
-                //tạo control user BanHangGUI để lắng nghe sự kiện thay đổi panel body
-                banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
-                //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
-                dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
-                quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+            dSHoaDon.Dock = DockStyle.Fill;
+
+            //tạo control user BanHangGUI để lắng nghe sự kiện thay đổi panel body
+            banHang.PnlBodyChangedToThanhToan += OnPnlBodyChangedToThanhToan;
+
+            //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
+            dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
+            quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+
             // Đảm bảo layout được cập nhật khi form được hiển thị
             this.Shown += (s, e) => {
                     UpdateTitleBarLayout();
@@ -344,14 +348,17 @@ namespace CoffeeManagement
             //lắng nghe sự kiện thay đổi panel body từ control user ThanhToanGUI
             thanhToan.RequestPnlBodyToBanHang += OnPnlBodyChangedToBanHang;
         }
-        //ban hang
-        public void OnPnlBodyChangedToBanHang()
+
+        private void OnPnlBodyChangedToBanHang()
         {
             // Xóa nội dung hiện tại trong pnlBody
             this.pnlBody.Controls.Clear();
             banHang.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(banHang);
         }
+
+        //ban hang
+
 
         // lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
         public void OnRequestOpenCTHoaDon(int ID)

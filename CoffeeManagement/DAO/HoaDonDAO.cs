@@ -32,9 +32,11 @@ namespace CoffeeManagement.DAO
         // tạo hóa đơn mới
         public static void TaoHoaDon(int NhanVienID, int BanID, DateTime NgayLap, decimal TongTien, string trangthai, int IDKM)
         {
-            string query;
-            if (IDKM == 0) query = $"INSERT INTO hoadon (NhanVienID, BanID, NgayKhoiTao, TongTien, TrangThai) VALUES ({NhanVienID}, {BanID}, '{NgayLap.ToString("yyyy-MM-dd HH:mm:ss")}', {TongTien}, '{trangthai}');";
-            else query = $"INSERT INTO hoadon (NhanVienID, BanID, NgayKhoiTao, TongTien, TrangThai, KhuyenMaiID) VALUES ({NhanVienID}, {BanID}, '{NgayLap.ToString("yyyy-MM-dd HH:mm:ss")}', {TongTien}, '{trangthai}', '{IDKM}');";
+            string query =
+                $"INSERT INTO hoadon (NhanVienID, BanID, NgayKhoiTao, TongTien, TrangThai, KhuyenMaiID) " +
+                $"VALUES ({NhanVienID}, {(BanID == 0 ? "NULL" : IDKM.ToString())}, '{NgayLap:yyyy-MM-dd HH:mm:ss}', {TongTien}, '{trangthai}', " +
+                $"{(IDKM == 0 ? "NULL" : IDKM.ToString())});";
+
             DBConnect.ExecuteNonQuery(query);
         }
         // tạo chi tiết hóa đơn mới

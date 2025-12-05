@@ -51,12 +51,12 @@ namespace CoffeeManagement.GUI
             }
             errorProvider1.SetError(dataGridView1, "");
             // Kiểm tra chọn bàn
-            if (cbb_Ban.SelectedItem == null)
-            {
-                errorProvider1.SetError(cbb_Ban, "Vui lòng chọn bàn!");
-                return;
-            }
-            errorProvider1.SetError(cbb_Ban, "");
+            //if (cbb_Ban.SelectedItem == null)
+            //{
+            //    errorProvider1.SetError(cbb_Ban, "Vui lòng chọn bàn!");
+            //    return;
+            //}
+            //errorProvider1.SetError(cbb_Ban, "");
             //kiểm tra tổng tiền
             if (tongTien <= 0)
             {
@@ -68,9 +68,25 @@ namespace CoffeeManagement.GUI
 
             //
             // Tạo hóa đơn mới
-            // 
-            string[] banInfo = cbb_Ban.SelectedItem.ToString().Split('-');
-            int banID = Convert.ToInt32(banInfo[0].Trim());
+            //
+            int banID = 0;
+
+            if (cbb_Ban.SelectedItem != null)
+            {
+                try
+                {
+                    string[] banInfo = cbb_Ban.SelectedItem.ToString().Split('-');
+                    banID = Convert.ToInt32(banInfo[0].Trim());
+                }
+                catch
+                {
+                    errorProvider1.SetError(txtTong, "Dữ liệu không hợp lệ!");
+                    return;
+                } 
+            }
+
+
+
 
             int KMID;
             if (cbb_KM.SelectedIndex < 0)

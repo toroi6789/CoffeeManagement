@@ -18,11 +18,16 @@ namespace CoffeeManagement.GUI
         public ThanhToanGUI()
         {
             InitializeComponent();
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.SelectedIndex = 0;
         }
         public ThanhToanGUI(int HoaDonID)
         {
             InitializeComponent();
             hoaDonID = HoaDonID;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.SelectedIndex = 0;
+            
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -38,32 +43,54 @@ namespace CoffeeManagement.GUI
                 errorProvider1.SetError(comboBox1, "Vui lòng chọn phương thức thanh toán!");
                 return;
             }
-            errorProvider1.SetError(comboBox1, "");
-            // check tien nhan
-            if (Convert.ToDecimal(txtTienNhan.Text) < Convert.ToDecimal(txtTongTien.Text) || Convert.ToDecimal(txtTienNhan.Text) == 0)
+
+            //
+            if (string.IsNullOrEmpty(txtTienNhan.Text))
             {
-                errorProvider1.SetError(txtTienNhan, "Số tiền nhận không đủ để thanh toán!");
+                errorProvider1.SetError(comboBox1, "Vui lòng nhập số tiền nhận!");
                 return;
             }
-            errorProvider1.SetError(txtTienNhan, "");
+            errorProvider1.SetError(comboBox1, "");
+            // check tien nhan
+            try
+            {
+                if (Convert.ToDecimal(txtTienNhan.Text) < Convert.ToDecimal(txtTongTien.Text) || Convert.ToDecimal(txtTienNhan.Text) == 0)
+                {
+                    errorProvider1.SetError(txtTienNhan, "Số tiền nhận không đủ để thanh toán!");
+                    return;
+                }
+                errorProvider1.SetError(txtTienNhan, "");
+            }
+            catch (Exception ex)
+            {
+                errorProvider1.SetError(txtTienNhan, "Vui lòng nhập số nguyên!");
+                return;
+            }
 
-            //luu ThanhToan
-            BUS.ThanhToanBUS.TaoThanhToan(
-                Convert.ToInt32(txtIDHD.Text),
-                Convert.ToInt32(txtIDNV.Text),
-                Convert.ToDecimal(txtTongTien.Text),
-                comboBox1.SelectedItem.ToString(),
-                DateTime.Now,
-                "Hoàn tất"
+            try
+            {
+                //luu ThanhToan
+                BUS.ThanhToanBUS.TaoThanhToan(
+                    hoaDonID,
+                    Convert.ToInt32(txtIDNV.Text),
+                    Convert.ToDecimal(txtTongTien.Text),
+                    comboBox1.SelectedItem.ToString(),
+                    DateTime.Now,
+                    "Hoàn tất"
                 );
 
-            //sua hoa don
-            BUS.HoaDonBUS.SuaTrangThai(hoaDonID, "Đã thanh toán");
-            //cap nhat phuong thuc
-            BUS.HoaDonBUS.Capnhatphuongthuc(hoaDonID, comboBox1.SelectedItem.ToString());
+                //sua hoa don
+                BUS.HoaDonBUS.SuaTrangThai(hoaDonID, "Đã thanh toán");
+                //cap nhat phuong thuc
+                BUS.HoaDonBUS.Capnhatphuongthuc(hoaDonID, comboBox1.SelectedItem.ToString());
 
-            // Chuyen ve giao dien ban hang
-            RequestPnlBodyToBanHang?.Invoke();
+                // Chuyen ve giao dien ban hang
+                RequestPnlBodyToBanHang?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể thanh toán", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ThanhToan_Load(object sender, EventArgs e)
@@ -92,8 +119,17 @@ namespace CoffeeManagement.GUI
         //tinh tien thoi
         private void txtTienNhan_TextChanged(object sender, EventArgs e)
         {
-            if (txtTienNhan.Text.Length <= 0) return; 
-            txtTienThoi.Text = (Convert.ToDouble(txtTienNhan.Text) - Convert.ToDouble(txtTongTien.Text)).ToString();
+            try
+            {
+                if (txtTienNhan.Text.Length <= 0) return;
+                txtTienThoi.Text = (Convert.ToDouble(txtTienNhan.Text) - Convert.ToDouble(txtTongTien.Text)).ToString();
+            }
+            catch (Exception ex)
+            {
+                errorProvider1.SetError(txtTienNhan, "Vui lòng nhập số nguyên!");
+                return;
+            }
+           
         }
 
         private void ThanhToanGUI_SizeChanged(object sender, EventArgs e)

@@ -168,7 +168,7 @@ CREATE TABLE HoaDon (
     TrangThai             VARCHAR(20)  NULL,
     TongTien              DECIMAL(18,2) DEFAULT 0,
     PhuongThucThanhToan   VARCHAR(50)  NULL,
-    BanID                 INT          NOT NULL,
+    BanID                 INT          NULL,
     NhanVienID            INT          NOT NULL,
     KhuyenMaiID           INT          NULL,
     CONSTRAINT fk_hoadon_ban
