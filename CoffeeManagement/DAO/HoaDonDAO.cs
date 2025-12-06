@@ -34,7 +34,7 @@ namespace CoffeeManagement.DAO
         {
             string query =
                 $"INSERT INTO hoadon (NhanVienID, BanID, NgayKhoiTao, TongTien, TrangThai, KhuyenMaiID) " +
-                $"VALUES ({NhanVienID}, {(BanID == 0 ? "NULL" : IDKM.ToString())}, '{NgayLap:yyyy-MM-dd HH:mm:ss}', {TongTien}, '{trangthai}', " +
+                $"VALUES ({NhanVienID}, {(BanID == 0 ? "NULL" : BanID.ToString())}, '{NgayLap:yyyy-MM-dd HH:mm:ss}', {TongTien}, '{trangthai}', " +
                 $"{(IDKM == 0 ? "NULL" : IDKM.ToString())});";
 
             DBConnect.ExecuteNonQuery(query);
