@@ -1,6 +1,7 @@
 ﻿using CoffeeManagement.DAO;
 using CoffeeManagement.DTO;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace CoffeeManagement.BUS
@@ -42,6 +43,27 @@ namespace CoffeeManagement.BUS
             }
 
             return false;
+        }
+
+        public static List<DatBanDTO> ChuyenDataTableSangDTO(DataTable dt)
+        {
+            List<DatBanDTO> list = new List<DatBanDTO>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                DatBanDTO dto = new DatBanDTO
+                {
+                    DatBanID = Convert.ToInt32(row["DatBanID"]),
+                    BanID = Convert.ToInt32(row["BanID"]),
+                    Ngay = Convert.ToDateTime(row["Ngay"]),
+                    GioBatDau = TimeSpan.Parse(row["GioBatDau"].ToString()),
+                    GioKetThuc = TimeSpan.Parse(row["GioKetThuc"].ToString())
+                };
+
+                list.Add(dto);
+            }
+
+            return list;
         }
 
     }

@@ -50,13 +50,7 @@ namespace CoffeeManagement.GUI
                 if (i >= dataGridView1.Rows.Count - 1) break;
             }
             errorProvider1.SetError(dataGridView1, "");
-            // Kiểm tra chọn bàn
-            //if (cbb_Ban.SelectedItem == null)
-            //{
-            //    errorProvider1.SetError(cbb_Ban, "Vui lòng chọn bàn!");
-            //    return;
-            //}
-            //errorProvider1.SetError(cbb_Ban, "");
+
             //kiểm tra tổng tiền
             if (tongTien <= 0)
             {
@@ -70,6 +64,7 @@ namespace CoffeeManagement.GUI
             // Tạo hóa đơn mới
             //
             int banID = 0;
+            bool coNguoiDatBanHomNay = false;
 
             if (cbb_Ban.SelectedItem != null)
             {
@@ -77,6 +72,26 @@ namespace CoffeeManagement.GUI
                 {
                     string[] banInfo = cbb_Ban.SelectedItem.ToString().Split('-');
                     banID = Convert.ToInt32(banInfo[0].Trim());
+                    List<DatBanDTO> dsDatBan = DatBanBUS.ChuyenDataTableSangDTO(DatBanBUS.LayDatBanTheoBan(banID));
+
+                    foreach (var item in dsDatBan)
+                    {
+                        if (DateTime.Now.TimeOfDay < item.GioBatDau && !coNguoiDatBanHomNay)
+                        {
+                            MessageBox.Show("Có người đặt bàn trong hôm nay!", "Thông báo",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            coNguoiDatBanHomNay = true;
+                        }
+                        // Ghép Ngày + Giờ
+                        DateTime thoiGianBatDau = item.Ngay.Date + item.GioBatDau; // của bàn đã hẹn
+
+                        // Cho phép khách ngồi trong 1 tiếng trước khi đến hẹn bàn
+                        if (DateTime.Now.AddHours(1) >= thoiGianBatDau && thoiGianBatDau >= DateTime.Now)
+                        {
+                            errorProvider1.SetError(txtTong, "Bàn có người đặt trong 1h tới!");
+                            return;
+                        }
+                    }
                 }
                 catch
                 {
