@@ -13,11 +13,18 @@ namespace CoffeeManagement.BUS
     public class SanPhamNguyenLieuBUS
     {
         private SanPhamNguyenLieuDAO dao = new SanPhamNguyenLieuDAO();
-        // Lấy công thức theo sản phẩm (trả về List để dễ dùng)
         public List<SanPhamNguyenLieuDTO> LayCongThucTheoSanPhamBUS(int sanPhamID)
         {
             return dao.LayCongThucTheoSanPham(sanPhamID);
         }
-
+        public void ThemNguyenLieuVaoSanPham(int SanPhamID, int NguyenLieuID , decimal SoLuongSuDung)
+        {
+            dao.ThemNguyenLieuVaoSanPham(SanPhamID,NguyenLieuID,SoLuongSuDung);
+        }
+        public void XoaNguyenLieuCuaSanPham(int NguyenLieuID)
+        {
+            dao.XoaNguyenLieuCuaSanPham( NguyenLieuID);
+        }
     }
+
 }

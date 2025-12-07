@@ -221,7 +221,7 @@ namespace CoffeeManagement.GUI
                 return;
             }
 
-            // Lấy thông tin nguyên liệu để thêm vào bảng phải
+            // Lấy thông tin nguyên liệu 
             DataGridViewRow selectedRow = AllNguyenLieu.CurrentRow;
             DataRow newRow = dtNguyenLieuSP.NewRow();
             newRow["STT"] = dtNguyenLieuSP.Rows.Count + 1;
@@ -234,11 +234,16 @@ namespace CoffeeManagement.GUI
             newRow["SoLuongTon"] = selectedRow.Cells["SoLuongTon"].Value;
             newRow["DonVi"] = selectedRow.Cells["DonVi"].Value;
             newRow["SoLuongSuDung"] = 0;
+            spnl_bus.ThemNguyenLieuVaoSanPham(
+                sanphamID,
+                (int)selectedRow.Cells["NguyenLieuID"].Value,
+                0
+            );
             // Các cột khác giữ nguyên nếu cần
             dtNguyenLieuSP.Rows.Add(newRow);
             LocTatCaNguyenLieu();
             // Reset ô nhập
-            AllNguyenLieu.CurrentRow.Selected = false; // bỏ chọn để người dùng chọn lại
+            AllNguyenLieu.CurrentRow.Selected = false;
             btnThem.Enabled = false;
             MessageBox.Show("Đã thêm nguyên liệu vào công thức!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -254,8 +259,52 @@ namespace CoffeeManagement.GUI
             if (MessageBox.Show("Xóa nguyên liệu này khỏi công thức?", "Xác nhận",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                int nguyenLieuID = Convert.ToInt32(
+                    NguyenLieuSP.CurrentRow.Cells["NguyenLieuID"].Value
+                );
                 NguyenLieuSP.Rows.Remove(NguyenLieuSP.CurrentRow);
-                LocNguyenLieuCuaSanPham();
+                spnl_bus.XoaNguyenLieuCuaSanPham(nguyenLieuID);
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch_ID.Text))
+            {
+                errorProvider1.SetError(txtSearch_ID, "Vui lòng nhập ID nguyên liệu cần tìm!");
+                LocTatCaNguyenLieu();
+                return;
+            }
+            errorProvider1.Clear();
+            int idCanTim;
+            if (!int.TryParse(txtSearch_ID.Text.Trim(), out idCanTim))
+            {
+                errorProvider1.SetError(txtSearch_ID, "ID phải là số nguyên!");
+                LocTatCaNguyenLieu();
+                return;
+            }
+
+            DataView dv = dtNguyenLieu.DefaultView;
+            dv.RowFilter = $"NguyenLieuID = {idCanTim}";
+            dv.Sort = "STT ASC";
+            AllNguyenLieu.DataSource = dv;
+            // Kiểm tra kết quả tìm kiếm
+            if (AllNguyenLieu.Rows.Count == 0 || (AllNguyenLieu.Rows.Count == 1 && AllNguyenLieu.Rows[0].IsNewRow))
+            {
+                MessageBox.Show($"Không tìm thấy nguyên liệu có ID = {idCanTim}",
+                                "Không tìm thấy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LocTatCaNguyenLieu();
+                txtSearch_ID.Focus();
+                txtSearch_ID.SelectAll();
+            }
+            else
+            {
+                AllNguyenLieu.Rows[0].Selected = true;
+                AllNguyenLieu.CurrentCell = AllNguyenLieu.Rows[0].Cells[1];
+                AllNguyenLieu.FirstDisplayedScrollingRowIndex = 0;
+
+                MessageBox.Show($"Đã tìm thấy nguyên liệu ID = {idCanTim}",
+                                "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

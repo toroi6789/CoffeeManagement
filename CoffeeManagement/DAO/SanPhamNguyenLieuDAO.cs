@@ -82,6 +82,19 @@ namespace CoffeeManagement.DAO
             return ds;
         }
 
+        public void ThemNguyenLieuVaoSanPham(int SanPhamID, int NguyenLieuID, decimal SoLuongSuDung)
+        {
+            string query =
+                $"INSERT INTO sanphamnguyenlieu (SanPhamID, NguyenLieuID, SoLuongSuDung) " +
+                $"VALUES ({SanPhamID}, {NguyenLieuID}, {SoLuongSuDung})";
+
+            DBConnect.ExecuteNonQuery(query);
+        }
+        public void XoaNguyenLieuCuaSanPham(int ID)
+        {
+            string query = $"delete FROM coffeemanagement.sanphamnguyenlieu where NguyenLieuID = '{ID}';";
+            DBConnect.ExecuteNonQuery(query);
+        }
 
     }
 }
