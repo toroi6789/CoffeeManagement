@@ -50,24 +50,72 @@ namespace CoffeeManagement
             //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
             dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
             quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+            ShowMenuItemBaseOnUser();
 
             // Đảm bảo layout được cập nhật khi form được hiển thị
             this.Shown += (s, e) => {
                     UpdateTitleBarLayout();
-                };
-            }
+            };
 
-            private void EnableDraggingContent()
-            {
-                pnlTitle.MouseDown += (s, e) =>
-                {
-                    if (e.Button == MouseButtons.Left)
-                    {
-                        ReleaseCapture();
-                        SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                    }
-                };
+        }
+        private void ShowMenuItemBaseOnUser()
+        {
+            // Reset: ban đầu ẩn tất cả
+            banHangToolStripMenuItem.Visible = false;
+            hoaDonToolStripMenuItem.Visible = false;
+            nhanVienToolStripMenuItem.Visible = false;
+            nhapKhoToolStripMenuItem.Visible = false;
+            đặtBànToolStripMenuItem.Visible = false;
+            sanPhamToolStripMenuItem.Visible = false;
+            danhMụcToolStripMenuItem.Visible = false;
+            bànToolStripMenuItem.Visible = false;
+            nhàCungCấpToolStripMenuItem.Visible = false;
+            nguyênLiệuToolStripMenuItem.Visible = false;
+            nguyênLiệuToolStripMenuItem1.Visible = false;
+            danhSáchHóaĐơnToolStripMenuItem.Visible = false;
+
+            switch (Session.CurrentUser.RoleID) {
+                case 1:
+                    // Admin được xem tất cả
+                    banHangToolStripMenuItem.Visible = true;
+                    hoaDonToolStripMenuItem.Visible = true;
+                    nhanVienToolStripMenuItem.Visible = true;
+                    nhapKhoToolStripMenuItem.Visible = true;
+                    đặtBànToolStripMenuItem.Visible = true;
+                    sanPhamToolStripMenuItem.Visible = true;
+                    danhMụcToolStripMenuItem.Visible = true;
+                    bànToolStripMenuItem.Visible = true;
+                    nhàCungCấpToolStripMenuItem.Visible = true;
+                    nguyênLiệuToolStripMenuItem.Visible = true;
+                    nguyênLiệuToolStripMenuItem1.Visible = true;
+                    danhSáchHóaĐơnToolStripMenuItem.Visible = true;
+                    break;
+                case 5:
+                    nhapKhoToolStripMenuItem.Visible = true;
+                    nguyênLiệuToolStripMenuItem.Visible = true;
+                    nguyênLiệuToolStripMenuItem1.Visible = true;
+                    danhMụcToolStripMenuItem.Visible = true;
+                    nhàCungCấpToolStripMenuItem.Visible = true;
+                    break;
+                default: // thu ngân, pha chế, phục vụ (case 2,3,4)
+                    banHangToolStripMenuItem.Visible = true;
+                    đặtBànToolStripMenuItem.Visible = true;
+                    hoaDonToolStripMenuItem.Visible = true;
+                    danhSáchHóaĐơnToolStripMenuItem.Visible = true;
+                    break;
             }
+        }
+        private void EnableDraggingContent()
+        {
+            pnlTitle.MouseDown += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                }
+            };
+        }
 
         private void banHangToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -152,6 +200,7 @@ namespace CoffeeManagement
                 {
                     // Cập nhật thông tin user mới
                     UpdateUserInfo();
+                    ShowMenuItemBaseOnUser();
                     this.Show();
                 }
                 else
