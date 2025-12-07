@@ -23,6 +23,8 @@ namespace CoffeeManagement.BUS
 
         //====================================================
         private SanPhamDAO dao = new SanPhamDAO();
+        private SanPhamNguyenLieuDAO spnl_dao = new SanPhamNguyenLieuDAO();
+        private NguyenLieuDAO nl_dao = new NguyenLieuDAO();
         public List<SanPhamDTO> LayTatCaSanPham()
         {
             return dao.GetAll();
@@ -147,6 +149,18 @@ namespace CoffeeManagement.BUS
             return kq;
         }
 
+        public bool CapNhatTrangThaiSanPham(int sanPhamID, string trangThaiMoi)
+        {
+            try
+            {
+                return dao.daoCapNhatTrangThaiSanPham(sanPhamID, trangThaiMoi);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         // LẤY ID LỚN NHẤT TRONG DATABASE + 1
         public int LaySanPhamIDLonNhat()
         {
@@ -160,10 +174,37 @@ namespace CoffeeManagement.BUS
             }
         }
 
-        // KIEM TRA SAN PHAM HET HANG
-        public static void KiemTraSanPhamHetHang()
+        public bool KiemTraNguyenLieuThieu(int sanPhamID)
         {
-            SanPhamDAO.KiemTraSanPhamHetHang();
+            try
+            {
+                var dsCongThuc = spnl_dao.LayCongThucTheoSanPham(sanPhamID);
+                if (dsCongThuc == null || !dsCongThuc.Any())
+                {
+                    return false;
+                }
+
+                // Kiểm tra từng nguyên liệu
+                foreach (var ct in dsCongThuc)
+                {
+                    var nguyenLieu = nl_dao.LayNguyenLieuTheoID(ct.NguyenLieu.NguyenLieuID);
+                    if (nguyenLieu == null)
+                        continue; // Bỏ qua nếu không tìm thấy
+                    if (ct.NguyenLieu.SoLuongTon < ct.SoLuongSuDung)
+                    {
+                        return true; // Thiếu nguyên liệu
+                    }
+                    if (ct.NguyenLieu.SoLuongTon == 0 & ct.SoLuongSuDung == 0)
+                    {
+                        return true; // Thiếu nguyên liệu
+                    }
+                }
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
         }
     }
 }

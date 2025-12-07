@@ -11,7 +11,6 @@ namespace CoffeeManagement.BUS
     public class NguyenLieuBUS
     {
         private NguyenLieuDAO dao = new NguyenLieuDAO();
-
         public List<NguyenLieuDTO> LayTatCaNguyenLieu()
         {
             return dao.GetAll();
@@ -32,7 +31,6 @@ namespace CoffeeManagement.BUS
         {
             message = "";
             errorField = "";
-
             // === 1. KIỂM TRA ID ===
             if (nl.NguyenLieuID < 0)
             {
@@ -134,7 +132,7 @@ namespace CoffeeManagement.BUS
             return kq;
         }
 
-        // 
+        // Xoa nguyen lieu
         public bool busXoaNguyenLieu(int nguyenLieuID, out string message)
         {
             message = "";

@@ -102,5 +102,42 @@ namespace CoffeeManagement.DAO
 
             ExecuteNonQuery(query, parameters);
         }
+
+        public UserDTO GetUserByID(int userID)
+        {
+            string query = @"
+                SELECT u.UserID, u.Email, u.MatKhau, u.TrangThai, u.RoleID, 
+                       u.NgayDangNhapCuoi, r.TenRole
+                FROM `User` u
+                INNER JOIN `Role` r ON u.RoleID = r.RoleID
+                WHERE u.UserID = @UserID";
+
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@UserID", userID)
+            };
+
+            DataTable dt = ExecuteQuery(query, parameters);
+
+            if (dt.Rows.Count == 0)
+                return null;
+
+            DataRow row = dt.Rows[0];
+
+            return new UserDTO
+            {
+                UserID = Convert.ToInt32(row["UserID"]),
+                Email = row["Email"].ToString(),
+                MatKhau = row["MatKhau"].ToString(),
+                TrangThai = Convert.ToInt32(row["TrangThai"]),
+                RoleID = Convert.ToInt32(row["RoleID"]),
+                TenRole = row["TenRole"].ToString(),
+                NgayDangNhapCuoi = row["NgayDangNhapCuoi"] != DBNull.Value
+                                    ? Convert.ToDateTime(row["NgayDangNhapCuoi"])
+                                    : (DateTime?)null
+            };
+        }
+
+
     }
 }

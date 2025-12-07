@@ -1,6 +1,7 @@
 ﻿using CoffeeManagement.DTO;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -16,27 +17,27 @@ namespace CoffeeManagement.DAO
         private SanPhamDAO spDao = new SanPhamDAO();
         private NguyenLieuDAO nlDao = new NguyenLieuDAO();
 
-        // Lấy công thức của 1 sản phẩm (dùng khi mở form chi tiết sản phẩm)
+        // Lấy công thức của 1 sản phẩm 
         public List<SanPhamNguyenLieuDTO> LayCongThucTheoSanPham(int sanPhamID)
         {
             List<SanPhamNguyenLieuDTO> ds = new List<SanPhamNguyenLieuDTO>();
-
             string sql = @"
             SELECT spnl.NguyenLieuID, spnl.SoLuongSuDung
             FROM SanPhamNguyenLieu spnl
             WHERE spnl.SanPhamID = @SanPhamID";
+<<<<<<< HEAD
 
             var param = new MySqlParameter("@SanPhamID",Convert.ToInt32( sanPhamID ));
+=======
+            var param = new MySqlParameter("@SanPhamID", MySqlDbType.Int32) { Value = sanPhamID };
+>>>>>>> 1266e116af3d8d94a5463688c8988e5429c18eee
             DataTable dt = ExecuteQuery(sql, new[] { param });
-
             var sanPham = spDao.GetAll().FirstOrDefault(x => x.SanPhamID == sanPhamID);
             if (sanPham == null) return ds;
-
             foreach (DataRow row in dt.Rows)
             {
                 int nlId = Convert.ToInt32(row["NguyenLieuID"]);
                 decimal sl = Convert.ToDecimal(row["SoLuongSuDung"]);
-
                 var nguyenLieu = nlDao.GetAll().FirstOrDefault(x => x.NguyenLieuID == nlId);
                 if (nguyenLieu != null)
                 {
@@ -48,7 +49,6 @@ namespace CoffeeManagement.DAO
                     });
                 }
             }
-
             return ds;
         }
 
@@ -65,10 +65,8 @@ namespace CoffeeManagement.DAO
                 int spId = Convert.ToInt32(row["SanPhamID"]);
                 int nlId = Convert.ToInt32(row["NguyenLieuID"]);
                 decimal sl = Convert.ToDecimal(row["SoLuongSuDung"]);
-
                 var sp = allSP.FirstOrDefault(x => x.SanPhamID == spId);
                 var nl = allNL.FirstOrDefault(x => x.NguyenLieuID == nlId);
-
                 if (sp != null && nl != null)
                 {
                     ds.Add(new SanPhamNguyenLieuDTO
@@ -87,7 +85,6 @@ namespace CoffeeManagement.DAO
             string query =
                 $"INSERT INTO sanphamnguyenlieu (SanPhamID, NguyenLieuID, SoLuongSuDung) " +
                 $"VALUES ({SanPhamID}, {NguyenLieuID}, {SoLuongSuDung})";
-
             DBConnect.ExecuteNonQuery(query);
         }
         public void XoaNguyenLieuCuaSanPham(int ID)
@@ -95,6 +92,7 @@ namespace CoffeeManagement.DAO
             string query = $"delete FROM coffeemanagement.sanphamnguyenlieu where NguyenLieuID = '{ID}';";
             DBConnect.ExecuteNonQuery(query);
         }
+<<<<<<< HEAD
 
         // 
         public static bool KiemTraNguyenLieuTonKhoChoSanPham(int IDsp)
@@ -113,6 +111,12 @@ namespace CoffeeManagement.DAO
                 }
             }
             return false;
+=======
+        public void CapNhatSoLuongSuDung(int sanphamID, int nguyenLieuID, decimal soLuongMoi)
+        {
+            string sql = $"UPDATE sanphamnguyenlieu SET SoLuongSuDung = '{soLuongMoi}' WHERE SanPhamID = '{sanphamID}' AND NguyenLieuID = '{nguyenLieuID}';";
+            DBConnect.ExecuteNonQuery(sql);
+>>>>>>> 1266e116af3d8d94a5463688c8988e5429c18eee
         }
     }
 }

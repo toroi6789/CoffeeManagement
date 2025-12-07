@@ -25,6 +25,10 @@ namespace CoffeeManagement.BUS
         {
             dao.XoaNguyenLieuCuaSanPham( NguyenLieuID);
         }
+        public void CapNhatSoLuongSuDung(int sanphamID, int nguyenLieuID, decimal soLuongMoi)
+        {
+            dao.CapNhatSoLuongSuDung(sanphamID, nguyenLieuID, soLuongMoi);
+        }
     }
 
 }
