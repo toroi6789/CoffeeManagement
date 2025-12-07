@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,21 @@ namespace CoffeeManagement.GUI
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.SelectedIndex = 0;
             
+            pictureBox1.Visible = false;
+            string path = Path.Combine(Application.StartupPath, @"Images", "qrcode.png");
+            if (!File.Exists(path))
+            {
+                path = Path.Combine(Application.StartupPath, @"Images", "null.png");
+            }
+            Image img2 = null;
+            if (File.Exists(path))
+            {
+                using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    img2 = Image.FromStream(stream);
+                }
+            }
+            pictureBox1.Image = Compoment.ResizeImage(img2, 180, 180);
         }
 
         private void label8_Click(object sender, EventArgs e)
@@ -49,7 +65,7 @@ namespace CoffeeManagement.GUI
             //
             if (string.IsNullOrEmpty(txtTienNhan.Text))
             {
-                errorProvider1.SetError(comboBox1, "Vui lòng nhập số tiền nhận!");
+                errorProvider1.SetError(txtTienNhan, "Vui lòng nhập số tiền nhận!");
                 return;
             }
             errorProvider1.SetError(comboBox1, "");
@@ -103,7 +119,7 @@ namespace CoffeeManagement.GUI
                     foreach (var item in listSPNL)
                     {
                         NguyenLieuDTO nl = item.NguyenLieu;
-                        nl.SoLuongTon -= item.SoLuongSuDung;
+                        nl.SoLuongTon -= item.SoLuongSuDung * Convert.ToDecimal(row["SoLuong"]);
                         MessageBox.Show(
                             "NL ID = " + nl.NguyenLieuID + "Sản phẩm: " + sanPhamID + "\nNguyên liệu: " + nl.TenNguyenLieu + "\nTrừ: " + item.SoLuongSuDung,
                             "Thông báo",
@@ -113,7 +129,10 @@ namespace CoffeeManagement.GUI
                         nlBUS.busSuaNguyenLieu(nl, out message, out error);
                     }
                 }
-                
+
+                // check cac sp het hang
+                BUS.SanPhamBUS.KiemTraSanPhamHetHang();
+
 
                 // Chuyen ve giao dien ban hang
                 RequestPnlBodyToBanHang?.Invoke();
@@ -169,6 +188,7 @@ namespace CoffeeManagement.GUI
             groupBox1.Size = new Size((int)(this.Width * 0.8), (int)(this.Height * 0.65));
             groupBox1.Location = new Point((int)(this.Width - groupBox1.Width) / 2, label1.Location.Y + label1.Height + 20);
             btn_ThanhToan.Location = new Point((int)(this.Width - btn_ThanhToan.Width) / 2, groupBox1.Height + groupBox1.Location.Y + 20);
+
         }
 
         private void groupBox1_SizeChanged(object sender, EventArgs e)
@@ -184,6 +204,19 @@ namespace CoffeeManagement.GUI
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != 1)
+            {
+                pictureBox1.Visible = false;
+            }
+            if (comboBox1.SelectedIndex == 1) 
+            { 
+                pictureBox1.Visible = true;
+            }
 
         }
     }

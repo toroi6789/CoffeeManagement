@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoffeeManagement.DAO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -101,8 +102,8 @@ namespace CoffeeManagement.GUI
 
         private void DSHoaDon_SizeChanged(object sender, EventArgs e)
         {
-            this.dataGridView1.Size = new Size((int)(this.Width * 0.7), (int)(this.Height * 0.8));
-            this.dataGridView1.Location = new Point(30,90);
+            this.dataGridView1.Size = new Size((int)(this.Width * 0.7), (int)(this.Height * 0.6));
+            this.dataGridView1.Location = new Point(30,160);
             this.panel1.Location = new Point(dataGridView1.Size.Width + dataGridView1.Location.X + 30, 90);
             this.label2.Location = new Point(30,60);
             this.txtSearch_ID.Size = new Size((int)(this.Width * 0.5), txtSearch_ID.Size.Height);
@@ -137,6 +138,7 @@ namespace CoffeeManagement.GUI
                 btnDelete.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(btnDelete);
             }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void DSHoaDonGUI_ParentChanged(object sender, EventArgs e)
@@ -166,6 +168,79 @@ namespace CoffeeManagement.GUI
                 btnDelete.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(btnDelete);
             }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Columns.Clear();
+            dataGridView1.DataSource = BUS.HoaDonBUS.TimKiemHoaDonTheoNgay(dateTimePicker1.Value,dateTimePicker2.Value);
+            txtSoHD.Text = (dataGridView1.Rows.Count - 1).ToString();
+            // thêm cột button sau khi gán
+            if (!dataGridView1.Columns.Contains("btnView"))
+            {
+                DataGridViewButtonColumn btnView = new DataGridViewButtonColumn();
+                btnView.HeaderText = "View";
+                btnView.Name = "btnView";
+                btnView.Text = "VIEW";
+                btnView.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(btnView);
+            }
+            if (!dataGridView1.Columns.Contains("btnDelete"))
+            {
+                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn();
+                btnDelete.HeaderText = "Delete";
+                btnDelete.Name = "btnDelete";
+                btnDelete.Text = "DELETE";
+                btnDelete.UseColumnTextForButtonValue = true;
+                dataGridView1.Columns.Add(btnDelete);
+            }
+        }
+
+        private void btnExportXML_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "XML Files (*.xml)|*.xml";
+            sfd.Title = "Chọn nơi lưu file XML";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                string path = sfd.FileName;
+
+                DataTable dt = (DataTable)dataGridView1.DataSource;
+                dt.TableName = "HoaDon";
+                dt.WriteXml(path, XmlWriteMode.WriteSchema);
+
+                MessageBox.Show("Xuất XML thành công!");
+            }
+        }
+        private void btnImportXML_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "XML Files (*.xml)|*.xml";
+            ofd.Title = "Chọn file XML để nhập";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string path = ofd.FileName;
+
+                DataTable dt = new DataTable();
+                dt.ReadXml(path);
+
+                // Hiển thị lên DataGridView nếu cần
+                dataGridView1.DataSource = dt;
+
+                MessageBox.Show("Nhập XML thành công!");
+            }
+        }
+
+        private void button2_MouseClick(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

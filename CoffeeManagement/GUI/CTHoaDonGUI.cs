@@ -35,6 +35,7 @@ namespace CoffeeManagement.GUI
                 total +=( Convert.ToInt32(row.Cells["GiaBan"].Value) * Convert.ToInt32(row.Cells["Soluong"].Value));
             }
             txtTotal.Text = total.ToString();
+            HoaDon.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void Order_SizeChanged(object sender, EventArgs e)

@@ -59,6 +59,13 @@ namespace CoffeeManagement.GUI
             }
             errorProvider1.SetError(txtTong, "");
 
+            //
+            if(cbb_Ban.SelectedIndex < 0)
+            {
+                errorProvider1.SetError(cbb_Ban, "chọn bàn !!!!");
+                return;
+            }
+            errorProvider1.SetError(cbb_Ban, "");
 
             //
             // Tạo hóa đơn mới

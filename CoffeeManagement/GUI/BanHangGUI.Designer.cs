@@ -1,4 +1,7 @@
-﻿namespace CoffeeManagement.GUI
+﻿using System.Windows.Documents;
+using System.Windows.Forms;
+
+namespace CoffeeManagement.GUI
 {
     partial class BanHangGUI
     {
@@ -34,9 +37,11 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(24, 39);
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(24, 145);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(660, 511);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(660, 378);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
@@ -47,7 +52,6 @@
             this.orderGUI1.Size = new System.Drawing.Size(387, 606);
             this.orderGUI1.TabIndex = 1;
             this.orderGUI1.Load += new System.EventHandler(this.orderGUI1_Load);
-            this.orderGUI1.RequestChangeToThanhToan += OnOrderRequestPnlBodyChangedToThanhToan;
             // 
             // BanHangGUI
             // 
@@ -59,6 +63,7 @@
             this.Size = new System.Drawing.Size(1080, 656);
             this.Load += new System.EventHandler(this.BanHang_Load);
             this.SizeChanged += new System.EventHandler(this.BanHangGUI_SizeChanged);
+            this.ParentChanged += new System.EventHandler(this.BanHangGUI_ParentChanged);
             this.ResumeLayout(false);
 
         }

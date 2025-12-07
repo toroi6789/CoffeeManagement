@@ -31,6 +31,7 @@ namespace CoffeeManagement.DAO
                     SELECT sp.SanPhamID, sp.TenSanPham, sp.GiaBan, sp.MoTa, sp.TrangThai, sp.DanhMucID, sp.Hinh
                     FROM SanPham sp";
             DataTable dt = ExecuteQuery(sql);
+
             foreach (DataRow row in dt.Rows)
             {
                 SanPhamDTO sp = new SanPhamDTO
@@ -74,6 +75,7 @@ namespace CoffeeManagement.DAO
             (SanPhamID, TenSanPham, GiaBan, MoTa, TrangThai, DanhMucID, `Hinh`) 
             VALUES 
             (@SanPhamID, @TenSanPham, @GiaBan, @MoTa, @TrangThai, @DanhMucID, @Hinh)";
+
             var parameters = new MySqlParameter[]
             {
             new MySqlParameter("@SanPhamID", MySqlDbType.Int32) { Value = sp.SanPhamID },
@@ -84,6 +86,7 @@ namespace CoffeeManagement.DAO
             new MySqlParameter("@DanhMucID", MySqlDbType.Int32) { Value = sp.DanhMucID },
             new MySqlParameter("@Hinh", MySqlDbType.VarChar) { Value = sp.Hinh ?? (object)DBNull.Value }
             };
+
             try
             {
                 int rowsAffected = ExecuteNonQuery(sql, parameters);
@@ -108,6 +111,7 @@ namespace CoffeeManagement.DAO
                 DanhMucID = @DanhMuc, 
                 `Hinh` = @Hinh 
             WHERE SanPhamID = @ID";
+
             var parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@ID", sp.SanPhamID),
@@ -118,8 +122,10 @@ namespace CoffeeManagement.DAO
                 new MySqlParameter("@DanhMuc", sp.DanhMucID),
                 new MySqlParameter("@Hinh", sp.Hinh ?? (object)DBNull.Value)
             };
+
             return ExecuteNonQuery(sql, parameters) > 0;
         }
+
 
         public bool daoCapNhatTrangThaiSanPham(int sanPhamID, string trangThaiMoi)
         {
@@ -129,6 +135,7 @@ namespace CoffeeManagement.DAO
                 new MySqlParameter("@ID", sanPhamID),
                 new MySqlParameter("@TrangThai", trangThaiMoi)
             };
+
             try
             {
                 return ExecuteNonQuery(sql, parameters) > 0;
@@ -145,7 +152,9 @@ namespace CoffeeManagement.DAO
             try
             {
                 string sql = "SELECT COALESCE(MAX(SanPhamID), 0) FROM SanPham";
+                // COALESCE = MySQL version của ISNULL
                 var dt = DBConnect.ExecuteQuery(sql);
+
                 if (dt.Rows.Count > 0)
                 {
                     return Convert.ToInt32(dt.Rows[0][0]);
@@ -158,7 +167,26 @@ namespace CoffeeManagement.DAO
             }
         }
 
+        // Kiểm tra và cập nhật trạng thái "Hết hàng" cho sản phẩm
+        public static void KiemTraSanPhamHetHang()
+        {
+            List<SanPhamDTO> dsSP = new SanPhamDAO().GetAll();
+            foreach (var sp in dsSP)
+            {
+                if (sp.TrangThai == "Hết hàng")
+                {
+                    continue; // Đã là hết hàng rồi, không cần kiểm tra nữa
+                }
 
+
+                bool hetHang = SanPhamNguyenLieuDAO.KiemTraNguyenLieuTonKhoChoSanPham(sp.SanPhamID);
+                if (hetHang)
+                {
+                    // Cập nhật trạng thái sản phẩm thành "Hết hàng"
+                    new SanPhamDAO().daoCapNhatTrangThaiSanPham(sp.SanPhamID, "Hết hàng");
+                }
+            }
+        }
 
     }
 }
