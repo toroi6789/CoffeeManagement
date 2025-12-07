@@ -119,7 +119,7 @@ CREATE TABLE NguyenLieu (
     MoTa          VARCHAR(255) NULL,
     DonVi         VARCHAR(50)  NULL,
     GiaNhap       DECIMAL(18,2) NOT NULL,
-    SoLuongTon    INT          NOT NULL DEFAULT 0,
+    SoLuongTon    DECIMAL(18,2)          NOT NULL DEFAULT 0,
     DanhMucID     INT          NOT NULL,
     Hinh 		VARCHAR(20) NULL,
     CONSTRAINT fk_nguyenlieu_danhmuc
@@ -301,11 +301,12 @@ INSERT INTO NhaCungCap (TenNhaCungCap, DiaChi, SoDienThoai, Email, Website, Tran
 
 -- 8. Nguyên liệu
 INSERT INTO NguyenLieu (TenNguyenLieu, TrangThai, MoTa, DonVi, GiaNhap, SoLuongTon, DanhMucID, Hinh) VALUES
-('Cà phê hạt', 'Hoạt động', 'Nguyên liệu pha phin', 'kg', 180000, 20, 5,'tradaocamsa.png'),
-('Đào miếng', 'Hoạt động', 'Nguyên liệu trà đào', 'kg', 150000, 10, 5,'tradaocamsa.png'),
+('Cà phê hạt', 'Hoạt động', 'Nguyên liệu pha phin', 'kg', 180000, 20, 5.00,'tradaocamsa.png'),
+('Đào miếng', 'Hoạt động', 'Nguyên liệu trà đào', 'kg', 150000, 10, 5.00,'tradaocamsa.png'),
 ('Xoài tươi', 'Hoạt động', 'Sinh tố xoài', 'kg', 40000, 15, 5,'tradaocamsa.png'),
 ('Đường cát', 'Hoạt động', 'Sử dụng chung', 'kg', 20000, 30, 5,'tradaocamsa.png'),
-('Bột làm bánh', 'Hoạt động', 'Nguyên liệu bánh', 'kg', 50000, 12, 5,'tradaocamsa.png');
+('Bột làm bánh', 'Hoạt động', 'Nguyên liệu bánh', 'kg', 50000, 12, 5,'tradaocamsa.png'),
+('Pepsi lon', 'Hoạt động', 'Lon Pepsi', 'lon', 10000, 20, 5, 'tradaocamsa.png');
 
 -- 9. Phiếu nhập
 INSERT INTO PhieuNhap (NgayNhap, TongTien, GhiChu, TrangThai, NhanVienID, NhaCungCapID) VALUES
@@ -343,10 +344,12 @@ INSERT INTO ChiTietHoaDon (SoLuong, DonGia, ThanhTien, HoaDonID, SanPhamID) VALU
 INSERT INTO SanPhamNguyenLieu (SanPhamID, NguyenLieuID, SoLuongSuDung) VALUES
 (1, 1, 0.02),
 (1, 4, 0.01),
-(2, 2, 0.03),
+(2, 3, 0.03),
 (2, 4, 0.01),
-(3, 3, 0.25),
-(4, 5, 0.10);
+(3, 6, 1),
+(4, 5, 0.10),
+(5, 2, 0.20),
+(5, 4, 0.03);
 
 -- 15. Thanh toán
 INSERT INTO ThanhToan (SoTien, PhuongThuc, TrangThai, HoaDonID, NhanVienID) VALUES

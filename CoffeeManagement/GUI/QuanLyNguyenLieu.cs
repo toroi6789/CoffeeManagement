@@ -85,6 +85,7 @@ namespace CoffeeManagement.GUI
             dataGridView1.Columns["DanhMucID"].HeaderText = "Mã Danh Mục";
             dataGridView1.Columns["DonVi"].HeaderText = "Đơn Vị";
             dataGridView1.Columns["SoLuongTon"].HeaderText = "Số lượng tồn";
+            dataGridView1.Columns["SoLuongTon"].DefaultCellStyle.Format = "N2"; // Định dạng decimal
             dataGridView1.Columns["Hinh"].HeaderText = "Hình";
 
             dataGridView1.EnableHeadersVisualStyles = false; // ⚠️ Bắt buộc để màu custom có hiệu lực

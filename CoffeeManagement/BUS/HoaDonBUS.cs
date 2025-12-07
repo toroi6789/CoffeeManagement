@@ -4,7 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using CoffeeManagement.DAO;
+using CoffeeManagement.DTO;
 
 namespace CoffeeManagement.BUS
 {
@@ -29,6 +31,8 @@ namespace CoffeeManagement.BUS
         public static void TaoChiTietHoaDon(int SoLuong, decimal DonGia, int HoaDonID, int SanPhamID, int ThanhTien)
         {
             HoaDonDAO.TaoChiTietHoaDon(SoLuong, DonGia, HoaDonID, SanPhamID, ThanhTien);
+
+
         }
         //lay tat ca hoa don
         public static DataTable TatCaHoaDon()

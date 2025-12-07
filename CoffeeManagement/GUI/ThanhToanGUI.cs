@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CoffeeManagement.BUS;
+using CoffeeManagement.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -83,6 +85,35 @@ namespace CoffeeManagement.GUI
                 BUS.HoaDonBUS.SuaTrangThai(hoaDonID, "Đã thanh toán");
                 //cap nhat phuong thuc
                 BUS.HoaDonBUS.Capnhatphuongthuc(hoaDonID, comboBox1.SelectedItem.ToString());
+
+                // Trừ nguyên liệu sử dụng cho sp
+                DataTable sp = HoaDonBUS.ChiTietHoaDonID(hoaDonID);
+                
+                foreach (DataRow row in sp.Rows)
+                {
+                    int sanPhamID = Convert.ToInt32(row["SanPhamID"]);
+
+                    SanPhamNguyenLieuBUS spnlBUS = new SanPhamNguyenLieuBUS();
+                    NguyenLieuBUS nlBUS = new NguyenLieuBUS();
+
+                    List<SanPhamNguyenLieuDTO> listSPNL = spnlBUS.LayCongThucTheoSanPhamBUS(sanPhamID);
+
+                    string message = "";
+                    string error = "";
+                    foreach (var item in listSPNL)
+                    {
+                        NguyenLieuDTO nl = item.NguyenLieu;
+                        nl.SoLuongTon -= item.SoLuongSuDung;
+                        MessageBox.Show(
+                            "NL ID = " + nl.NguyenLieuID + "Sản phẩm: " + sanPhamID + "\nNguyên liệu: " + nl.TenNguyenLieu + "\nTrừ: " + item.SoLuongSuDung,
+                            "Thông báo",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                        nlBUS.busSuaNguyenLieu(nl, out message, out error);
+                    }
+                }
+                
 
                 // Chuyen ve giao dien ban hang
                 RequestPnlBodyToBanHang?.Invoke();
