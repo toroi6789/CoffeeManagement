@@ -206,5 +206,21 @@ namespace CoffeeManagement.BUS
                 return true;
             }
         }
+        public static void KiemTraSanPhamHetHang()
+        {
+            SanPhamDAO sp = new SanPhamDAO();
+            List<SanPhamDTO> lssp = sp.GetAll();
+            foreach(var i in lssp)
+            {
+                if (i.TrangThai == "Hết hàng") { continue; }
+                bool hang = false;
+                hang = SanPhamNguyenLieuDAO.KiemTraNguyenLieuTonKhoChoSanPham(i.SanPhamID);
+                if (hang) 
+                {
+                    SanPhamBUS s = new SanPhamBUS();
+                    s.CapNhatTrangThaiSanPham(i.SanPhamID, "Hết hàng");
+                }
+            }
+        }
     }
 }

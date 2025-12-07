@@ -131,7 +131,7 @@ namespace CoffeeManagement.GUI
                 }
 
                 // check cac sp het hang
-                BUS.SanPhamBUS.KiemTraSanPhamHetHang();
+                SanPhamBUS.KiemTraSanPhamHetHang();
 
 
                 // Chuyen ve giao dien ban hang

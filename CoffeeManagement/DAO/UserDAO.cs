@@ -129,7 +129,7 @@ namespace CoffeeManagement.DAO
                 UserID = Convert.ToInt32(row["UserID"]),
                 Email = row["Email"].ToString(),
                 MatKhau = row["MatKhau"].ToString(),
-                TrangThai = Convert.ToInt32(row["TrangThai"]),
+                TrangThai = row["TrangThai"].ToString(),
                 RoleID = Convert.ToInt32(row["RoleID"]),
                 TenRole = row["TenRole"].ToString(),
                 NgayDangNhapCuoi = row["NgayDangNhapCuoi"] != DBNull.Value
