@@ -767,6 +767,10 @@ namespace CoffeeManagement.GUI
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (DangThaoTac)
+            {
+                return;
+            }
             if (dataGridView1.Columns[e.ColumnIndex].Name == "btnView" && e.RowIndex >= 0)
             {
                 int sanphamID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["SanPhamID"].Value);
