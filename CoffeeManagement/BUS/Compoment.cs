@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,19 @@ namespace CoffeeManagement.BUS
             }
             return bmp;
         }
+
+
+        public static void ExportToXML(DataTable dt, string filePath)
+        {
+            dt.WriteXml(filePath, XmlWriteMode.WriteSchema);
+        }
+        public static DataTable ImportFromXML(string filePath)
+        {
+            DataTable dt = new DataTable();
+            dt.ReadXml(filePath);
+            return dt;
+        }
+
 
     }
 }

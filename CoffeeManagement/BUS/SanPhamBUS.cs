@@ -159,5 +159,11 @@ namespace CoffeeManagement.BUS
                 throw new Exception("Lỗi BUS lấy ID lớn nhất: " + ex.Message);
             }
         }
+
+        // KIEM TRA SAN PHAM HET HANG
+        public static void KiemTraSanPhamHetHang()
+        {
+            SanPhamDAO.KiemTraSanPhamHetHang();
+        }
     }
 }

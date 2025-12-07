@@ -54,6 +54,10 @@ namespace CoffeeManagement.BUS
         {
             HoaDonDAO.XoaHoaDon(ID);
         }
-
+        // tim kiem hoa don theo ngay
+        public static DataTable TimKiemHoaDonTheoNgay(DateTime NgayBatDau, DateTime NgayKetThuc)
+        {
+            return HoaDonDAO.TimKiemHoaDonTheoNgay(NgayBatDau, NgayKetThuc);
+        }
     }
 }

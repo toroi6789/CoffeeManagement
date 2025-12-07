@@ -8,7 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Forms;
+
 
 namespace CoffeeManagement.GUI
 {
@@ -18,14 +20,16 @@ namespace CoffeeManagement.GUI
         public BanHangGUI()
         {
             InitializeComponent();
-
-            
+            orderGUI1.RequestChangeToThanhToan += OnOrderRequestPnlBodyChangedToThanhToan;
         }
 
 
         // xử lý sự kiện khi load BanHangGUI
         private void BanHang_Load(object sender, EventArgs e)
         {
+            //
+            //Thêm dữ liệu sản phẩm vào flowLayoutPanel1
+            //
             DataTable sanPhamTable = SanPhamBUS.SanPham();
             foreach (DataRow row in sanPhamTable.Rows)
             {
@@ -73,17 +77,37 @@ namespace CoffeeManagement.GUI
                 btn.SizeChanged += Btn_SizeChanged;
                 flowLayoutPanel1.Controls.Add(btn);
             }
+            //
+            // CHECK TRẠNG THÁI SẢN PHẨM
+            //
+            foreach (Button btn in flowLayoutPanel1.Controls)
+            {
+                int sanPhamID = int.Parse(btn.Name);
+                DataTable sanPhamRow = SanPhamBUS.SanPhamTheoID(sanPhamID);
+                if (sanPhamRow.Rows.Count > 0)
+                {
+                    DataRow row = sanPhamRow.Rows[0];
+                    if (row["TrangThai"].ToString().Equals("hết hàng"))
+                    {
+                        btn.BackColor = Color.LightGray;
+                        btn.Enabled = false;
+                        btn.Text = row["TenSanPham"] + "\nHet Hang";
+                    }
+                }
+            }
         }
         // xử lý sự kiện khi thay đổi kích thước của BanHangGUI
         private void BanHangGUI_SizeChanged(object sender, EventArgs e)
         {
             orderGUI1.Size = new Size((int)(this.Width * 0.3), this.Height );
-            flowLayoutPanel1.Size = new Size(this.Width - orderGUI1.Width - 20, this.Height - 20);
-            orderGUI1.Location = new Point(flowLayoutPanel1.Width , 3);
-            foreach(Button btn in flowLayoutPanel1.Controls)
-            {
-                btn.Width = (int)(flowLayoutPanel1.Width / 4);
-                btn.Height = btn.Width;
+            flowLayoutPanel1.Size = new Size(this.Width - orderGUI1.Width - 20, (int)(this.Height * 0.77));
+            orderGUI1.Location = new Point(flowLayoutPanel1.Width + flowLayoutPanel1.Location.X , 3);
+            foreach (var btn in flowLayoutPanel1.Controls)
+            { 
+                if(!(btn is Button)) continue;
+                Button button = (Button)btn;
+                button.Width = (int)(flowLayoutPanel1.Width / 4);
+                button.Height = button.Width;
             }
         }
         // xử lý sự kiện khi nhấn nút sản phẩm
@@ -159,6 +183,9 @@ namespace CoffeeManagement.GUI
             PnlBodyChangedToThanhToan?.Invoke(HoaDonID);
         }
 
+
+
+
         private void orderGUI1_Load(object sender, EventArgs e)
         {
 
@@ -167,6 +194,11 @@ namespace CoffeeManagement.GUI
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void BanHangGUI_ParentChanged(object sender, EventArgs e)
+        {
+            BanHang_Load(sender, e);
         }
     }
 }

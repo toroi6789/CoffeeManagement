@@ -26,7 +26,7 @@ namespace CoffeeManagement.DAO
             FROM SanPhamNguyenLieu spnl
             WHERE spnl.SanPhamID = @SanPhamID";
 
-            var param = new MySqlParameter("@SanPhamID", MySqlDbType.Int32) { Value = sanPhamID };
+            var param = new MySqlParameter("@SanPhamID",Convert.ToInt32( sanPhamID ));
             DataTable dt = ExecuteQuery(sql, new[] { param });
 
             var sanPham = spDao.GetAll().FirstOrDefault(x => x.SanPhamID == sanPhamID);
@@ -96,5 +96,23 @@ namespace CoffeeManagement.DAO
             DBConnect.ExecuteNonQuery(query);
         }
 
+        // 
+        public static bool KiemTraNguyenLieuTonKhoChoSanPham(int IDsp)
+        {
+            List<SanPhamNguyenLieuDTO> ls = new List<SanPhamNguyenLieuDTO>();
+            SanPhamNguyenLieuDAO nl = new SanPhamNguyenLieuDAO();
+            ls = nl.LayCongThucTheoSanPham(IDsp);
+            foreach(var i in ls)
+            {
+                NguyenLieuDAO nlDao = new NguyenLieuDAO();
+                NguyenLieuDTO NguyenLieu = new NguyenLieuDTO();
+                NguyenLieu = nlDao.LayNguyenLieuTheoID(i.NguyenLieu.NguyenLieuID);
+                if(NguyenLieu.SoLuongTon < i.SoLuongSuDung)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

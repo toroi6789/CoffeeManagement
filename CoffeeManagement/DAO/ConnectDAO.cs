@@ -8,7 +8,7 @@ namespace CoffeeManagement.DAO
     public class DBConnect
     {
         private static string connectionString =
-             "server=localhost;port=3306;user id=root;password=123456;database=coffeemanagement;charset=utf8mb4;";
+             "server=localhost;port=3306;userid=root;password=123456789;database=coffeemanagement;charset=utf8mb4;";
             //ConfigurationManager.ConnectionStrings["CoffeeManagement_full"]?.ConnectionString 
             //?? "server=localhost;port=3306;user id=root;password=123456789;database=coffeemanagement;charset=utf8mb4;";
 
@@ -73,10 +73,13 @@ namespace CoffeeManagement.DAO
         }
 
         // Hàm thực thi SELECT (trả về DataTable) voi 2 agrument
-        protected DataTable ExecuteQuery(string query, MySqlParameter[] parameters = null)
+        protected static DataTable ExecuteQuery(string query, MySqlParameter[] parameters = null)
         {
             using (MySqlConnection conn = GetConnection())
             {
+                conn.Open();
+
+
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     if (parameters != null)
@@ -91,7 +94,7 @@ namespace CoffeeManagement.DAO
         }
 
         // Hàm thực thi INSERT, UPDATE, DELETE
-        protected int ExecuteNonQuery(string query, MySqlParameter[] parameters = null)
+        protected static int ExecuteNonQuery(string query, MySqlParameter[] parameters = null)
         {
             using (MySqlConnection conn = GetConnection())
             {

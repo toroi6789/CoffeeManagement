@@ -167,5 +167,26 @@ namespace CoffeeManagement.DAO
             }
         }
 
+        // Kiểm tra và cập nhật trạng thái "Hết hàng" cho sản phẩm
+        public static void KiemTraSanPhamHetHang()
+        {
+            List<SanPhamDTO> dsSP = new SanPhamDAO().GetAll();
+            foreach (var sp in dsSP)
+            {
+                if (sp.TrangThai == "Hết hàng")
+                {
+                    continue; // Đã là hết hàng rồi, không cần kiểm tra nữa
+                }
+
+
+                bool hetHang = SanPhamNguyenLieuDAO.KiemTraNguyenLieuTonKhoChoSanPham(sp.SanPhamID);
+                if (hetHang)
+                {
+                    // Cập nhật trạng thái sản phẩm thành "Hết hàng"
+                    new SanPhamDAO().daoCapNhatTrangThaiSanPham(sp.SanPhamID, "Hết hàng");
+                }
+            }
+        }
+
     }
 }
