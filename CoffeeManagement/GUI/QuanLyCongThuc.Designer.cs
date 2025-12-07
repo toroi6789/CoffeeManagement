@@ -43,13 +43,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtID_NL = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NguyenLieuSP)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AllNguyenLieu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -116,7 +114,6 @@
             this.label1.Size = new System.Drawing.Size(344, 38);
             this.label1.TabIndex = 4;
             this.label1.Text = "Công thức sản phẩm";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // panel2
             // 
@@ -202,15 +199,10 @@
             this.txtID_NL.ReadOnly = true;
             this.txtID_NL.Size = new System.Drawing.Size(153, 22);
             this.txtID_NL.TabIndex = 2;
-            this.txtID_NL.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // errorProvider2
-            // 
-            this.errorProvider2.ContainerControl = this;
             // 
             // QuanLyCongThuc
             // 
@@ -229,7 +221,6 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AllNguyenLieu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -250,6 +241,5 @@
         private FontAwesome.Sharp.IconButton btnSearch;
         private System.Windows.Forms.TextBox txtSearch_ID;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.ErrorProvider errorProvider2;
     }
 }
