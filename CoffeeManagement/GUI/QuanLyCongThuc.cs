@@ -101,34 +101,16 @@ namespace CoffeeManagement.GUI
             //dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void btnXemvaThem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void QuanLyCongThuc_SizeChanged(object sender, EventArgs e)
         {
             panel1.Size = new Size(this.Width / 2 - 50, this.Height - 110);
             panel1.Location = new Point((this.Width / 2) - panel1.Width - 25, panel1.Location.Y);
-
             panel2.Size = new Size(this.Width / 2 - 50, this.Height - 110);
             panel2.Location = new Point(this.Width - panel2.Width - 25, panel2.Location.Y);
-
             AllNguyenLieu.Width = panel1.Width - 6;
             AllNguyenLieu.Height = panel1.Height - 6;
             NguyenLieuSP.Width = panel2.Width - 6;
             NguyenLieuSP.Height = panel2.Height - 6;
-
             txtID.Location = new Point((panel1.Width - txtID.Width) / 2, txtID.Location.Y);
             txtID_NL.Location = new Point((panel1.Width - txtID_NL.Width) / 2, txtID_NL.Location.Y);
         }
@@ -158,6 +140,8 @@ namespace CoffeeManagement.GUI
             int stt = 1;
             foreach (var nl in nguyenLieus)
             {
+                if (nl.TrangThai != "Hoạt động")
+                    continue;
                 DataRow row = dtNguyenLieu.NewRow();
                 row["STT"] = stt++;
                 row["NguyenLieuID"] = nl.NguyenLieuID;
@@ -200,7 +184,6 @@ namespace CoffeeManagement.GUI
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            // BẮT BUỘC phải chọn nguyên liệu từ bảng trái
             if (AllNguyenLieu.CurrentRow == null || AllNguyenLieu.CurrentRow.Index < 0)
             {
                 MessageBox.Show("Vui lòng chọn một nguyên liệu từ danh sách bên trái để thêm vào công thức!",
@@ -209,8 +192,6 @@ namespace CoffeeManagement.GUI
             }
 
             int nguyenLieuID = Convert.ToInt32(AllNguyenLieu.CurrentRow.Cells["NguyenLieuID"].Value);
-
-            // Kiểm tra trùng: không cho thêm 2 lần cùng nguyên liệu
             bool daTonTai = dtNguyenLieuSP.AsEnumerable()
                 .Any(row => row.Field<int>("NguyenLieuID") == nguyenLieuID);
 
@@ -239,10 +220,8 @@ namespace CoffeeManagement.GUI
                 (int)selectedRow.Cells["NguyenLieuID"].Value,
                 0
             );
-            // Các cột khác giữ nguyên nếu cần
             dtNguyenLieuSP.Rows.Add(newRow);
             LocTatCaNguyenLieu();
-            // Reset ô nhập
             AllNguyenLieu.CurrentRow.Selected = false;
             btnThem.Enabled = false;
             MessageBox.Show("Đã thêm nguyên liệu vào công thức!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -283,7 +262,6 @@ namespace CoffeeManagement.GUI
                 LocTatCaNguyenLieu();
                 return;
             }
-
             DataView dv = dtNguyenLieu.DefaultView;
             dv.RowFilter = $"NguyenLieuID = {idCanTim}";
             dv.Sort = "STT ASC";
@@ -302,7 +280,6 @@ namespace CoffeeManagement.GUI
                 AllNguyenLieu.Rows[0].Selected = true;
                 AllNguyenLieu.CurrentCell = AllNguyenLieu.Rows[0].Cells[1];
                 AllNguyenLieu.FirstDisplayedScrollingRowIndex = 0;
-
                 MessageBox.Show($"Đã tìm thấy nguyên liệu ID = {idCanTim}",
                                 "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

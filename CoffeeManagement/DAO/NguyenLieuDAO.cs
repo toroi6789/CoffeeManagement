@@ -19,7 +19,6 @@ namespace CoffeeManagement.DAO
                     SELECT NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh
                     FROM NguyenLieu ";
             DataTable dt = ExecuteQuery(sql);
-
             foreach (DataRow row in dt.Rows)
             {
                 NguyenLieuDTO nl = new NguyenLieuDTO
@@ -39,16 +38,13 @@ namespace CoffeeManagement.DAO
             return dsNL;
         }
 
-
         public bool IsNguyenLieuIdExists(int nguyenLieuId)
         {
             string sql = "SELECT COUNT(*) FROM NguyenLieu WHERE NguyenLieuID = @id";
-
             var parameters = new MySqlParameter[]
             {
             new MySqlParameter("@id", MySqlDbType.Int32) { Value = nguyenLieuId }
             };
-
             DataTable dt = ExecuteQuery(sql, parameters);
             return Convert.ToInt32(dt.Rows[0][0]) > 0;
         }
@@ -67,7 +63,6 @@ namespace CoffeeManagement.DAO
             (NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh) 
             VALUES 
             (@NguyenLieuID, @TenNguyenLieu, @GiaNhap, @MoTa, @TrangThai, @DanhMucID, @SoLuongTon, @DonVi, @Hinh)";
-
             var parameters = new MySqlParameter[]
             {
             new MySqlParameter("@NguyenLieuID", MySqlDbType.Int32) { Value = nl.NguyenLieuID },
@@ -106,7 +101,6 @@ namespace CoffeeManagement.DAO
                 SoLuongTon = @SoLuong,
                 Hinh = @Hinh
             WHERE NguyenLieuID = @ID";
-
             var parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@ID", nl.NguyenLieuID),
@@ -119,7 +113,6 @@ namespace CoffeeManagement.DAO
                 new MySqlParameter("@Hinh", nl.Hinh ?? (object)DBNull.Value),
                 new MySqlParameter("@SoLuong", nl.SoLuongTon),
             };
-
             return ExecuteNonQuery(sql, parameters) > 0;
         }
 
@@ -143,7 +136,6 @@ namespace CoffeeManagement.DAO
             }
         }
 
-        // 
         public int LayNguyenLieuIDLonNhat()
         {
             try
@@ -166,19 +158,15 @@ namespace CoffeeManagement.DAO
         public NguyenLieuDTO LayNguyenLieuTheoID(int id)
         {
             string sql = @"
-        SELECT NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh
-        FROM NguyenLieu 
-        WHERE NguyenLieuID = @id";
-
+                        SELECT NguyenLieuID, TenNguyenLieu, GiaNhap, MoTa, TrangThai, DanhMucID, SoLuongTon, DonVi, Hinh
+                        FROM NguyenLieu 
+                        WHERE NguyenLieuID = @id";
             var parameters = new MySqlParameter[]
             {
                 new MySqlParameter("@id", MySqlDbType.Int32) { Value = id }
             };
-
             DataTable dt = ExecuteQuery(sql, parameters);
-
             if (dt.Rows.Count == 0) return null;
-
             DataRow row = dt.Rows[0];
             return new NguyenLieuDTO
             {
