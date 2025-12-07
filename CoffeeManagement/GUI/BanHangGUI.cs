@@ -92,12 +92,19 @@ namespace CoffeeManagement.GUI
             Button btn = sender as Button;
             if (btn.BackColor == Color.BurlyWood)
             {
-                btn.BackColor = Color.LightGreen;
                 int sanPhamID = int.Parse(btn.Name);
                 DataTable sanPhamTable = SanPhamBUS.SanPhamTheoID(sanPhamID);
+                DataRow row = sanPhamTable.Rows[0];
+
+                if (!row["TrangThai"].ToString().Equals("Hoạt động"))
+                {
+                    MessageBox.Show("Sản phẩm tạm dừng bán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                btn.BackColor = Color.LightGreen;
                 if (sanPhamTable.Rows.Count > 0)
                 {
-                    DataRow row = sanPhamTable.Rows[0];
                     int maSanPham = (int)row["SanPhamID"];
                     string tenSanPham = row["TenSanPham"].ToString();
                     decimal giaBan = (decimal)row["GiaBan"];
