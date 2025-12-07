@@ -198,7 +198,24 @@ namespace CoffeeManagement.GUI
 
         private void BanHangGUI_ParentChanged(object sender, EventArgs e)
         {
-            BanHang_Load(sender, e);
+            //
+            // CHECK TRẠNG THÁI SẢN PHẨM
+            //
+            foreach (Button btn in flowLayoutPanel1.Controls)
+            {
+                int sanPhamID = int.Parse(btn.Name);
+                DataTable sanPhamRow = SanPhamBUS.SanPhamTheoID(sanPhamID);
+                if (sanPhamRow.Rows.Count > 0)
+                {
+                    DataRow row = sanPhamRow.Rows[0];
+                    if (row["TrangThai"].ToString().Equals("hết hàng"))
+                    {
+                        btn.BackColor = Color.LightGray;
+                        btn.Enabled = false;
+                        btn.Text = row["TenSanPham"] + "\nHet Hang";
+                    }
+                }
+            }
         }
     }
 }
