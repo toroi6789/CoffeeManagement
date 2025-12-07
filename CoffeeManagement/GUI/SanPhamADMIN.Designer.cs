@@ -176,7 +176,7 @@
             this.cmbTrangThai.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbTrangThai.Name = "cmbTrangThai";
             this.cmbTrangThai.Size = new System.Drawing.Size(353, 36);
-            this.cmbTrangThai.TabIndex = 24;
+            this.cmbTrangThai.TabIndex = 3;
             // 
             // cmbDanhMucID
             // 
@@ -186,7 +186,7 @@
             this.cmbDanhMucID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbDanhMucID.Name = "cmbDanhMucID";
             this.cmbDanhMucID.Size = new System.Drawing.Size(353, 36);
-            this.cmbDanhMucID.TabIndex = 23;
+            this.cmbDanhMucID.TabIndex = 6;
             // 
             // label1
             // 

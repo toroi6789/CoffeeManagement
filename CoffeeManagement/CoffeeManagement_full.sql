@@ -292,7 +292,12 @@ INSERT INTO SanPham (TenSanPham, TrangThai, MoTa, GiaBan, DanhMucID, Hinh) VALUE
 ('Sinh tố xoài', 'Hoạt động', 'Sinh tố trái cây', 30000, 2,'sinhtoxoai.png'),
 ('Pepsi lon', 'Hoạt động', 'Nước giải khát', 20000, 3, 'pepsilon.png'),
 ('Bánh su kem', 'Hoạt động', 'Bánh ngọt mini', 15000, 4, 'banhsukem.png'),
-('Trà đào cam sả', 'Hoạt động', 'Trà trái cây', 35000, 5, 'tradaocamsa.png');
+('Trà đào cam sả', 'Hoạt động', 'Trà trái cây', 35000, 5, 'tradaocamsa.png'),
+('Cà phê đen đá', 'Hoạt động', 'Cà phê pha phin truyền thống', 20000, 1, 'caphedenda.png'),
+('Trà vải hoa hồng', 'Hoạt động', 'Trà trái cây với vải', 32000, 2, 'travaihong.jpg'),
+('Sinh tố dứa', 'Hoạt động', 'Sinh tố dứa tươi', 28000, 3, 'sinhtodua.png'),
+('Bánh cookie socola', 'Hoạt động', 'Bánh ngọt giòn', 18000, 4, 'cookiesocola.jpg'),
+('Hồng trà latte', 'Hoạt động', 'Trà sữa vị hồng trà', 30000, 2, 'hongtralatte.jpg');
 
 -- 7. Nhà cung cấp
 INSERT INTO NhaCungCap (TenNhaCungCap, DiaChi, SoDienThoai, Email, Website, TrangThai) VALUES
@@ -301,12 +306,17 @@ INSERT INTO NhaCungCap (TenNhaCungCap, DiaChi, SoDienThoai, Email, Website, Tran
 
 -- 8. Nguyên liệu
 INSERT INTO NguyenLieu (TenNguyenLieu, TrangThai, MoTa, DonVi, GiaNhap, SoLuongTon, DanhMucID, Hinh) VALUES
-('Cà phê hạt', 'Hoạt động', 'Nguyên liệu pha phin', 'kg', 180000, 20, 5.00,'tradaocamsa.png'),
-('Đào miếng', 'Hoạt động', 'Nguyên liệu trà đào', 'kg', 150000, 10, 5.00,'tradaocamsa.png'),
-('Xoài tươi', 'Hoạt động', 'Sinh tố xoài', 'kg', 40000, 15, 5,'tradaocamsa.png'),
-('Đường cát', 'Hoạt động', 'Sử dụng chung', 'kg', 20000, 30, 5,'tradaocamsa.png'),
-('Bột làm bánh', 'Hoạt động', 'Nguyên liệu bánh', 'kg', 50000, 12, 5,'tradaocamsa.png'),
-('Pepsi lon', 'Hoạt động', 'Lon Pepsi', 'lon', 10000, 20, 5, 'tradaocamsa.png');
+('Cà phê hạt', 'Hoạt động', 'Nguyên liệu pha phin', 'kg', 180000, 20, 5.00,'hatcafe.jpg'),
+('Đào miếng', 'Hoạt động', 'Nguyên liệu trà đào', 'kg', 150000, 10, 5.00,'daomieng.jpg'),
+('Xoài tươi', 'Hoạt động', 'Sinh tố xoài', 'kg', 40000, 15, 5,'xoaituoi.jpg'),
+('Đường cát', 'Hoạt động', 'Sử dụng chung', 'kg', 20000, 30, 5,'duongcat.jpg'),
+('Bột làm bánh', 'Hoạt động', 'Nguyên liệu bánh', 'kg', 50000, 12, 5,'botlambanh.jpg'),
+('Pepsi lon', 'Hoạt động', 'Lon Pepsi', 'lon', 10000, 20, 5, 'pepsilon.png'),
+('Siro vải', 'Hoạt động', 'Sử dụng cho trà trái cây', 'ml', 90000, 5000, 5, 'sirovai.jpg'),
+('Dứa tươi', 'Hoạt động', 'Nguyên liệu sinh tố dứa', 'kg', 35000, 20, 5, 'duatuoi.jpg'),
+('Bột cacao', 'Hoạt động', 'Dùng làm bánh và topping', 'kg', 120000, 10, 5, 'botcacao.jpg'),
+('Trà đen', 'Hoạt động', 'Nguyên liệu hồng trà latte', 'kg', 80000, 15, 5, 'traden.jpg'),
+('Sữa đặc', 'Hoạt động', 'Dùng pha cà phê', 'lon', 20000, 50, 5, 'suadac.jpg');
 
 -- 9. Phiếu nhập
 INSERT INTO PhieuNhap (NgayNhap, TongTien, GhiChu, TrangThai, NhanVienID, NhaCungCapID) VALUES
@@ -349,7 +359,22 @@ INSERT INTO SanPhamNguyenLieu (SanPhamID, NguyenLieuID, SoLuongSuDung) VALUES
 (3, 6, 1),
 (4, 5, 0.10),
 (5, 2, 0.20),
-(5, 4, 0.03);
+(5, 4, 0.03),
+-- Cà phê đen đá (ID 6)
+(6, 1, 0.02),     -- Cà phê hạt
+(6, 4, 0.01),     -- Đường cát
+(6, 11, 0.05),    -- Sữa đặc
+-- Trà vải hoa hồng (ID 7)
+(7, 7, 20),       -- Siro vải
+(7, 4, 0.01),     -- Đường
+-- Sinh tố dứa (ID 8)
+(8, 8, 0.25),     -- Dứa tươi
+(8, 4, 0.01),     -- Đường
+(9, 9, 0.10),     -- Bột cacao
+(9, 5, 0.20),     -- Bột làm bánh
+-- Hồng trà latte (ID 10)
+(10, 10, 0.05),   -- Trà đen
+(10, 11, 0.03);   -- Sữa đặc
 
 -- 15. Thanh toán
 INSERT INTO ThanhToan (SoTien, PhuongThuc, TrangThai, HoaDonID, NhanVienID) VALUES

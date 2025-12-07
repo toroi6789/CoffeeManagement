@@ -25,9 +25,8 @@ namespace CoffeeManagement.DAO
             SELECT spnl.NguyenLieuID, spnl.SoLuongSuDung
             FROM SanPhamNguyenLieu spnl
             WHERE spnl.SanPhamID = @SanPhamID";
-
-            var param = new MySqlParameter("@SanPhamID",Convert.ToInt32( sanPhamID ));
-
+            var param = new MySqlParameter("@SanPhamID", Convert.ToInt32(sanPhamID));
+            //var param = new MySqlParameter("@SanPhamID", MySqlDbType.Int32) { Value = sanPhamID };
             DataTable dt = ExecuteQuery(sql, new[] { param });
             var sanPham = spDao.GetAll().FirstOrDefault(x => x.SanPhamID == sanPhamID);
             if (sanPham == null) return ds;
@@ -113,7 +112,7 @@ namespace CoffeeManagement.DAO
         {
             string sql = $"UPDATE sanphamnguyenlieu SET SoLuongSuDung = '{soLuongMoi}' WHERE SanPhamID = '{sanphamID}' AND NguyenLieuID = '{nguyenLieuID}';";
             DBConnect.ExecuteNonQuery(sql);
-
+>>>>>>> 1266e116af3d8d94a5463688c8988e5429c18eee
         }
     }
 }
