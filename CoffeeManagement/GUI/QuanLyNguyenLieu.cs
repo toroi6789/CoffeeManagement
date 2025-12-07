@@ -277,7 +277,7 @@ namespace CoffeeManagement.GUI
             {
                 sfd.Filter = "Excel Files|*.xlsx";
                 sfd.Title = "Lưu file Excel";
-                sfd.FileName = "QuanLyNguyenLieu.xlsx";
+                sfd.FileName = "DanhSachNguyenLieu_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xlsx";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -296,7 +296,7 @@ namespace CoffeeManagement.GUI
                             ws.Cells[1, 6].Value = "Danh Mục ID";
                             ws.Cells[1, 7].Value = "Đơn Vị";
                             ws.Cells[1, 8].Value = "Số Lượng Tồn";
-                            ws.Cells[1, 9].Value = "Hình";
+                            //ws.Cells[1, 9].Value = "Hình";
 
                             // Format tiêu đề
                             using (var range = ws.Cells[1, 1, 1, 9])
@@ -349,101 +349,89 @@ namespace CoffeeManagement.GUI
                 ofd.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
                 ofd.Title = "Chọn file Excel để nhập nguyên liệu";
 
-                if (ofd.ShowDialog() == DialogResult.OK)
+                if (ofd.ShowDialog() != DialogResult.OK) return;
+
+                try
                 {
-                    try
+                    using (var package = new ExcelPackage(new FileInfo(ofd.FileName)))
                     {
-                        using (var package = new ExcelPackage(new FileInfo(ofd.FileName)))
+                        var ws = package.Workbook.Worksheets[1]; // Sheet đầu tiên
+                        if (ws?.Dimension == null || ws.Dimension.Rows < 2)
                         {
-                            var ws = package.Workbook.Worksheets[0]; // Sheet đầu tiên
-                            int rowCount = ws.Dimension.Rows;
+                            MessageBox.Show("File Excel không có dữ liệu hoặc không đọc được!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
 
-                            if (rowCount < 2)
+                        int rowCount = ws.Dimension.Rows;
+                        int thanhCong = 0;
+                        int thatBai = 0;
+
+                        for (int row = 2; row <= rowCount; row++)
+                        {
+                            try
                             {
-                                MessageBox.Show("File Excel không có dữ liệu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-
-                            int thanhCong = 0;
-                            int thatBai = 0;
-
-                            // Bắt đầu từ dòng 2 (dòng 1 là tiêu đề)
-                            for (int row = 2; row <= rowCount; row++)
-                            {
-                                try
-                                {
-                                    // ĐỌC ĐÚNG THỨ TỰ CỘT
-                                    string tenNL = ws.Cells[row, 2].GetValue<string>()?.Trim();
-                                    decimal giaNhap = ws.Cells[row, 3].GetValue<decimal>();
-                                    string moTa = ws.Cells[row, 4].GetValue<string>()?.Trim();
-                                    string trangThai = ws.Cells[row, 5].GetValue<string>()?.Trim();
-                                    int danhMucID = ws.Cells[row, 6].GetValue<int>();
-                                    string donVi = ws.Cells[row, 7].GetValue<string>()?.Trim();
-                                    decimal soLuongTon = ws.Cells[row, 8].GetValue<decimal>();
-                                    string hinh = ws.Cells[row, 9].GetValue<string>()?.Trim();
-
-                                    // VALIDATE DỮ LIỆU
-                                    if (string.IsNullOrWhiteSpace(tenNL))
-                                    {
-                                        thatBai++;
-                                        continue;
-                                    }
-                                    if (giaNhap < 0)
-                                    {
-                                        giaNhap = 0; // mặc định nếu sai
-                                    }
-                                    if (danhMucID <= 0)
-                                    {
-                                        danhMucID = 1; // mặc định
-                                    }
-                                    if (string.IsNullOrWhiteSpace(trangThai))
-                                        trangThai = "Hoạt động";
-                                    if (string.IsNullOrWhiteSpace(donVi))
-                                        donVi = "Cái"; 
-                                    if (soLuongTon < 0)
-                                        soLuongTon = 0;
-
-                                    var nl = new NguyenLieuDTO
-                                    {
-                                        TenNguyenLieu = tenNL,
-                                        GiaNhap = giaNhap,
-                                        MoTa = moTa,
-                                        TrangThai = trangThai,
-                                        DanhMucID = danhMucID,
-                                        DonVi = donVi,
-                                        SoLuongTon = soLuongTon,
-                                        Hinh = string.IsNullOrWhiteSpace(hinh) ? null : hinh
-                                    };
-
-                                    // THÊM VÀO CSDL
-                                    if (nl_bus.busThemNguyenLieu(nl, out string msg, out string err))
-                                    {
-                                        thanhCong++;
-                                    }
-                                    else
-                                    {
-                                        thatBai++;
-                                    }
-                                }
-                                catch (Exception ex)
+                                string tenNL = ws.Cells[row, 2].Value?.ToString().Trim();
+                                if (string.IsNullOrWhiteSpace(tenNL))
                                 {
                                     thatBai++;
+                                    continue;
                                 }
+
+                                // Giá nhập
+                                decimal giaNhap = 0;
+                                decimal.TryParse(ws.Cells[row, 3].Value?.ToString(), out giaNhap);
+
+                                // Mô tả
+                                string moTa = ws.Cells[row, 4].Value?.ToString().Trim() ?? "";
+
+                                // Trạng thái
+                                string trangThai = ws.Cells[row, 5].Value?.ToString().Trim();
+                                if (string.IsNullOrWhiteSpace(trangThai)) trangThai = "Hoạt động";
+
+                                // Danh mục
+                                int danhMucID = 1;
+                                int.TryParse(ws.Cells[row, 6].Value?.ToString(), out danhMucID);
+
+                                // Đơn vị
+                                string donVi = ws.Cells[row, 7].Value?.ToString().Trim();
+                                if (string.IsNullOrWhiteSpace(donVi)) donVi = "Cái";
+
+                                // Số lượng tồn
+                                decimal soLuongTon = 0;
+                                decimal.TryParse(ws.Cells[row, 8].Value?.ToString(), out soLuongTon);
+
+                                var nl = new NguyenLieuDTO
+                                {
+                                    NguyenLieuID = nl_bus.LayNguyenLieuIDLonNhat() + 1,
+                                    TenNguyenLieu = tenNL,
+                                    GiaNhap = giaNhap,
+                                    MoTa = moTa,
+                                    TrangThai = trangThai,
+                                    DanhMucID = danhMucID > 0 ? danhMucID : 1,
+                                    DonVi = donVi,
+                                    SoLuongTon = soLuongTon,
+                                    Hinh = null
+                                };
+
+                                if (nl_bus.busThemNguyenLieu(nl, out string msg, out string err))
+                                    thanhCong++;
+                                else
+                                    thatBai++;
                             }
-
-                            // LÀM MỚI BẢNG
-                            LocNguyenLieu();
-
-                            MessageBox.Show($"Nhập Excel thành công!\n" +
-                                            $"Đã thêm: {thanhCong} nguyên liệu\n" +
-                                            $"Bị lỗi: {thatBai} dòng",
-                                            "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            catch
+                            {
+                                thatBai++;
+                            }
                         }
+
+                        LocNguyenLieu();
+                        MessageBox.Show($"Nhập xong!\nThành công: {thanhCong}\nThất bại: {thatBai}",
+                                        "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Lỗi đọc file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi mở file Excel: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
