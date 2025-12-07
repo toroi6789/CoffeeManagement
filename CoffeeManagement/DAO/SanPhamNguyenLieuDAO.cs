@@ -25,12 +25,8 @@ namespace CoffeeManagement.DAO
             SELECT spnl.NguyenLieuID, spnl.SoLuongSuDung
             FROM SanPhamNguyenLieu spnl
             WHERE spnl.SanPhamID = @SanPhamID";
-<<<<<<< HEAD
-
-            var param = new MySqlParameter("@SanPhamID",Convert.ToInt32( sanPhamID ));
-=======
-            var param = new MySqlParameter("@SanPhamID", MySqlDbType.Int32) { Value = sanPhamID };
->>>>>>> 1266e116af3d8d94a5463688c8988e5429c18eee
+            var param = new MySqlParameter("@SanPhamID", Convert.ToInt32(sanPhamID));
+            //var param = new MySqlParameter("@SanPhamID", MySqlDbType.Int32) { Value = sanPhamID };
             DataTable dt = ExecuteQuery(sql, new[] { param });
             var sanPham = spDao.GetAll().FirstOrDefault(x => x.SanPhamID == sanPhamID);
             if (sanPham == null) return ds;
@@ -92,7 +88,6 @@ namespace CoffeeManagement.DAO
             string query = $"delete FROM coffeemanagement.sanphamnguyenlieu where NguyenLieuID = '{ID}';";
             DBConnect.ExecuteNonQuery(query);
         }
-<<<<<<< HEAD
 
         // 
         public static bool KiemTraNguyenLieuTonKhoChoSanPham(int IDsp)
@@ -111,12 +106,11 @@ namespace CoffeeManagement.DAO
                 }
             }
             return false;
-=======
+        }
         public void CapNhatSoLuongSuDung(int sanphamID, int nguyenLieuID, decimal soLuongMoi)
         {
             string sql = $"UPDATE sanphamnguyenlieu SET SoLuongSuDung = '{soLuongMoi}' WHERE SanPhamID = '{sanphamID}' AND NguyenLieuID = '{nguyenLieuID}';";
             DBConnect.ExecuteNonQuery(sql);
->>>>>>> 1266e116af3d8d94a5463688c8988e5429c18eee
         }
     }
 }

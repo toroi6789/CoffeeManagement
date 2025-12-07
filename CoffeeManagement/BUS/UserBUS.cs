@@ -48,7 +48,7 @@ namespace CoffeeManagement.BUS
                     Email = email, 
                     MatKhau = password,
                     RoleID = roleID,
-                    TrangThai = "Hoạt động"
+                    TrangThai = 1
                 });
                 return true;
             }
