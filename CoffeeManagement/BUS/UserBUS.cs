@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CoffeeManagement.BUS
 {
@@ -56,5 +57,17 @@ namespace CoffeeManagement.BUS
                 return false;
             }
         }
+        public UserDTO GetUserByID(int id)
+        {
+            UserDTO user = userDAO.GetUserByID(id);
+            if (user != null)
+            {
+                return user;
+            }
+
+            return null;
+        }
     }
+
+    
 }
