@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Interop;
 
 namespace CoffeeManagement.GUI
 {
@@ -31,11 +32,15 @@ namespace CoffeeManagement.GUI
             InitializeComponent();
             sanphamID = id;
             this.Load += QuanLyCongThuc_Load;
+            txtSoLuongSuDung.TextChanged += Control_TextChanged;
         }
 
         private void QuanLyCongThuc_Load(object sender, EventArgs e)
         {
             btnThem.Enabled = false;
+            btnSua.Enabled = false;       // Mặc định không cho sửa
+            btnXoa.Enabled = false;
+            btnHuy.Visible = false;
             txtID.Text = sanphamID.ToString();
             txtID.ReadOnly = true;
             dtNguyenLieu = new DataTable();
@@ -48,12 +53,11 @@ namespace CoffeeManagement.GUI
             dtNguyenLieu.Columns.Add("DanhMucID", typeof(int));
             dtNguyenLieu.Columns.Add("DonVi", typeof(string));
             dtNguyenLieu.Columns.Add("SoLuongTon", typeof(decimal));
-            AllNguyenLieu.AutoGenerateColumns = true;
+            AllNguyenLieu.AutoGenerateColumns = false;
             AllNguyenLieu.DataSource = dtNguyenLieu;
+            TaoCotChoAllNguyenLieu();
             LocTatCaNguyenLieu();
-
-            // Format AllNguyenLieu
-            FormatDataGridView(AllNguyenLieu);
+            FormatDataGridViewALL(AllNguyenLieu);
 
             // DataTable cho NguyenLieuSP (tương tự)
             dtNguyenLieuSP = new DataTable();
@@ -67,28 +71,117 @@ namespace CoffeeManagement.GUI
             dtNguyenLieuSP.Columns.Add("DonVi", typeof(string));
             dtNguyenLieuSP.Columns.Add("SoLuongTon", typeof(decimal));
             dtNguyenLieuSP.Columns.Add("SoLuongSuDung", typeof(decimal));
-            NguyenLieuSP.AutoGenerateColumns = true;
+            NguyenLieuSP.Columns.Clear();
+            NguyenLieuSP.AutoGenerateColumns = false;
             NguyenLieuSP.DataSource = dtNguyenLieuSP;
             LocNguyenLieuCuaSanPham();
-            // Format NguyenLieuSP tương tự
-            FormatDataGridView(NguyenLieuSP);
-            FormatDataGridView(AllNguyenLieu);
+            TaoCotChoNguyenLieuSP();
+            FormatDataGridViewNLSP(NguyenLieuSP);
         }
 
-        private void FormatDataGridView(DataGridView dgv)
+        private void TaoCotChoAllNguyenLieu()
         {
-            dgv.Columns["STT"].HeaderText = "STT";
-            dgv.Columns["NguyenLieuID"].HeaderText = "Mã Nguyên Liệu";
-            dgv.Columns["TenNguyenLieu"].HeaderText = "Tên Nguyên Liệu";
-            dgv.Columns["GiaNhap"].HeaderText = "Giá Nhập";
-            dgv.Columns["TrangThai"].HeaderText = "Trạng Thái";
-            dgv.Columns["MoTa"].HeaderText = "Mô Tả";
-            dgv.Columns["DanhMucID"].HeaderText = "Mã Danh Mục";
-            dgv.Columns["DonVi"].HeaderText = "Đơn Vị";
-            dgv.Columns["SoLuongTon"].HeaderText = "Số lượng tồn";
-            dgv.Columns["STT"].Width = 50;
-            dgv.Columns["STT"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv.Columns["STT"].DisplayIndex = 0;
+            AllNguyenLieu.Columns.Clear();
+
+            // Cột STT
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "STT",
+                HeaderText = "STT",
+                DataPropertyName = "STT",
+                Width = 50,
+                ReadOnly = true
+            });
+
+            // Cột NguyenLieuID
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "NguyenLieuID",
+                HeaderText = "Mã NL",
+                DataPropertyName = "NguyenLieuID",
+                Width = 70,
+                ReadOnly = true
+            });
+
+            // Cột TenNguyenLieu
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TenNguyenLieu",
+                HeaderText = "Tên Nguyên Liệu",
+                DataPropertyName = "TenNguyenLieu",
+                Width = 150,
+                ReadOnly = true
+            });
+
+            // Cột DonVi
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "DonVi",
+                HeaderText = "Đơn Vị",
+                DataPropertyName = "DonVi",
+                Width = 70,
+                ReadOnly = true
+            });
+
+            // Cột GiaNhap
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "GiaNhap",
+                HeaderText = "Giá Nhập",
+                DataPropertyName = "GiaNhap",
+                Width = 100,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Format = "N0",
+                    Alignment = DataGridViewContentAlignment.MiddleRight
+                }
+            });
+
+            // Cột SoLuongTon
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "SoLuongTon",
+                HeaderText = "Số Lượng Tồn",
+                DataPropertyName = "SoLuongTon",
+                Width = 100,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleRight
+                }
+            });
+
+            // Cột TrangThai
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TrangThai",
+                HeaderText = "Trạng Thái",
+                DataPropertyName = "TrangThai",
+                Width = 100,
+                ReadOnly = true
+            });
+
+            // Các cột ẩn (nếu cần)
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "MoTa",
+                HeaderText = "Mô Tả",
+                DataPropertyName = "MoTa",
+                Visible = false
+            });
+
+            AllNguyenLieu.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "DanhMucID",
+                HeaderText = "Danh Mục",
+                DataPropertyName = "DanhMucID",
+                Visible = false
+            });
+        }
+
+        private void FormatDataGridViewALL(DataGridView dgv)
+        {
             dgv.ReadOnly = true;
             // Tự động điều chỉnh chiều cao dòng
             dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -97,8 +190,135 @@ namespace CoffeeManagement.GUI
             dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold); // Font chữ
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;   // Căn giữa header
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv.MultiSelect = false; 
-            //dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.MultiSelect = false;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void TaoCotChoNguyenLieuSP()
+        {
+            NguyenLieuSP.Columns.Clear();
+
+            // Cột STT
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "STT",
+                HeaderText = "STT",
+                DataPropertyName = "STT",
+                Width = 50,
+                ReadOnly = true
+            });
+
+            // Cột NguyenLieuID
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "NguyenLieuID",
+                HeaderText = "Mã NL",
+                DataPropertyName = "NguyenLieuID",
+                Width = 70,
+                ReadOnly = true
+            });
+
+            // Cột TenNguyenLieu
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TenNguyenLieu",
+                HeaderText = "Tên Nguyên Liệu",
+                DataPropertyName = "TenNguyenLieu",
+                Width = 150,
+                ReadOnly = true
+            });
+
+            // Cột DonVi
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "DonVi",
+                HeaderText = "Đơn Vị",
+                DataPropertyName = "DonVi",
+                Width = 70,
+                ReadOnly = true
+            });
+
+            // 
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "SoLuongSuDung",
+                HeaderText = "Số Lượng Sử Dụng",
+                DataPropertyName = "SoLuongSuDung",
+                Width = 120,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleRight,
+                    BackColor = Color.LightYellow // Tô màu để dễ nhận biết
+                }
+            });
+
+            // Cột GiaNhap
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "GiaNhap",
+                HeaderText = "Giá Nhập",
+                DataPropertyName = "GiaNhap",
+                Width = 100,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Format = "N0",
+                    Alignment = DataGridViewContentAlignment.MiddleRight
+                }
+            });
+
+            // Cột SoLuongTon
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "SoLuongTon",
+                HeaderText = "Tồn Kho",
+                DataPropertyName = "SoLuongTon",
+                Width = 80,
+                ReadOnly = true,
+                DefaultCellStyle = new DataGridViewCellStyle
+                {
+                    Alignment = DataGridViewContentAlignment.MiddleRight
+                }
+            });
+
+            // Cột TrangThai
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "TrangThai",
+                HeaderText = "Trạng Thái",
+                DataPropertyName = "TrangThai",
+                Width = 100,
+                ReadOnly = true
+            });
+
+            // Các cột ẩn
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "MoTa",
+                DataPropertyName = "MoTa",
+                Visible = false
+            });
+
+            NguyenLieuSP.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "DanhMucID",
+                DataPropertyName = "DanhMucID",
+                Visible = false
+            });
+        }
+        private void FormatDataGridViewNLSP(DataGridView dgv)
+        {
+            dgv.ReadOnly = true;
+            // Tự động điều chỉnh chiều cao dòng
+            dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.SteelBlue; // Màu nền
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;     // Màu chữ
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold); // Font chữ
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;   // Căn giữa header
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.MultiSelect = false;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void QuanLyCongThuc_SizeChanged(object sender, EventArgs e)
@@ -112,7 +332,8 @@ namespace CoffeeManagement.GUI
             NguyenLieuSP.Width = panel2.Width - 6;
             NguyenLieuSP.Height = panel2.Height - 6;
             txtID.Location = new Point((panel1.Width - txtID.Width) / 2, txtID.Location.Y);
-            txtID_NL.Location = new Point((panel1.Width - txtID_NL.Width) / 2, txtID_NL.Location.Y);
+            txtID_NL.Location = new Point((panel2.Width - txtID_NL.Width) / 2, txtID_NL.Location.Y);
+            txtSoLuongSuDung.Location = new Point((panel1.Width - txtSoLuongSuDung.Width) / 2, txtSoLuongSuDung.Location.Y);
         }
 
         private void AllNguyenLieu_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -282,6 +503,167 @@ namespace CoffeeManagement.GUI
                 AllNguyenLieu.FirstDisplayedScrollingRowIndex = 0;
                 MessageBox.Show($"Đã tìm thấy nguyên liệu ID = {idCanTim}",
                                 "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ResetForm()
+        {
+            btnSua.Text = "Sửa";
+            btnHuy.Visible = false;
+            btnSua.Enabled = false;
+            txtSoLuongSuDung.ReadOnly = true;
+            ClearErrorProvider();
+        }
+
+        private void ClearErrorProvider()
+        {
+            errorProvider1.Clear();
+        }
+
+        private bool ValidateForm()
+        {
+            bool isValid = true;
+            errorProvider1.Clear(); // Xóa hết lỗi cũ
+            // 1. Kiểm tra Số Lượng Sử Dụng
+            if (string.IsNullOrWhiteSpace(txtSoLuongSuDung.Text))
+            {
+                errorProvider1.SetError(txtSoLuongSuDung, "Vui lòng nhập số lượng!");
+                isValid = false;
+            }
+            else
+            {
+                // Kiểm tra xem có phải là số hợp lệ không
+                if (!decimal.TryParse(txtSoLuongSuDung.Text, out decimal sl))
+                {
+                    errorProvider1.SetError(txtSoLuongSuDung, "Vui lòng chỉ nhập số!");
+                    isValid = false;
+                }
+                else if (sl < 0)
+                {
+                    errorProvider1.SetError(txtSoLuongSuDung, "Số lượng không được âm!");
+                    isValid = false;
+                }
+            }
+
+            // 2. Kiểm tra ID Nguyên Liệu (Cực quan trọng để tránh lỗi Input string)
+            if (string.IsNullOrWhiteSpace(txtID.Text))
+            {
+                MessageBox.Show("Lỗi: Chưa chọn nguyên liệu để sửa (Mã NL trống).", "Lỗi dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isValid = false;
+            }
+
+            // Nếu có lỗi, focus vào ô nhập để user sửa ngay
+            if (!isValid && txtSoLuongSuDung.Enabled)
+            {
+                txtSoLuongSuDung.Focus();
+            }
+
+            return isValid;
+        }
+
+        private void Control_TextChanged(object sender, EventArgs e)
+        {
+            if (sender is Control ctrl)
+            {
+                errorProvider1.SetError(ctrl, "");
+            }
+        }
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            if (btnSua.Text == "Sửa")
+            {
+                // --- CHẾ ĐỘ BẮT ĐẦU SỬA ---
+                DangThaoTac = true;
+                btnSua.Text = "Lưu";       // Đổi tên nút
+                btnHuy.Visible = true;     // Hiện nút Hủy
+                txtSoLuongSuDung.Enabled = true;
+                txtSoLuongSuDung.ReadOnly = false;// Cho phép nhập số lượng
+                txtSoLuongSuDung.Focus();  // Đưa con trỏ chuột vào ô nhập
+                btnXoa.Enabled = false;
+                btnThem.Enabled = false;
+                AllNguyenLieu.Enabled = false; // Khóa lưới bên trái
+                NguyenLieuSP.Enabled = false;  // Khóa lưới bên phải
+            }
+            else
+            {
+                if (!ValidateForm())
+                {
+                    return;
+                }
+
+                try
+                {
+                    int nguyenLieuID = Convert.ToInt32(NguyenLieuSP.CurrentRow.Cells["NguyenLieuID"].Value);
+                    decimal soLuongMoi = decimal.Parse(txtSoLuongSuDung.Text);
+                    spnl_bus.CapNhatSoLuongSuDung(sanphamID, nguyenLieuID, soLuongMoi);
+                    MessageBox.Show("Cập nhật số lượng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DangThaoTac = false;
+                    LocNguyenLieuCuaSanPham();
+                    NguyenLieuSP.DataSource = null;
+                    NguyenLieuSP.DataSource = dtNguyenLieuSP;
+                    AllNguyenLieu.Enabled = true;
+                    NguyenLieuSP.Enabled = true;
+                    ResetForm();
+
+                    // 💡 THÊM: Kích hoạt lại nút Xóa nếu có dòng đang chọn
+                    btnXoa.Enabled = NguyenLieuSP.CurrentRow != null && !NguyenLieuSP.CurrentRow.IsNewRow;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+        "Bạn có muốn hủy thao tác hiện tại?",
+        "Xác nhận hủy",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+                return;
+
+            this.ActiveControl = null;
+
+            // 💡 THÊM: Bật lại các DataGridView
+            AllNguyenLieu.Enabled = true;
+            NguyenLieuSP.Enabled = true;
+
+            ResetForm();
+
+            DangThaoTac = false;
+            if (NguyenLieuSP.CurrentRow != null && !NguyenLieuSP.CurrentRow.IsNewRow)
+            {
+                NguyenLieuSP_CellClick(NguyenLieuSP, new DataGridViewCellEventArgs(
+                    NguyenLieuSP.CurrentCell.ColumnIndex,
+                    NguyenLieuSP.CurrentRow.Index));
+
+                btnSua.Enabled = true;
+                btnXoa.Enabled = NguyenLieuSP.Rows.Count > 0;
+            }
+            else
+            {
+                btnSua.Enabled = false;
+                btnXoa.Enabled = false;
+            }
+        }
+
+        private void NguyenLieuSP_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (DangThaoTac)
+            {
+                MessageBox.Show("Đang ở chế độ thêm/sửa. Vui lòng Lưu hoặc Hủy trước khi chọn nguyên liệu khác!",
+                               "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (e.RowIndex >= 0)
+            {
+                btnSua.Enabled = true;
+                btnXoa.Enabled = NguyenLieuSP.Rows.Count > 0;
+                DataGridViewRow row = NguyenLieuSP.Rows[e.RowIndex];
+                txtSoLuongSuDung.Text = row.Cells["SoLuongSuDung"].Value.ToString();
             }
         }
     }

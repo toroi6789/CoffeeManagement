@@ -118,7 +118,7 @@ namespace CoffeeManagement
         {
             this.pnlBody.Controls.Clear();
             this.pnlBody.Controls.Add(quanlySanPham);
-            quanlySanPham.Dock = DockStyle.Fill;
+            quanlySanPham.Dock = DockStyle.Fill;           
         }
 
         private void datBanToolStripMenuItem_Click(object sender, EventArgs e)

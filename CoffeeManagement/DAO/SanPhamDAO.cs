@@ -157,5 +157,8 @@ namespace CoffeeManagement.DAO
                 throw new Exception("Lỗi lấy ID lớn nhất: " + ex.Message);
             }
         }
+
+
+
     }
 }

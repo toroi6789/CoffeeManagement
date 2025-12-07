@@ -33,13 +33,23 @@ namespace CoffeeManagement.GUI
         {
             InitializeComponent();
             this.Load += SanPhamADMIN_Load;
+            this.VisibleChanged += SanPhamADMIN_VisibleChanged;
             txtTenSP.TextChanged += Control_TextChanged;
             txtGia.TextChanged += Control_TextChanged;
             txtMoTa.TextChanged += Control_TextChanged;
             cmbDanhMucID.SelectedIndexChanged += Control_SelectionChanged;
             cmbTrangThai.SelectedIndexChanged += Control_SelectionChanged;
+
         }
 
+        private void SanPhamADMIN_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                LoadDanhMucVaoComboBox(); 
+                LocSanPham();             
+            }
+        }
         private void SanPhamADMIN_Load(object sender, EventArgs e)
         {
             List<string> trangThais = new List<string> {"Trống","Hoạt động", "Ngừng bán"};
@@ -465,26 +475,38 @@ namespace CoffeeManagement.GUI
             var dm = cmbDanhMuc.SelectedItem as DanhMucDTO;
             int danhMucID = dm?.DanhMucID ?? 0;
             var listSP = sp_bus.LayTatCaSanPham();
+
             // Lọc theo danh mục
             if (danhMucID > 0)
                 listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
 
-            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "Ngừng bán" ).ToList();
+            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "Ngừng bán").ToList();
             int stt = 1;
             foreach (var sp in listSP)
             {
+                string trangThaiHienThi = sp.TrangThai;
+                if (sp.TrangThai == "Hoạt động") 
+                {
+                    bool coNguyenLieuThieu = sp_bus.KiemTraNguyenLieuThieu(sp.SanPhamID);
+                    if (coNguyenLieuThieu)
+                    {
+                        sp_bus.CapNhatTrangThaiSanPham(sp.SanPhamID, "Ngừng bán");
+                        sp.TrangThai = "Ngừng bán";
+                    }
+                }
                 dtSanPham.Rows.Add(
-                    stt++,                           
+                    stt++,
                     sp.SanPhamID,
                     sp.TenSanPham,
                     sp.GiaBan,
                     sp.MoTa ?? "",
-                    sp.TrangThai ?? "Hoạt động",
+                    sp.TrangThai, 
                     sp.DanhMucID,
                     sp.Hinh ?? ""
                 );
             }
         }
+
 
 
         // ==================== XUẤT RA EXCEL ====================

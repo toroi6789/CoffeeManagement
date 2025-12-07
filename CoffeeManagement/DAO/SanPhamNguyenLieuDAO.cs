@@ -1,6 +1,7 @@
 ﻿using CoffeeManagement.DTO;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -85,6 +86,11 @@ namespace CoffeeManagement.DAO
         {
             string query = $"delete FROM coffeemanagement.sanphamnguyenlieu where NguyenLieuID = '{ID}';";
             DBConnect.ExecuteNonQuery(query);
+        }
+        public void CapNhatSoLuongSuDung(int sanphamID, int nguyenLieuID, decimal soLuongMoi)
+        {
+            string sql = $"UPDATE sanphamnguyenlieu SET SoLuongSuDung = '{soLuongMoi}' WHERE SanPhamID = '{sanphamID}' AND NguyenLieuID = '{nguyenLieuID}';";
+            DBConnect.ExecuteNonQuery(sql);
         }
     }
 }

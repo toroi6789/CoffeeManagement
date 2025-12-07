@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnHuy = new System.Windows.Forms.Button();
+            this.btnSua = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.NguyenLieuSP = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
             this.btnXoa = new System.Windows.Forms.Button();
@@ -43,6 +46,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtID_NL = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.txtSoLuongSuDung = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NguyenLieuSP)).BeginInit();
             this.panel2.SuspendLayout();
@@ -53,6 +57,10 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btnHuy);
+            this.panel1.Controls.Add(this.btnSua);
+            this.panel1.Controls.Add(this.txtSoLuongSuDung);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.NguyenLieuSP);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.btnXoa);
@@ -63,18 +71,49 @@
             this.panel1.Size = new System.Drawing.Size(294, 355);
             this.panel1.TabIndex = 3;
             // 
+            // btnHuy
+            // 
+            this.btnHuy.Location = new System.Drawing.Point(178, 114);
+            this.btnHuy.Name = "btnHuy";
+            this.btnHuy.Size = new System.Drawing.Size(81, 29);
+            this.btnHuy.TabIndex = 11;
+            this.btnHuy.Text = "Hủy";
+            this.btnHuy.UseVisualStyleBackColor = true;
+            this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
+            // 
+            // btnSua
+            // 
+            this.btnSua.Location = new System.Drawing.Point(90, 114);
+            this.btnSua.Name = "btnSua";
+            this.btnSua.Size = new System.Drawing.Size(81, 29);
+            this.btnSua.TabIndex = 10;
+            this.btnSua.Text = "Sửa";
+            this.btnSua.UseVisualStyleBackColor = true;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Times New Roman", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(8, 57);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(104, 15);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Số lượng sử dụng";
+            // 
             // NguyenLieuSP
             // 
             this.NguyenLieuSP.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.NguyenLieuSP.Location = new System.Drawing.Point(3, 111);
+            this.NguyenLieuSP.Location = new System.Drawing.Point(3, 148);
             this.NguyenLieuSP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.NguyenLieuSP.MultiSelect = false;
             this.NguyenLieuSP.Name = "NguyenLieuSP";
             this.NguyenLieuSP.ReadOnly = true;
             this.NguyenLieuSP.RowHeadersWidth = 51;
             this.NguyenLieuSP.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.NguyenLieuSP.Size = new System.Drawing.Size(286, 231);
+            this.NguyenLieuSP.Size = new System.Drawing.Size(286, 194);
             this.NguyenLieuSP.TabIndex = 0;
+            this.NguyenLieuSP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.NguyenLieuSP_CellClick);
             // 
             // label10
             // 
@@ -88,7 +127,7 @@
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(3, 80);
+            this.btnXoa.Location = new System.Drawing.Point(3, 114);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(81, 29);
             this.btnXoa.TabIndex = 4;
@@ -133,7 +172,7 @@
             // txtSearch_ID
             // 
             this.txtSearch_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch_ID.Location = new System.Drawing.Point(114, 82);
+            this.txtSearch_ID.Location = new System.Drawing.Point(96, 112);
             this.txtSearch_ID.Name = "txtSearch_ID";
             this.txtSearch_ID.Size = new System.Drawing.Size(148, 27);
             this.txtSearch_ID.TabIndex = 7;
@@ -150,7 +189,7 @@
             this.btnSearch.IconColor = System.Drawing.Color.GhostWhite;
             this.btnSearch.IconFont = FontAwesome.Sharp.IconFont.Solid;
             this.btnSearch.IconSize = 20;
-            this.btnSearch.Location = new System.Drawing.Point(260, 80);
+            this.btnSearch.Location = new System.Drawing.Point(251, 110);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(29, 29);
             this.btnSearch.TabIndex = 6;
@@ -159,7 +198,7 @@
             // 
             // btnThem
             // 
-            this.btnThem.Location = new System.Drawing.Point(3, 80);
+            this.btnThem.Location = new System.Drawing.Point(3, 112);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(87, 31);
             this.btnThem.TabIndex = 3;
@@ -170,14 +209,14 @@
             // AllNguyenLieu
             // 
             this.AllNguyenLieu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AllNguyenLieu.Location = new System.Drawing.Point(3, 111);
+            this.AllNguyenLieu.Location = new System.Drawing.Point(3, 148);
             this.AllNguyenLieu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AllNguyenLieu.MultiSelect = false;
             this.AllNguyenLieu.Name = "AllNguyenLieu";
             this.AllNguyenLieu.ReadOnly = true;
             this.AllNguyenLieu.RowHeadersWidth = 51;
             this.AllNguyenLieu.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AllNguyenLieu.Size = new System.Drawing.Size(286, 231);
+            this.AllNguyenLieu.Size = new System.Drawing.Size(286, 194);
             this.AllNguyenLieu.TabIndex = 0;
             this.AllNguyenLieu.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AllNguyenLieu_CellClick);
             // 
@@ -203,6 +242,15 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // txtSoLuongSuDung
+            // 
+            this.txtSoLuongSuDung.Location = new System.Drawing.Point(127, 57);
+            this.txtSoLuongSuDung.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtSoLuongSuDung.Name = "txtSoLuongSuDung";
+            this.txtSoLuongSuDung.ReadOnly = true;
+            this.txtSoLuongSuDung.Size = new System.Drawing.Size(153, 22);
+            this.txtSoLuongSuDung.TabIndex = 8;
             // 
             // QuanLyCongThuc
             // 
@@ -241,5 +289,9 @@
         private FontAwesome.Sharp.IconButton btnSearch;
         private System.Windows.Forms.TextBox txtSearch_ID;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnSua;
+        private System.Windows.Forms.Button btnHuy;
+        private System.Windows.Forms.TextBox txtSoLuongSuDung;
     }
 }
