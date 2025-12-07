@@ -1,20 +1,22 @@
 ﻿using CoffeeManagement.BUS;
 using CoffeeManagement.DTO;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using OfficeOpenXml;
-using OfficeOpenXml.Style;
 
 
 namespace CoffeeManagement.GUI
@@ -40,7 +42,7 @@ namespace CoffeeManagement.GUI
 
         private void SanPhamADMIN_Load(object sender, EventArgs e)
         {
-            List<string> trangThais = new List<string> {"Trống","Hoạt động", "Ngừng bán", "Deleted" };
+            List<string> trangThais = new List<string> {"Trống","Hoạt động", "Ngừng bán"};
             cmbTrangThai.DataSource = trangThais;
             cmbTrangThai.SelectedIndex = 0; 
 
@@ -184,7 +186,13 @@ namespace CoffeeManagement.GUI
                 errorProvider1.SetError(txtTenSP, "Tên sản phẩm không được để trống!");
                 isValid = false;
             }
-            if (!decimal.TryParse(txtGia.Text.Trim(), out decimal giaBan) || giaBan < 0)
+            else if (!Regex.IsMatch(txtTenSP.Text, @"^[\p{L}\s]+$"))
+            {
+                errorProvider1.SetError(txtTenSP, "Tên sản phẩm chỉ được chứa chữ cái (kể cả tiếng Việt) và khoảng trắng!");
+                isValid = false;
+            }
+            var culture = new CultureInfo("vi-VN");
+            if (!decimal.TryParse(txtGia.Text, NumberStyles.Number, culture, out decimal giaBan) || giaBan < 0)
             {
                 errorProvider1.SetError(txtGia, "Giá bán phải từ 0 trở lên!");
                 isValid = false;

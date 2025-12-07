@@ -7,9 +7,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,7 +41,7 @@ namespace CoffeeManagement.GUI
         private void QuanLyNguyenLieu_Load(object sender, EventArgs e)
         {
             //
-            List<string> trangThais = new List<string> { "Hoạt động", "Hết", "Deleted" };
+            List<string> trangThais = new List<string> { "Hoạt động", "Hết"};
             cmbTrangThai.DataSource = trangThais;
             cmbTrangThai.SelectedIndex = 0; // Mặc định "Hoạt động"
 
@@ -231,14 +234,21 @@ namespace CoffeeManagement.GUI
                 errorProvider1.SetError(txtTenNguyenLieu, "Tên nguyên liệu không được để trống!");
                 isValid = false;
             }
+            else if(!Regex.IsMatch(txtTenNguyenLieu.Text, @"^[\p{L}\s]+$"))
+            {
+                errorProvider1.SetError(txtTenNguyenLieu,
+                    "Chỉ cho phép chữ cái (kể cả tiếng Việt) và khoảng trắng!");
+                isValid = false;
+            }
 
-            if (!decimal.TryParse(txtGiaNhap.Text, out decimal giaNhap) || giaNhap < 0)
+            var culture = new CultureInfo("vi-VN");
+            if (!decimal.TryParse(txtGiaNhap.Text, NumberStyles.Number, culture, out decimal giaNhap) || giaNhap < 0)
             {
                 errorProvider1.SetError(txtGiaNhap, "Giá nhập phải là số dương!");
                 isValid = false;
             }
 
-            if (cmbDanhMucID.SelectedIndex == -1)
+            if (cmbDanhMucID.SelectedIndex < 1)
             {
                 errorProvider1.SetError(cmbDanhMucID, "Vui lòng chọn danh mục!");
                 isValid = false;
@@ -247,6 +257,12 @@ namespace CoffeeManagement.GUI
             if (string.IsNullOrWhiteSpace(txtDonVi.Text))
             {
                 errorProvider1.SetError(txtDonVi, "Đơn vị không được để trống!");
+                isValid = false;
+            }
+            else if (!Regex.IsMatch(txtDonVi.Text, @"^[\p{L}\s]+$"))
+            {
+                errorProvider1.SetError(txtDonVi,
+                    "Chỉ cho phép chữ cái (kể cả tiếng Việt) và khoảng trắng!");
                 isValid = false;
             }
 
