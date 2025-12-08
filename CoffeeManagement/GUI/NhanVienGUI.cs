@@ -334,10 +334,13 @@ namespace CoffeeManagement.GUI
                         foreach (var nv in listNV)
                         {
                             ws.Cells[row, 1].Value = nv.NhanVienID;
+                            ws.Cells[row, 1].Style.Numberformat.Format = "@";
                             ws.Cells[row, 2].Value = nv.Ho;
                             ws.Cells[row, 3].Value = nv.Ten;
                             ws.Cells[row, 4].Value = nv.FullName;
                             ws.Cells[row, 5].Value = nv.Phone;
+                            ws.Cells[row, 5].Style.Numberformat.Format = "@";
+
                             ws.Cells[row, 6].Value = nv.TrangThai;
 
                             ws.Cells[row, 7].Value = nv.DateJoin;
@@ -345,8 +348,13 @@ namespace CoffeeManagement.GUI
 
 
                             ws.Cells[row, 8].Value = nv.NgayCapNhat?.ToString("dd/MM/yyyy");
+                            ws.Cells[row, 8].Style.Numberformat.Format = "dd/MM/yyyy";
+
                             ws.Cells[row, 9].Value = nv.NgayKhoiTao.ToString("dd/MM/yyyy");
+                            ws.Cells[row, 9].Style.Numberformat.Format = "dd/MM/yyyy";
                             ws.Cells[row, 10].Value = nv.UserID;
+                            ws.Cells[row, 10].Style.Numberformat.Format = "@";
+
 
                             row++;
                         }
@@ -389,7 +397,10 @@ namespace CoffeeManagement.GUI
                     }
                     else
                     {
-                        nhanVienBUS.AddNhanVien(item);
+                        UserBUS userBUS = new UserBUS();
+                        if (userBUS.GetUserByID(item.UserID) == null) // thêm khi nv sở hữu userID duy nhất
+                            nhanVienBUS.AddNhanVien(item);
+                        else nvBUS.UpdateNhanVien(item); // update khi co san 1 user trống cho nv assgin vào
                     }
                 }
 
