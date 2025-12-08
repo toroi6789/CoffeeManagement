@@ -32,6 +32,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnSua = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
@@ -51,8 +53,7 @@
             this.txtTen = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtHo = new System.Windows.Forms.TextBox();
-            this.btnImport = new System.Windows.Forms.Button();
-            this.btnExport = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -78,7 +79,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dataGridView1.Location = new System.Drawing.Point(0, 304);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.Size = new System.Drawing.Size(1085, 351);
@@ -93,7 +94,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(757, 72);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(328, 202);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(328, 232);
@@ -102,7 +103,7 @@
             // btnSua
             // 
             this.btnSua.Location = new System.Drawing.Point(208, 4);
-            this.btnSua.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSua.Margin = new System.Windows.Forms.Padding(4);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(116, 69);
             this.btnSua.TabIndex = 1;
@@ -110,11 +111,34 @@
             this.btnSua.UseVisualStyleBackColor = true;
             this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(84, 4);
+            this.btnImport.Margin = new System.Windows.Forms.Padding(4);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(116, 69);
+            this.btnImport.TabIndex = 2;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(208, 81);
+            this.btnExport.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(116, 69);
+            this.btnExport.TabIndex = 3;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.dateTimePicker1);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.txtNgayCapNhat);
+            this.panel1.Controls.Add(this.txtSearch);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.txtNgayThamGia);
             this.panel1.Controls.Add(this.label6);
@@ -132,7 +156,7 @@
             this.panel1.Controls.Add(this.txtHo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 72);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.MinimumSize = new System.Drawing.Size(735, 202);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(735, 232);
@@ -142,7 +166,7 @@
             // 
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dateTimePicker1.Location = new System.Drawing.Point(151, 193);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
             this.dateTimePicker1.MinimumSize = new System.Drawing.Size(4, 28);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(185, 28);
@@ -273,7 +297,7 @@
             "Đang làm",
             "Trống lịch"});
             this.cbTrangThai.Location = new System.Drawing.Point(151, 144);
-            this.cbTrangThai.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbTrangThai.Margin = new System.Windows.Forms.Padding(4);
             this.cbTrangThai.Name = "cbTrangThai";
             this.cbTrangThai.Size = new System.Drawing.Size(185, 36);
             this.cbTrangThai.TabIndex = 25;
@@ -344,27 +368,16 @@
             this.txtHo.Size = new System.Drawing.Size(185, 38);
             this.txtHo.TabIndex = 3;
             // 
-            // btnImport
+            // txtSearch
             // 
-            this.btnImport.Location = new System.Drawing.Point(84, 4);
-            this.btnImport.Margin = new System.Windows.Forms.Padding(4);
-            this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(116, 69);
-            this.btnImport.TabIndex = 2;
-            this.btnImport.Text = "Import";
-            this.btnImport.UseVisualStyleBackColor = true;
-            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(208, 81);
-            this.btnExport.Margin = new System.Windows.Forms.Padding(4);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(116, 69);
-            this.btnExport.TabIndex = 3;
-            this.btnExport.Text = "Export";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(384, 189);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtSearch.Multiline = true;
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(328, 37);
+            this.txtSearch.TabIndex = 4;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // NhanVienGUI
             // 
@@ -374,7 +387,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lblTitle);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "NhanVienGUI";
             this.Size = new System.Drawing.Size(1085, 655);
             this.SizeChanged += new System.EventHandler(this.NhanVienGUI_SizeChanged);
@@ -413,5 +426,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }

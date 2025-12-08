@@ -99,23 +99,8 @@ namespace CoffeeManagement.GUI
             }
 
             dataGridView1.AutoGenerateColumns = true;
-            dataGridView1.DataSource = nvBUS.GetAllNhanVien();
-
-            //// Đặt tên cột
-            //dataGridView1.Columns["STT"].HeaderText = "STT";
-            //dataGridView1.Columns["NhanVienID"].HeaderText = "Mã NV";
-            //dataGridView1.Columns["FullName"].HeaderText = "Tên Nhân Viên";
-            //dataGridView1.Columns["Phone"].HeaderText = "Số Điện Thoại";
-            //dataGridView1.Columns["TrangThai"].HeaderText = "Trạng Thái";
-
-            //// Ẩn cột ID nếu không cần
-            //dataGridView1.Columns["NhanVienID"].Visible = false;
-
-            //// Căn giữa STT
-            //dataGridView1.Columns["STT"].Width = 50;
-            //dataGridView1.Columns["STT"].DefaultCellStyle.Alignment =
-            //    DataGridViewContentAlignment.MiddleCenter;
-            //dataGridView1.Columns["STT"].DisplayIndex = 0;
+            dataGridView1.DataSource = dtNhanVien;
+            //dataGridView1.DataSource = nvBUS.GetAllNhanVien();
 
             // Chỉ đọc
             dataGridView1.ReadOnly = true;
@@ -476,6 +461,22 @@ namespace CoffeeManagement.GUI
             }
 
             return ds;
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string search = txtSearch.Text.Trim().Replace("'", "''");
+
+            if (string.IsNullOrEmpty(search))
+            {
+                // Reset lại DataView khi không search
+                (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = "";
+            }
+            else
+            {
+                (dataGridView1.DataSource as DataTable).DefaultView.RowFilter =
+                    $"FullName LIKE '%{search}%' OR Phone LIKE '%{search}%' OR TrangThai LIKE '%{search}%' OR Convert(NhanVienID, 'System.String') LIKE '%{search}%'";
+            }
         }
 
     }
