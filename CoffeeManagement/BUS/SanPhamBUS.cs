@@ -222,5 +222,26 @@ namespace CoffeeManagement.BUS
                 }
             }
         }
+
+        public void TuDongCapNhatTrangThaiTatCaSanPham()
+        {
+            try
+            {
+                var tatCaSanPham = LayTatCaSanPham();
+                foreach (var sp in tatCaSanPham)
+                {
+                    if (sp.TrangThai != "Hoạt động") continue; 
+                    bool duNguyenLieu = !KiemTraNguyenLieuThieu(sp.SanPhamID);
+                    if (!duNguyenLieu)
+                    {
+                        CapNhatTrangThaiSanPham(sp.SanPhamID, "hết hàng");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi tự động cập nhật trạng thái sản phẩm: " + ex.Message);
+            }
+        }
     }
 }

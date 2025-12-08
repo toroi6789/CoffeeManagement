@@ -149,6 +149,7 @@
             // 
             // cmbDanhMucID
             // 
+            this.cmbDanhMucID.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDanhMucID.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cmbDanhMucID.FormattingEnabled = true;
             this.cmbDanhMucID.Location = new System.Drawing.Point(202, 232);
@@ -158,6 +159,7 @@
             // 
             // cmbTrangThai
             // 
+            this.cmbTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTrangThai.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.cmbTrangThai.FormattingEnabled = true;
             this.cmbTrangThai.Location = new System.Drawing.Point(202, 100);
