@@ -34,7 +34,7 @@ namespace CoffeeManagement
         GUI.NCCGUI NCCGUI = new GUI.NCCGUI();
         GUI.DatBanGUI datban = new GUI.DatBanGUI();
         GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
-
+        BUS.SanPhamBUS spBUS = new BUS.SanPhamBUS();
         public MainForm()
         {
             InitializeComponent();
@@ -119,6 +119,7 @@ namespace CoffeeManagement
 
         private void banHangToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            spBUS.TuDongCapNhatTrangThaiTatCaSanPham();
             this.pnlBody.Controls.Clear();
             banHang.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(banHang);
@@ -164,6 +165,7 @@ namespace CoffeeManagement
 
         private void sanPhamToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            spBUS.TuDongCapNhatTrangThaiTatCaSanPham();
             this.pnlBody.Controls.Clear();
             this.pnlBody.Controls.Add(quanlySanPham);
             quanlySanPham.Dock = DockStyle.Fill;           

@@ -84,7 +84,10 @@ namespace CoffeeManagement.BUS
                 errorField = "DonVi";
                 return false;
             }
-
+            if (nl.TrangThai != "Deleted")
+            {
+                nl.TrangThai = CapNhatTrangThaiTuSoLuong(nl.SoLuongTon);
+            }
             // === 5. GỌI DAL THÊM SẢN PHẨM ===
             bool kq = dao.daoThemNguyenLieu(nl);
 
@@ -126,7 +129,10 @@ namespace CoffeeManagement.BUS
                 errorField = "DanhMucID";
                 return false;
             }
-
+            if (nl.TrangThai != "Deleted")
+            {
+                nl.TrangThai = CapNhatTrangThaiTuSoLuong(nl.SoLuongTon);
+            }
             bool kq = dao.daoSuaNguyenLieu(nl);
             message = kq ? "Sửa nguyên liệu thành công!" : "Sửa thất bại!";
             return kq;
@@ -163,7 +169,12 @@ namespace CoffeeManagement.BUS
 
         public NguyenLieuDTO LayNguyenLieuTheoID(int id)
         {
-            return dao.LayNguyenLieuTheoID(id); // Sẽ thêm ở DAO dưới đây
+            return dao.LayNguyenLieuTheoID(id);
+        }
+
+        private string CapNhatTrangThaiTuSoLuong(decimal soLuongTon)
+        {
+            return soLuongTon > 0 ? "Hoạt động" : "Hết";
         }
     }
 }

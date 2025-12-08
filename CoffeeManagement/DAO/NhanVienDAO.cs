@@ -59,23 +59,37 @@ namespace CoffeeManagement.DAO
         {
             Console.WriteLine("UPDATE ID = " + nv.NhanVienID);
 
-            string query = @"UPDATE NhanVien 
-                             SET Ho=@Ho, Ten=@Ten, Phone=@Phone, TrangThai=@TrangThai,
-                                 DateJoin=@DateJoin, NgayCapNhat=@NgayCapNhat, UserID=@UserID
-                             WHERE NhanVienID=@ID";
+            bool valid = nv.UserID > 0;
 
-            MySqlParameter[] parameters = {
+            string query = @"UPDATE NhanVien 
+                     SET Ho=@Ho, Ten=@Ten, Phone=@Phone, TrangThai=@TrangThai,
+                         DateJoin=@DateJoin, NgayCapNhat=@NgayCapNhat";
+
+            // chỉ thêm UserID nếu hợp lệ
+            if (valid)
+            {   
+                query += ", UserID=@UserID";
+            }
+
+            query += " WHERE NhanVienID=@ID";
+
+            List<MySqlParameter> parameters = new List<MySqlParameter>
+            {
                 new MySqlParameter("@Ho", nv.Ho ?? (object)DBNull.Value),
                 new MySqlParameter("@Ten", nv.Ten ?? (object)DBNull.Value),
                 new MySqlParameter("@Phone", nv.Phone ?? (object)DBNull.Value),
                 new MySqlParameter("@TrangThai", nv.TrangThai ?? (object)DBNull.Value),
                 new MySqlParameter("@DateJoin", nv.DateJoin ?? (object)DBNull.Value),
                 new MySqlParameter("@NgayCapNhat", nv.NgayCapNhat ?? (object)DBNull.Value),
-                new MySqlParameter("@UserID", nv.UserID),
                 new MySqlParameter("@ID", nv.NhanVienID)
             };
 
-            return ExecuteNonQuery(query, parameters) > 0;
+            if (valid)
+            {
+                parameters.Add(new MySqlParameter("@UserID", nv.UserID));
+            }
+
+            return ExecuteNonQuery(query, parameters.ToArray()) > 0;
         }
 
         // Delete employee

@@ -39,7 +39,6 @@ namespace CoffeeManagement.GUI
             txtMoTa.TextChanged += Control_TextChanged;
             cmbDanhMucID.SelectedIndexChanged += Control_SelectionChanged;
             cmbTrangThai.SelectedIndexChanged += Control_SelectionChanged;
-
         }
 
         private void SanPhamADMIN_VisibleChanged(object sender, EventArgs e)
@@ -52,7 +51,7 @@ namespace CoffeeManagement.GUI
         }
         private void SanPhamADMIN_Load(object sender, EventArgs e)
         {
-            List<string> trangThais = new List<string> {"Trống","Hoạt động", "Ngừng bán"};
+            List<string> trangThais = new List<string> {"Trống","Hoạt động", "hết hàng"};
             cmbTrangThai.DataSource = trangThais;
             cmbTrangThai.SelectedIndex = 0; 
             btnSua.Enabled = false;
@@ -76,7 +75,7 @@ namespace CoffeeManagement.GUI
             dtSanPham.Columns.Add("DanhMucID", typeof(int));
             dtSanPham.Columns.Add("Hinh", typeof(string));
 
-          
+         
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = dtSanPham;
             if (!dataGridView1.Columns.Contains("btnView"))
@@ -84,7 +83,7 @@ namespace CoffeeManagement.GUI
                 DataGridViewButtonColumn btnView = new DataGridViewButtonColumn();
                 btnView.HeaderText = "Xem Nguyên Liệu";
                 btnView.Name = "btnView";
-                btnView.Text = "VIEW";
+                btnView.Text = "XEM";
                 btnView.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(btnView);
             }
@@ -480,7 +479,7 @@ namespace CoffeeManagement.GUI
             if (danhMucID > 0)
                 listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
 
-            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "Ngừng bán").ToList();
+            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "hết hàng").ToList();
             int stt = 1;
             foreach (var sp in listSP)
             {
@@ -490,8 +489,8 @@ namespace CoffeeManagement.GUI
                     bool coNguyenLieuThieu = sp_bus.KiemTraNguyenLieuThieu(sp.SanPhamID);
                     if (coNguyenLieuThieu)
                     {
-                        sp_bus.CapNhatTrangThaiSanPham(sp.SanPhamID, "Ngừng bán");
-                        sp.TrangThai = "Ngừng bán";
+                        sp_bus.CapNhatTrangThaiSanPham(sp.SanPhamID, "hết hàng");
+                        sp.TrangThai = "hết hàng";
                     }
                 }
                 dtSanPham.Rows.Add(
