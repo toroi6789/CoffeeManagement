@@ -18,7 +18,52 @@ namespace CoffeeManagement.BUS
         }
         public static DataTable LayTatCaBanHoatDong()
         {
+            ResetTatCaBan();
+
             return BanDAO.LayTatCaBanHoatDong();
+        }
+        public static void ResetTatCaBan()
+        {
+            List<BanDTO> list = ChuyenDataTableSangDTO(LayTatCaBan());
+            DateTime now = DateTime.Now;
+            DateTime twoHoursLater = now.AddHours(2);
+
+            foreach (var item in list)
+            {
+                List<DatBanDTO> dsDatBan = DatBanBUS.ChuyenDataTableSangDTO(
+                                            DatBanBUS.LayDatBanTheoBan(item.BanID));
+
+                bool hasBookingInNext2Hours = false;
+                bool hasActiveBooking = false;
+
+                if (dsDatBan != null && dsDatBan.Count > 0)
+                {
+                    foreach (var datBan in dsDatBan)
+                    {
+                        DateTime start = datBan.Ngay.Date + datBan.GioBatDau;
+                        DateTime end = datBan.Ngay.Date + datBan.GioKetThuc;
+
+                        // 1. Hiện tại có người đang dùng bàn
+                        if (start <= now && now < end)
+                        {
+                            hasActiveBooking = true;
+                        }
+
+                        // 2. Có đặt bàn trong vòng 2h tới
+                        if (end >= now && start <= twoHoursLater)
+                        {
+                            hasBookingInNext2Hours = true;
+                        }
+                    }
+                }
+
+                // ❗ Điều kiện để set Trống:
+                // Không có người đang ngồi AND không có booking trong 2 giờ tới
+                if (!hasActiveBooking && !hasBookingInNext2Hours)
+                {
+                    CapNhatTrangThaiBan(item.BanID, "Trống");
+                }
+            }
         }
 
         public static DataTable LayTatCaBan()
@@ -55,6 +100,28 @@ namespace CoffeeManagement.BUS
         public static BanDTO LayBanTheoID(int banID)
         {
             return BanDAO.LayBanTheoID(banID);
+        }
+
+        public static List<BanDTO> ChuyenDataTableSangDTO(DataTable dt)
+        {
+            List<BanDTO> list = new List<BanDTO>();
+
+            if (dt == null || dt.Rows.Count == 0)
+                return list;
+
+            foreach (DataRow row in dt.Rows)
+            {
+                BanDTO ban = new BanDTO(
+                    Convert.ToInt32(row["BanID"]),
+                    row["TenBan"].ToString(),
+                    Convert.ToInt32(row["SucChua"]),
+                    row["TrangThai"].ToString()
+                );
+
+                list.Add(ban);
+            }
+
+            return list;
         }
     }
 }

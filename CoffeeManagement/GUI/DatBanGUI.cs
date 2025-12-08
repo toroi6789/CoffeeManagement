@@ -20,6 +20,7 @@ namespace CoffeeManagement.GUI
         // Load toàn bộ bàn
         private void LoadBan()
         {
+            BanBUS.ResetTatCaBan();
             dgvBan.DataSource = BanBUS.LayTatCaBan();
 
             // Cập nhật trạng thái thực tế

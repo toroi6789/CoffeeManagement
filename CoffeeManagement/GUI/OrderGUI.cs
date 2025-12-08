@@ -141,9 +141,13 @@ namespace CoffeeManagement.GUI
 
             // Cập nhật trạng thái bàn
             BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
-            //DatBanDTO datBanDTO = DatBanBUS.ChuyenDataTableSangDTO(DatBanBUS.LayDatBanTheoBan(banID))[0];
+            DatBanDTO datBanDTO = new DatBanDTO();
+            datBanDTO.BanID = banID;
+            datBanDTO.Ngay = DateTime.Now;
+            datBanDTO.GioBatDau = DateTime.Now.TimeOfDay;
+            datBanDTO.GioKetThuc = DateTime.Now.AddHours(1).TimeOfDay;  
             //datBanDTO.
-            //DatBanBUS.UpdateByID(DatBanBUS.GetByID(datBanDTO.DatBanID));
+            DatBanBUS.DatBan(datBanDTO);
             //lấy ID hóa đơn vừa tạo
             int HoaDonID = TaoID.LayHoaDonIDMoiNhat();
 
@@ -193,10 +197,12 @@ namespace CoffeeManagement.GUI
         }
 
         private void OrderGUI_Load(object sender, EventArgs e)
-        {
+        {   
             DataTable banTable = BanBUS.LayTatCaBanHoatDong();
             DataTable Km = KhuyenMaiBUS.GetAllKM();
-             
+            
+            cbb_Ban.Items.Clear();
+            cbb_KM.Items.Clear();   
             foreach (DataRow row in banTable.Rows)
             {
                 string item = row["BanID"] + " - " + row["TenBan"];
