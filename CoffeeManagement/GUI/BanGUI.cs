@@ -25,6 +25,7 @@ namespace CoffeeManagement.GUI
         // Tải danh sách bàn
         private void LoadBan()
         {
+            BanBUS.ResetTatCaBan();
             dgvBan.DataSource = BanBUS.LayTatCaBan();
             BanDAO.ResetAutoIncrement();
         }
@@ -233,7 +234,7 @@ namespace CoffeeManagement.GUI
 
         private void BanGUI_Load(object sender, EventArgs e)
         {
-
+            LoadBan();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
