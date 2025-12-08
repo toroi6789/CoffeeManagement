@@ -257,6 +257,12 @@
     <Compile Include="GUI\QuanLyNguyenLieu.Designer.cs">
       <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\SanPhamADMIN.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -286,6 +292,12 @@
     </Compile>
     <Compile Include="GUI\PhieuNhapGUI.Designer.cs">
       <DependentUpon>PhieuNhapGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ThongKeGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\ThongKeGUI.Designer.cs">
+      <DependentUpon>ThongKeGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -334,6 +346,9 @@
     <EmbeddedResource Include="GUI\QuanLyNguyenLieu.resx">
       <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\SanPhamADMIN.resx">
       <DependentUpon>SanPhamADMIN.cs</DependentUpon>
     </EmbeddedResource>
@@ -345,6 +360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PhieuNhapGUI.resx">
       <DependentUpon>PhieuNhapGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThongKeGUI.resx">
+      <DependentUpon>ThongKeGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

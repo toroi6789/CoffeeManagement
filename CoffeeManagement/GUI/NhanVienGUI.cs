@@ -76,6 +76,9 @@ namespace CoffeeManagement.GUI
 
         private void LoadNhanVienData()
         {
+            dataGridView1.DataSource = null;
+            dataGridView1.Columns.Clear();
+
             dtNhanVien = new DataTable();
             dtNhanVien.Columns.Add("STT", typeof(int));
             dtNhanVien.Columns.Add("NhanVienID", typeof(int));
@@ -207,7 +210,10 @@ namespace CoffeeManagement.GUI
         {
             if (dataGridView1.CurrentRow == null) return;
 
+
             int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["NhanVienID"].Value);
+            MessageBox.Show(id.ToString());
+
             selectedNV = nvBUS.GetNhanVienByID(id);
 
             if (selectedNV == null) return;
@@ -479,5 +485,18 @@ namespace CoffeeManagement.GUI
             }
         }
 
+        private void btnThem_Click(object sender, EventArgs e)
+        {
+            RegisterForm registerForm = new RegisterForm();
+
+            if (registerForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadNhanVienData();
+            }
+            else
+            {
+                registerForm.Close();
+            }
+        }
     }
 }

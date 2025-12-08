@@ -50,6 +50,7 @@ namespace CoffeeManagement
             //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
             dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
             quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+
             ShowMenuItemBaseOnUser();
 
             // Đảm bảo layout được cập nhật khi form được hiển thị

@@ -86,11 +86,13 @@ namespace CoffeeManagement.DAO
         }
 
         // Thêm user mới
-        public void Add(UserDTO user)
+        public int Add(UserDTO user)
         {
             string query = @"
                 INSERT INTO `User` (Email, MatKhau, TrangThai, RoleID, NgayKhoiTao)
-                VALUES (@Email, @MatKhau, @TrangThai, @RoleID, NOW())";
+                VALUES (@Email, @MatKhau, @TrangThai, @RoleID, NOW());
+                SELECT LAST_INSERT_ID();
+            ";
 
             MySqlParameter[] parameters = new MySqlParameter[]
             {
@@ -100,8 +102,12 @@ namespace CoffeeManagement.DAO
                 new MySqlParameter("@RoleID", user.RoleID)
             };
 
-            ExecuteNonQuery(query, parameters);
+            object result = ExecuteScalar(query, parameters);
+
+            return Convert.ToInt32(result);
         }
+
+
 
         public UserDTO GetUserByID(int userID)
         {
@@ -137,6 +143,55 @@ namespace CoffeeManagement.DAO
                                     : (DateTime?)null
             };
         }
+
+        // Check if an email already exists in database
+        public bool ExistsByEmail(string email)
+        {
+            string query = @"SELECT COUNT(*) FROM `User` WHERE Email = @Email";
+
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+        new MySqlParameter("@Email", email)
+            };
+
+            DataTable dt = ExecuteQuery(query, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                int count = Convert.ToInt32(dt.Rows[0][0]);
+                return count > 0;   // true = email already exists
+            }
+
+            return false;
+        }
+
+        public bool SoftDeleteUser(int userID)
+        {
+            string query = @"UPDATE `User` SET TrangThai = 0 WHERE UserID = @UserID";
+
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+        new MySqlParameter("@UserID", userID)
+            };
+
+            return ExecuteNonQuery(query, parameters) > 0;
+        }
+
+        // Xóa user theo ID
+        public bool DeleteUser(int userID)
+        {
+            string query = @"DELETE FROM `User` WHERE UserID = @UserID";
+
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+        new MySqlParameter("@UserID", userID)
+            };
+
+            int rows = ExecuteNonQuery(query, parameters);
+
+            return rows > 0; // true nếu xóa thành công
+        }
+
 
 
     }

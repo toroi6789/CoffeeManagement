@@ -8,7 +8,7 @@ namespace CoffeeManagement.DAO
     public class DBConnect
     {
         private static string connectionString =
-             "server=localhost;port=3306;userid=root;password=123456789;database=coffeemanagement;charset=utf8mb4;";
+             "server=localhost;port=3306;userid=root;password=123456;database=coffeemanagement;charset=utf8mb4;";
             //ConfigurationManager.ConnectionStrings["CoffeeManagement_full"]?.ConnectionString 
             //?? "server=localhost;port=3306;user id=root;password=123456789;database=coffeemanagement;charset=utf8mb4;";
 
@@ -108,5 +108,23 @@ namespace CoffeeManagement.DAO
                 }
             }
         }
+
+        // Hàm thực thi query trả về giá trị đầu tiên của dòng đầu tiên
+        protected static object ExecuteScalar(string query, MySqlParameter[] parameters = null)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    if (parameters != null)
+                        cmd.Parameters.AddRange(parameters);
+
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
+
     }
 }

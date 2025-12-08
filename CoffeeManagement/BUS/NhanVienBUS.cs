@@ -12,18 +12,18 @@ namespace CoffeeManagement.BUS
 {
     public class NhanVienBUS
     {
-        private readonly NhanVienDAO dao;
+        private readonly NhanVienDAO nhanVienDAO;
         private UserBUS userBUS = new UserBUS();
 
         public NhanVienBUS(NhanVienDAO dao)
         {
-            this.dao = dao;
+            this.nhanVienDAO = dao;
         }
 
         // Get all employees
         public List<NhanVienDTO> GetAllNhanVien()
         {
-            return dao.GetAll();
+            return nhanVienDAO.GetAll();
         }
 
         // Add new employee (with validation if needed)
@@ -41,13 +41,16 @@ namespace CoffeeManagement.BUS
             if (user != null)
             {
                 NhanVienDTO nhanVienDTO = GetNhanVienByID(user.UserID);
-                MessageBox.Show("Không thể tạo NV:" + nhanVienDTO.FullName + "đã sở hữu tài khoản này!", "Thông báo", 
+                if (nhanVienDTO != null)
+                {
+                    MessageBox.Show("Không thể tạo NV:" + nhanVienDTO.FullName + "đã sở hữu tài khoản này!", "Thông báo",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-                return false; 
+                    return false;
+                }    
             }
 
             nv.NgayKhoiTao = DateTime.Now;
-            return dao.Insert(nv);
+            return nhanVienDAO.Insert(nv);
         }
 
         // Update employee
@@ -77,13 +80,13 @@ namespace CoffeeManagement.BUS
 
            
             nv.NgayCapNhat = DateTime.Now;
-            return dao.Update(nv);
+            return nhanVienDAO.Update(nv);
         }
 
         // Delete employee
         public bool DeleteNhanVien(int id)
         {
-            return dao.Delete(id);
+            return nhanVienDAO.Delete(id);
         }
         public static DataTable LayNV_userID(int UserID)
         {
@@ -92,12 +95,7 @@ namespace CoffeeManagement.BUS
 
         public NhanVienDTO GetNhanVienByID(int nhanVienID)
         {
-            DataTable dt = NhanVienDAO.LayNV_userID(nhanVienID);
-
-            if (dt.Rows.Count == 0)
-                return null;
-
-            return ConvertRowToDTO(dt.Rows[0]);
+            return nhanVienDAO.GetByNhanVienID(nhanVienID);
         }
 
         private NhanVienDTO ConvertRowToDTO(DataRow row)
@@ -179,5 +177,9 @@ namespace CoffeeManagement.BUS
             return errors;
         }
 
+        public bool PhoneExists(string phone)
+        {
+            return nhanVienDAO.ExistsByPhone(phone);
+        }
     }
 }

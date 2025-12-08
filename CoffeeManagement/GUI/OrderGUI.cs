@@ -27,10 +27,10 @@ namespace CoffeeManagement.GUI
 
         Decimal tongTien = 0;
 
-        private void btnThanhToan_Click(object sender, EventArgs e)
+        private void btnThanhToan_Click(object sender, EventArgs e) 
         {
             //kiểm tra giỏ hàng có sản phẩm không
-            if (dataGridView1.Rows.Count <= 1)
+            if (dataGridView1.Rows.Count <= 1)  
             {
                 errorProvider1.SetError(dataGridView1, "Giỏ hàng trống!");
                 return;
@@ -147,8 +147,8 @@ namespace CoffeeManagement.GUI
             datBanDTO.Ngay = DateTime.Now;
             datBanDTO.GioBatDau = DateTime.Now.TimeOfDay;
             datBanDTO.GioKetThuc = DateTime.Now.AddHours(1).TimeOfDay;  
-            //datBanDTO.
             DatBanBUS.DatBan(datBanDTO);
+
             //lấy ID hóa đơn vừa tạo
             int HoaDonID = TaoID.LayHoaDonIDMoiNhat();
 
@@ -177,8 +177,6 @@ namespace CoffeeManagement.GUI
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-       
-            
             tongTien = 0;
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {

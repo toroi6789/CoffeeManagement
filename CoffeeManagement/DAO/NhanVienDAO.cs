@@ -107,5 +107,57 @@ namespace CoffeeManagement.DAO
             string query = $"SELECT * FROM coffeemanagement.nhanvien where UserID = '{IDuser}';";
             return DBConnect.ExecuteQuery(query) ;
         }
+
+        // Check if a phone number already exists
+        public bool ExistsByPhone(string phone)
+        {
+            string query = "SELECT COUNT(*) FROM NhanVien WHERE Phone = @Phone";
+
+            MySqlParameter[] parameters =
+            {
+        new MySqlParameter("@Phone", phone)
+    };
+
+            DataTable dt = ExecuteQuery(query, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                int count = Convert.ToInt32(dt.Rows[0][0]);
+                return count > 0;
+            }
+
+            return false;
+        }
+
+        // Get employee by NhanVienID
+        public NhanVienDTO GetByNhanVienID(int nvID)
+        {
+            string query = "SELECT * FROM NhanVien WHERE NhanVienID = @ID";
+
+            MySqlParameter[] parameters = {
+        new MySqlParameter("@ID", nvID)
+    };
+
+            DataTable dt = ExecuteQuery(query, parameters);
+
+            if (dt.Rows.Count == 0)
+                return null;
+
+            DataRow row = dt.Rows[0];
+
+            return new NhanVienDTO()
+            {
+                NhanVienID = Convert.ToInt32(row["NhanVienID"]),
+                Ho = row["Ho"]?.ToString(),
+                Ten = row["Ten"]?.ToString(),
+                Phone = row["Phone"]?.ToString(),
+                TrangThai = row["TrangThai"]?.ToString(),
+                DateJoin = row["DateJoin"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["DateJoin"]),
+                NgayCapNhat = row["NgayCapNhat"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["NgayCapNhat"]),
+                NgayKhoiTao = Convert.ToDateTime(row["NgayKhoiTao"]),
+                UserID = Convert.ToInt32(row["UserID"])
+            };
+        }
+
     }
 }
