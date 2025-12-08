@@ -52,7 +52,7 @@ namespace CoffeeManagement.GUI
         }
         private void SanPhamADMIN_Load(object sender, EventArgs e)
         {
-            List<string> trangThais = new List<string> {"Trống","Hoạt động", "Ngừng bán"};
+            List<string> trangThais = new List<string> {"Trống","Hoạt động", "hết hàng"};
             cmbTrangThai.DataSource = trangThais;
             cmbTrangThai.SelectedIndex = 0; 
             btnSua.Enabled = false;
@@ -480,7 +480,7 @@ namespace CoffeeManagement.GUI
             if (danhMucID > 0)
                 listSP = listSP.Where(sp => sp.DanhMucID == danhMucID).ToList();
 
-            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "Ngừng bán").ToList();
+            listSP = listSP.Where(sp => sp.TrangThai == "Hoạt động" || sp.TrangThai == "hết hàng").ToList();
             int stt = 1;
             foreach (var sp in listSP)
             {
@@ -490,8 +490,8 @@ namespace CoffeeManagement.GUI
                     bool coNguyenLieuThieu = sp_bus.KiemTraNguyenLieuThieu(sp.SanPhamID);
                     if (coNguyenLieuThieu)
                     {
-                        sp_bus.CapNhatTrangThaiSanPham(sp.SanPhamID, "Ngừng bán");
-                        sp.TrangThai = "Ngừng bán";
+                        sp_bus.CapNhatTrangThaiSanPham(sp.SanPhamID, "hết hàng");
+                        sp.TrangThai = "hết hàng";
                     }
                 }
                 dtSanPham.Rows.Add(

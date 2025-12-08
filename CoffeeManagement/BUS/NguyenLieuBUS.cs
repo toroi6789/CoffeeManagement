@@ -163,7 +163,7 @@ namespace CoffeeManagement.BUS
 
         public NguyenLieuDTO LayNguyenLieuTheoID(int id)
         {
-            return dao.LayNguyenLieuTheoID(id); // Sẽ thêm ở DAO dưới đây
+            return dao.LayNguyenLieuTheoID(id);
         }
     }
 }
