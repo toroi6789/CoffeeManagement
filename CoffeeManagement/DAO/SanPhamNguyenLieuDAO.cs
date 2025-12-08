@@ -112,7 +112,6 @@ namespace CoffeeManagement.DAO
         {
             string sql = $"UPDATE sanphamnguyenlieu SET SoLuongSuDung = '{soLuongMoi}' WHERE SanPhamID = '{sanphamID}' AND NguyenLieuID = '{nguyenLieuID}';";
             DBConnect.ExecuteNonQuery(sql);
->>>>>>> 1266e116af3d8d94a5463688c8988e5429c18eee
         }
     }
 }

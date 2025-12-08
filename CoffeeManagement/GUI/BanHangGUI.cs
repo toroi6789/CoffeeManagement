@@ -1,4 +1,5 @@
 ﻿using CoffeeManagement.BUS;
+using CoffeeManagement.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,6 +28,7 @@ namespace CoffeeManagement.GUI
         // xử lý sự kiện khi load BanHangGUI
         private void BanHang_Load(object sender, EventArgs e)
         {
+            flowLayoutPanel1.Controls.Clear();
             //
             //Thêm dữ liệu sản phẩm vào flowLayoutPanel1
             //
@@ -198,6 +200,83 @@ namespace CoffeeManagement.GUI
 
         private void BanHangGUI_ParentChanged(object sender, EventArgs e)
         {
+            //
+            // CHECK TRẠNG THÁI SẢN PHẨM
+            //
+            foreach (Button btn in flowLayoutPanel1.Controls)
+            {
+                int sanPhamID = int.Parse(btn.Name);
+                DataTable sanPhamRow = SanPhamBUS.SanPhamTheoID(sanPhamID);
+                if (sanPhamRow.Rows.Count > 0)
+                {
+                    DataRow row = sanPhamRow.Rows[0];
+                    if (row["TrangThai"].ToString().Equals("hết hàng"))
+                    {
+                        btn.BackColor = Color.LightGray;
+                        btn.Enabled = false;
+                        btn.Text = row["TenSanPham"] + "\nHet Hang";
+                    }
+                }
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            flowLayoutPanel1.Controls.Clear();
+            // Xử lý tìm kiếm sản phẩm theo tên
+            if (string.IsNullOrWhiteSpace(txt_Sreach.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên sản phẩm để tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Lấy danh sách sản phẩm từ BUS
+            DataTable dt = new DataTable();
+            dt = SanPhamBUS.SanPham();
+            string sn = txt_Sreach.Text;
+            DataTable result = new DataTable();
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row["TenSanPham"].ToString().ToLower().Contains(sn.ToLower()))
+                {
+                    //size
+                    Button btn = new Button();
+                    btn.BackColor = Color.BurlyWood;
+                    btn.Width = (int)(flowLayoutPanel1.Width / 4);
+                    btn.Height = btn.Width;
+                    btn.Margin = new Padding(10);
+                    //text
+                    btn.Text = row["TenSanPham"].ToString() + "\n" + row["GiaBan"].ToString() + " VND";
+                    btn.TextAlign = ContentAlignment.BottomCenter;
+                    btn.TextImageRelation = TextImageRelation.ImageAboveText;
+                    btn.Name = row["SanPhamID"].ToString();
+                    //img
+                    string imgName = row["Hinh"].ToString();
+                    if (string.IsNullOrWhiteSpace(imgName))
+                    {
+                        imgName = "null.png";
+                    }
+                    string path = Path.Combine(Application.StartupPath, @"Images", imgName);
+                    if (!File.Exists(path))
+                    {
+                        path = Path.Combine(Application.StartupPath, @"Images", "null.png");
+                    }
+                    Image img2 = null;
+                    if (File.Exists(path))
+                    {
+                        using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                        {
+                            img2 = Image.FromStream(stream);
+                        }
+                    }
+
+                    btn.Image = Compoment.ResizeImage(img2, 77, 77);
+                    btn.Tag = path;
+                    //function
+                    btn.Click += Btn_Click;
+                    btn.SizeChanged += Btn_SizeChanged;
+                    flowLayoutPanel1.Controls.Add(btn);
+                }
+            }
             //
             // CHECK TRẠNG THÁI SẢN PHẨM
             //
