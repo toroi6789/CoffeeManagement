@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CoffeeManagement.DTO;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,5 +84,25 @@ namespace CoffeeManagement.DAO
             }
             return true; // Bàn có sẵn
         }
+        public static BanDTO LayBanTheoID(int banID)
+        {
+            string query = $"SELECT BanID, TenBan, SucChua, TrangThai FROM Ban WHERE BanID = {banID};";
+            DataTable dt = DBConnect.ExecuteQuery(query);
+
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+
+                return new BanDTO(
+                    Convert.ToInt32(row["BanID"]),
+                    row["TenBan"].ToString(),
+                    Convert.ToInt32(row["SucChua"]),
+                    row["TrangThai"].ToString()
+                );
+            }
+
+            return null; // Không có bàn
+        }
+
     }
 }

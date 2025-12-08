@@ -236,5 +236,10 @@ namespace CoffeeManagement.GUI
                 }
             }
         }
+
+        private void DatBanGUI_Load(object sender, EventArgs e)
+        {
+            LoadBan();
+        }
     }
 }

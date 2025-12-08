@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace CoffeeManagement.BUS
 {
@@ -49,6 +50,11 @@ namespace CoffeeManagement.BUS
         public static bool CheckBanAvailability(int banID)
         {
             return BanDAO.IsBanAvailable(banID);
+        }
+
+        public static BanDTO LayBanTheoID(int banID)
+        {
+            return BanDAO.LayBanTheoID(banID);
         }
     }
 }

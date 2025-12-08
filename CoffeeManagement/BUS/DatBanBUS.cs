@@ -66,5 +66,21 @@ namespace CoffeeManagement.BUS
             return list;
         }
 
+        public static DatBanDTO GetByID(int ID)
+        {
+            DatBanDTO db = DatBanDAO.GetDatBanByID(ID);
+
+            if (db != null)
+            {
+                return null;
+            }
+
+            return db;
+        }
+
+        public static bool UpdateByID(DatBanDTO datBanDTO)
+        {
+            return DatBanDAO.UpdateDatBanByID(datBanDTO);
+        }
     }
 }

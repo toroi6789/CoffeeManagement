@@ -140,8 +140,10 @@ namespace CoffeeManagement.GUI
             HoaDonBUS.TaoHoaDon(nhanVienID, banID, ngayLap, tongTienDecimal, "Đang phục vụ", KMID);
 
             // Cập nhật trạng thái bàn
-            //BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
-
+            BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
+            //DatBanDTO datBanDTO = DatBanBUS.ChuyenDataTableSangDTO(DatBanBUS.LayDatBanTheoBan(banID))[0];
+            //datBanDTO.
+            //DatBanBUS.UpdateByID(DatBanBUS.GetByID(datBanDTO.DatBanID));
             //lấy ID hóa đơn vừa tạo
             int HoaDonID = TaoID.LayHoaDonIDMoiNhat();
 
