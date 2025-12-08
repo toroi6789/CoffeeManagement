@@ -18,7 +18,7 @@ namespace CoffeeManagement.BUS
         }
         public static DataTable LayTatCaBanHoatDong()
         {
-            ResetTatCaBan();
+            //ResetTatCaBan();
 
             return BanDAO.LayTatCaBanHoatDong();
         }

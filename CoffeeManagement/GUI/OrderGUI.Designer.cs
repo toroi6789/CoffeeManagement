@@ -287,6 +287,7 @@ namespace CoffeeManagement.GUI
             this.Size = new System.Drawing.Size(386, 713);
             this.Load += new System.EventHandler(this.OrderGUI_Load);
             this.SizeChanged += new System.EventHandler(this.OrderGUI_SizeChanged);
+            this.ParentChanged += new System.EventHandler(this.OrderGUI_ParentChanged);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);

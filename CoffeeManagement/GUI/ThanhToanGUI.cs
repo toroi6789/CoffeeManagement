@@ -135,6 +135,11 @@ namespace CoffeeManagement.GUI
 
                 MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                //cap nhat trang thai ban..
+                DataTable hoaDon =
+                HoaDonBUS.HoaDonID(hoaDonID);
+                int banID = Convert.ToInt32(hoaDon.Rows[0]["BanID"]);
+                BUS.BanBUS.CapNhatTrangThaiBan(banID, "Đang sử dụng");
 
                 // Chuyen ve giao dien ban hang
                 RequestPnlBodyToBanHang?.Invoke();

@@ -212,13 +212,13 @@ namespace CoffeeManagement.BUS
             List<SanPhamDTO> lssp = sp.GetAll();
             foreach(var i in lssp)
             {
-                if (i.TrangThai == "Hết hàng") { continue; }
+                if (i.TrangThai == "hết hàng") { continue; }
                 bool hang = false;
                 hang = SanPhamNguyenLieuDAO.KiemTraNguyenLieuTonKhoChoSanPham(i.SanPhamID);
                 if (hang) 
                 {
                     SanPhamBUS s = new SanPhamBUS();
-                    s.CapNhatTrangThaiSanPham(i.SanPhamID, "Hết hàng");
+                    s.CapNhatTrangThaiSanPham(i.SanPhamID, "hết hàng");
                 }
             }
         }

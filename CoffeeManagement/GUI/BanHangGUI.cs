@@ -218,6 +218,7 @@ namespace CoffeeManagement.GUI
                     }
                 }
             }
+            orderGUI1.OrderGUI_ParentChanged(sender, e);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

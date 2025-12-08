@@ -206,6 +206,7 @@ namespace CoffeeManagement.GUI
             cbb_KM.Items.Clear();   
             foreach (DataRow row in banTable.Rows)
             {
+                
                 string item = row["BanID"] + " - " + row["TenBan"];
                 cbb_Ban.Items.Add(item);
             }
@@ -246,6 +247,11 @@ namespace CoffeeManagement.GUI
         private void label6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void OrderGUI_ParentChanged(object sender, EventArgs e)
+        {
+            OrderGUI_Load(sender, e);
         }
 
 
