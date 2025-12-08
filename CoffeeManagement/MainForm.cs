@@ -64,7 +64,6 @@ namespace CoffeeManagement
             banHangToolStripMenuItem.Visible = false;
             hoaDonToolStripMenuItem.Visible = false;
             nhanVienToolStripMenuItem.Visible = false;
-            nhapKhoToolStripMenuItem.Visible = false;
             đặtBànToolStripMenuItem.Visible = false;
             sanPhamToolStripMenuItem.Visible = false;
             danhMụcToolStripMenuItem.Visible = false;
@@ -80,7 +79,6 @@ namespace CoffeeManagement
                     banHangToolStripMenuItem.Visible = true;
                     hoaDonToolStripMenuItem.Visible = true;
                     nhanVienToolStripMenuItem.Visible = true;
-                    nhapKhoToolStripMenuItem.Visible = true;
                     đặtBànToolStripMenuItem.Visible = true;
                     sanPhamToolStripMenuItem.Visible = true;
                     danhMụcToolStripMenuItem.Visible = true;
@@ -90,13 +88,7 @@ namespace CoffeeManagement
                     nguyênLiệuToolStripMenuItem1.Visible = true;
                     danhSáchHóaĐơnToolStripMenuItem.Visible = true;
                     break;
-                case 5:
-                    nhapKhoToolStripMenuItem.Visible = true;
-                    nguyênLiệuToolStripMenuItem.Visible = true;
-                    nguyênLiệuToolStripMenuItem1.Visible = true;
-                    danhMụcToolStripMenuItem.Visible = true;
-                    nhàCungCấpToolStripMenuItem.Visible = true;
-                    break;
+
                 default: // thu ngân, pha chế, phục vụ (case 2,3,4)
                     banHangToolStripMenuItem.Visible = true;
                     đặtBànToolStripMenuItem.Visible = true;
@@ -467,6 +459,15 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Clear();
             this.pnlBody.Controls.Add(quanLyNguyenLieu);
             quanLyNguyenLieu.Dock = DockStyle.Fill;
+        }
+
+        private void phiếuNhậpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            GUI.PhieuNhapGUI phieuNhap = new GUI.PhieuNhapGUI();    
+            phieuNhap.Show();
+            phieuNhap.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(phieuNhap);
         }
     }
 }

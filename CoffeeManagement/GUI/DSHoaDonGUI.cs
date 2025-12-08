@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ClosedXML.Excel;
+using System.Data;
 
 namespace CoffeeManagement.GUI
 {
@@ -201,43 +203,71 @@ namespace CoffeeManagement.GUI
             }
         }
 
-        private void btnExportXML_Click(object sender, EventArgs e)
+        private void btnExportExcel_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "XML Files (*.xml)|*.xml";
-            sfd.Title = "Chọn nơi lưu file XML";
+            sfd.Filter = "Excel Files (*.xlsx)|*.xlsx";
+            sfd.Title = "Chọn nơi lưu file Excel";
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 string path = sfd.FileName;
 
-                DataTable dt = (DataTable)dataGridView1.DataSource;
-                dt.TableName = "HoaDon";
-                dt.WriteXml(path, XmlWriteMode.WriteSchema);
+                if (dataGridView1.DataSource is DataTable dt)
+                {
+                    using (XLWorkbook wb = new XLWorkbook())
+                    {
+                        wb.Worksheets.Add(dt, "Sheet1");
+                        wb.SaveAs(path);
+                    }
 
-                MessageBox.Show("Xuất XML thành công!");
+                    MessageBox.Show("Xuất Excel thành công!");
+                }
+                else
+                {
+                    MessageBox.Show("DataGridView không chứa DataTable!");
+                }
             }
         }
-        private void btnImportXML_Click(object sender, EventArgs e)
+        private void btnImportExcel_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "XML Files (*.xml)|*.xml";
-            ofd.Title = "Chọn file XML để nhập";
+            ofd.Filter = "Excel Files (*.xlsx)|*.xlsx";
+            ofd.Title = "Chọn file Excel để nhập";
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string path = ofd.FileName;
 
-                DataTable dt = new DataTable();
-                dt.ReadXml(path);
+                using (XLWorkbook wb = new XLWorkbook(path))
+                {
+                    var ws = wb.Worksheet(1); // sheet đầu tiên
+                    DataTable dt = new DataTable();
+                    bool firstRow = true;
 
-                // Hiển thị lên DataGridView nếu cần
-                dataGridView1.DataSource = dt;
+                    foreach (var row in ws.RowsUsed())
+                    {
+                        if (firstRow)
+                        {
+                            // tạo cột từ dòng đầu
+                            foreach (var cell in row.Cells())
+                                dt.Columns.Add(cell.GetValue<string>());
 
-                MessageBox.Show("Nhập XML thành công!");
+                            firstRow = false;
+                        }
+                        else
+                        {
+                            // thêm dữ liệu từng dòng
+                            dt.Rows.Add(row.Cells().Select(c => c.Value.ToString()).ToArray());
+                        }
+                    }
+
+                    dataGridView1.DataSource = dt;
+                }
+
+                MessageBox.Show("Nhập Excel thành công!");
             }
         }
-
         private void button2_MouseClick(object sender, MouseEventArgs e)
         {
 

@@ -88,6 +88,7 @@ namespace CoffeeManagement.GUI
                             MessageBox.Show("Có người đặt bàn trong hôm nay!", "Thông báo",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             coNguoiDatBanHomNay = true;
+                            return;
                         }
                         // Ghép Ngày + Giờ
                         DateTime thoiGianBatDau = item.Ngay.Date + item.GioBatDau; // của bàn đã hẹn

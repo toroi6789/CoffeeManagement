@@ -208,7 +208,7 @@ namespace CoffeeManagement.GUI
             this.button2.TabIndex = 9;
             this.button2.Text = "Export";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnExportXML_Click);
+            this.button2.Click += new System.EventHandler(this.btnExportExcel_Click);
             this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_MouseClick);
             // 
             // button3
@@ -219,7 +219,7 @@ namespace CoffeeManagement.GUI
             this.button3.TabIndex = 9;
             this.button3.Text = "Import";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnImportXML_Click);
+            this.button3.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
             // DSHoaDonGUI
             // 

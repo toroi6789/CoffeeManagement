@@ -38,8 +38,8 @@ namespace CoffeeManagement.GUI
                 //size
                 Button btn = new Button();
                 btn.BackColor = Color.BurlyWood;
-                btn.Width = 100;
-                btn.Height = 100;
+                btn.Width = (int)(flowLayoutPanel1.Width / 4);
+                btn.Height = btn.Width;
                 btn.Margin = new Padding(10);
                 //text
                 btn.Text = row["TenSanPham"].ToString() + "\n" + row["GiaBan"].ToString() + " VND";
@@ -72,7 +72,7 @@ namespace CoffeeManagement.GUI
                     }
                 }
 
-                btn.Image = Compoment.ResizeImage(img2, 77, 77);
+                btn.Image = Compoment.ResizeImage(img2, (int)(btn.Width * 0.7), (int)(btn.Width * 0.7));
                 btn.Tag = path;
                 //function
                 btn.Click += Btn_Click;
@@ -222,6 +222,11 @@ namespace CoffeeManagement.GUI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            if(txt_Sreach.Text == "")
+            {
+                BanHang_Load(sender, e);
+                return;
+            }
             flowLayoutPanel1.Controls.Clear();
             // Xử lý tìm kiếm sản phẩm theo tên
             if (string.IsNullOrWhiteSpace(txt_Sreach.Text))
@@ -269,7 +274,7 @@ namespace CoffeeManagement.GUI
                         }
                     }
 
-                    btn.Image = Compoment.ResizeImage(img2, 77, 77);
+                    btn.Image = Compoment.ResizeImage(img2, (int)(btn.Width * 0.7), (int)(btn.Width * 0.7));
                     btn.Tag = path;
                     //function
                     btn.Click += Btn_Click;

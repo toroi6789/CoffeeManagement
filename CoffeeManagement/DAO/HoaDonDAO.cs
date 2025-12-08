@@ -147,17 +147,10 @@ namespace CoffeeManagement.DAO
         public static DataTable TimKiemHoaDonTheoNgay(DateTime tuNgay, DateTime denNgay)
         {
             string query =
-            @"SELECT *
-              FROM hoadon
-              WHERE NgayKhoiTao >= @tu
-                AND NgayKhoiTao < @den";
+            $"SELECT * FROM hoadon WHERE NgayKhoiTao >= '{tuNgay:yyyy-MM-dd}' AND NgayKhoiTao < '{denNgay:yyyy-MM-dd}';";
 
-            MySqlParameter[] param = {
-                new MySqlParameter("@tu", tuNgay),
-                new MySqlParameter("@den", denNgay.AddDays(1))
-            };
 
-            return ExecuteQuery(query, param);
+            return ExecuteQuery(query);
         }
     }
 }

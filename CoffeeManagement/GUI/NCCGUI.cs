@@ -443,6 +443,9 @@ namespace CoffeeManagement.GUI
             return valid;
         }
 
+        private void dgvNCC_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }

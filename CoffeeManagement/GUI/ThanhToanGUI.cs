@@ -120,18 +120,20 @@ namespace CoffeeManagement.GUI
                     {
                         NguyenLieuDTO nl = item.NguyenLieu;
                         nl.SoLuongTon -= item.SoLuongSuDung * Convert.ToDecimal(row["SoLuong"]);
-                        MessageBox.Show(
-                            "NL ID = " + nl.NguyenLieuID + "Sản phẩm: " + sanPhamID + "\nNguyên liệu: " + nl.TenNguyenLieu + "\nTrừ: " + item.SoLuongSuDung,
-                            "Thông báo",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information
-                        );
+                        //MessageBox.Show(
+                        //    "NL ID = " + nl.NguyenLieuID + "Sản phẩm: " + sanPhamID + "\nNguyên liệu: " + nl.TenNguyenLieu + "\nTrừ: " + item.SoLuongSuDung,
+                        //    "Thông báo",
+                        //    MessageBoxButtons.OK,
+                        //    MessageBoxIcon.Information
+                        //);
                         nlBUS.busSuaNguyenLieu(nl, out message, out error);
                     }
                 }
 
                 // check cac sp het hang
-                //BUS.SanPhamBUS.KiemTraSanPhamHetHang();
+                BUS.SanPhamBUS.KiemTraSanPhamHetHang();
+
+                MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                 // Chuyen ve giao dien ban hang
