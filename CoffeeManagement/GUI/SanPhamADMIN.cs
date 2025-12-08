@@ -39,7 +39,6 @@ namespace CoffeeManagement.GUI
             txtMoTa.TextChanged += Control_TextChanged;
             cmbDanhMucID.SelectedIndexChanged += Control_SelectionChanged;
             cmbTrangThai.SelectedIndexChanged += Control_SelectionChanged;
-
         }
 
         private void SanPhamADMIN_VisibleChanged(object sender, EventArgs e)
@@ -76,7 +75,7 @@ namespace CoffeeManagement.GUI
             dtSanPham.Columns.Add("DanhMucID", typeof(int));
             dtSanPham.Columns.Add("Hinh", typeof(string));
 
-          
+         
             dataGridView1.AutoGenerateColumns = true;
             dataGridView1.DataSource = dtSanPham;
             if (!dataGridView1.Columns.Contains("btnView"))
@@ -84,7 +83,7 @@ namespace CoffeeManagement.GUI
                 DataGridViewButtonColumn btnView = new DataGridViewButtonColumn();
                 btnView.HeaderText = "Xem Nguyên Liệu";
                 btnView.Name = "btnView";
-                btnView.Text = "VIEW";
+                btnView.Text = "XEM";
                 btnView.UseColumnTextForButtonValue = true;
                 dataGridView1.Columns.Add(btnView);
             }

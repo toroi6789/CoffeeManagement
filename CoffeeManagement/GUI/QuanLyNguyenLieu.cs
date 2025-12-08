@@ -495,7 +495,7 @@ namespace CoffeeManagement.GUI
                         DanhMucID = (int)cmbDanhMucID.SelectedValue,
                         DonVi = txtDonVi.Text.Trim(),
                         SoLuongTon = decimal.Parse(txtSLTon.Text),
-                        Hinh = pictureBox2.Tag?.ToString()
+                        Hinh = pictureBox2.Tag?.ToString() ?? dataGridView1.CurrentRow.Cells["Hinh"].Value?.ToString()
                     };
 
                     if (nl_bus.busThemNguyenLieu(nl, out string msg, out string err))
@@ -547,7 +547,7 @@ namespace CoffeeManagement.GUI
                         DanhMucID = (int)cmbDanhMucID.SelectedValue,
                         DonVi = txtDonVi.Text.Trim(),
                         SoLuongTon = decimal.Parse(txtSLTon.Text),
-                        Hinh = pictureBox2.Tag?.ToString()
+                        Hinh = pictureBox2.Tag?.ToString() ?? dataGridView1.CurrentRow.Cells["Hinh"].Value?.ToString()
                     };
 
                     if (nl_bus.busSuaNguyenLieu(nl, out string msg, out string err))
