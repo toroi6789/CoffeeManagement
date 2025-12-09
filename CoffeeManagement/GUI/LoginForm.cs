@@ -81,6 +81,14 @@ namespace CoffeeManagement.GUI
             txtPassword.Text = "Nhập mật khẩu";
             txtPassword.ForeColor = Color.Gray;
             txtPassword.PasswordChar = '\0';
+
+            txtPassword.TextChanged += (s, e) =>
+            {
+                if (txtPassword.Text != "Nhập mật khẩu" && txtPassword.Text.Length > 0)
+                    txtPassword.PasswordChar = '●';
+                else
+                    txtPassword.PasswordChar = '\0';
+            };
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -117,7 +125,7 @@ namespace CoffeeManagement.GUI
                 }
                 else
                 {
-                    MessageBox.Show("Email hoặc mật khẩu không đúng!", "Đăng nhập thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Email hoặc mật khẩu không đúng!\nTài khoản có thể đã dừng hoạt động", "Đăng nhập thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtPassword.Clear();
                     txtEmail.Focus();
                 }

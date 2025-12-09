@@ -30,6 +30,8 @@
         {
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContent = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtPassword2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtTen = new System.Windows.Forms.TextBox();
@@ -48,8 +50,6 @@
             this.lblEmail = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.pnlMain.SuspendLayout();
             this.pnlContent.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -93,6 +93,33 @@
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Size = new System.Drawing.Size(375, 408);
             this.pnlContent.TabIndex = 1;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Quản trị viên",
+            "Thu ngân",
+            "Pha chế",
+            "Phục vụ",
+            "Quản lý kho"});
+            this.comboBox1.Location = new System.Drawing.Point(8, 228);
+            this.comboBox1.MinimumSize = new System.Drawing.Size(30, 0);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(140, 21);
+            this.comboBox1.TabIndex = 56;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.label6.Location = new System.Drawing.Point(4, 202);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 20);
+            this.label6.TabIndex = 55;
+            this.label6.Text = "Chức vụ:";
             // 
             // txtPassword2
             // 
@@ -314,33 +341,6 @@
             this.lblTitle.Size = new System.Drawing.Size(164, 45);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "ĐĂNG KÝ";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label6.Location = new System.Drawing.Point(4, 202);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 20);
-            this.label6.TabIndex = 55;
-            this.label6.Text = "Chức vụ:";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Quản trị viên",
-            "Thu ngân",
-            "Pha chế",
-            "Phục vụ",
-            "Quản lý kho"});
-            this.comboBox1.Location = new System.Drawing.Point(8, 228);
-            this.comboBox1.MinimumSize = new System.Drawing.Size(30, 0);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(140, 21);
-            this.comboBox1.TabIndex = 56;
             // 
             // RegisterForm
             // 

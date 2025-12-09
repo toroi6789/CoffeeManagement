@@ -133,7 +133,15 @@ namespace CoffeeManagement.BUS
             return password.Length >= 6;
         }
 
+        public bool DeleteUser(int userID)
+        {
+            return userDAO.DeleteUser(userID);
+        }
 
+        public bool UpdateUser(UserDTO user)
+        {
+            return userDAO.UpdateUserByID(user);
+        }
     }
 
 

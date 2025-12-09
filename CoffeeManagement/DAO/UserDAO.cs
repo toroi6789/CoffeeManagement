@@ -192,7 +192,28 @@ namespace CoffeeManagement.DAO
             return rows > 0; // true nếu xóa thành công
         }
 
+        public bool UpdateUserByID(UserDTO user)
+        {
+            string query = @"
+                UPDATE `User`
+                SET Email = @Email,
+                    MatKhau = @MatKhau,
+                    TrangThai = @TrangThai,
+                    RoleID = @RoleID
+                WHERE UserID = @UserID";
 
+            MySqlParameter[] parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@Email", user.Email),
+                new MySqlParameter("@MatKhau", user.MatKhau),
+                new MySqlParameter("@TrangThai", user.TrangThai),
+                new MySqlParameter("@RoleID", user.RoleID),
+                new MySqlParameter("@UserID", user.UserID)
+            };
 
+            int rows = ExecuteNonQuery(query, parameters);
+
+            return rows > 0; // true nếu update thành công
+        }
     }
 }

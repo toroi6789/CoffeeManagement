@@ -42,7 +42,7 @@ namespace CoffeeManagement.BUS
             {
                 NhanVienDTO nhanVienDTO = GetNhanVienByID(user.UserID);
                 if (nhanVienDTO != null)
-                {
+                {   
                     MessageBox.Show("Không thể tạo NV:" + nhanVienDTO.FullName + "đã sở hữu tài khoản này!", "Thông báo",
                     MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
@@ -84,9 +84,17 @@ namespace CoffeeManagement.BUS
         }
 
         // Delete employee
-        public bool DeleteNhanVien(int id)
+        public bool DeleteNhanVien(NhanVienDTO nhanVien)
         {
-            return nhanVienDAO.Delete(id);
+            if (nhanVienDAO.Delete(nhanVien.NhanVienID))
+            {
+                if (userBUS.DeleteUser(nhanVien.UserID))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
         public static DataTable LayNV_userID(int UserID)
         {

@@ -123,12 +123,12 @@ namespace CoffeeManagement.GUI
             // Chọn theo dòng
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.MultiSelect = false;
+
+            dataGridView1.ClearSelection();
         }
 
         private bool ValidateInput()
         {
-
-
             // Check Họ
             if (string.IsNullOrWhiteSpace(txtHo.Text))
             {
@@ -193,12 +193,55 @@ namespace CoffeeManagement.GUI
             selectedNV.DateJoin = dateTimePicker1.Value;
             selectedNV.TrangThai = cbTrangThai.SelectedItem.ToString();
 
-            if (nvBUS.UpdateNhanVien(selectedNV))
+            int roleID;
+            switch (cbRole.SelectedItem.ToString().Trim())
             {
-                MessageBox.Show("Update thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                case "Quản trị viên":
+                    roleID = 1;
+                    break;
+                case "Thu ngân":
+                    roleID = 2;
+                    break;
+                case "Pha chế":
+                    roleID = 3;
+                    break;
+                case "Phục vụ":
+                    roleID = 4;
+                    break;
+                case "Quản lý kho":
+                    roleID = 5;
+                    break;
+
+                default:
+                    roleID = -1;
+                    break;
             }
 
-            LoadNhanVienData();
+            int trangThaiTK;
+            switch (cbTrangThaiTaiKhoan.SelectedItem.ToString().Trim())
+            {
+                case "Hoạt động":
+                    trangThaiTK = 1;
+                    break;
+                case "Dừng hoạt động":
+                    trangThaiTK = 0;
+                    break;
+
+                default:
+                    trangThaiTK = -1;
+                    break;
+            }
+
+            UserBUS userBUS = new UserBUS();
+            UserDTO userDTO = userBUS.GetUserByID(selectedNV.UserID);
+            userDTO.TrangThai = trangThaiTK;
+            userDTO.RoleID = roleID;
+
+            if (nvBUS.UpdateNhanVien(selectedNV) && userBUS.UpdateUser(userDTO))
+            {
+                MessageBox.Show("Update thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadNhanVienData();
+            }
         }
 
         private void cellClicked(object sender, DataGridViewCellEventArgs e)
@@ -210,13 +253,14 @@ namespace CoffeeManagement.GUI
         {
             if (dataGridView1.CurrentRow == null) return;
 
-
             int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["NhanVienID"].Value);
-            MessageBox.Show(id.ToString());
 
             selectedNV = nvBUS.GetNhanVienByID(id);
 
             if (selectedNV == null) return;
+
+            UserBUS userBUS = new UserBUS();
+            UserDTO userDTO = userBUS.GetUserByID(selectedNV.UserID);
 
             // Gán thông tin từ DTO nv
             txtNhanVienID.Text = selectedNV.NhanVienID.ToString();
@@ -224,6 +268,9 @@ namespace CoffeeManagement.GUI
             txtTen.Text = selectedNV.Ten;
             txtSdt.Text = selectedNV.Phone;
             cbTrangThai.Text = selectedNV.TrangThai;
+
+            cbTrangThaiTaiKhoan.SelectedIndex = userDTO.TrangThai - 1;
+            cbRole.SelectedIndex = userDTO.RoleID - 1;
 
             // DateJoin
             if (selectedNV.DateJoin.HasValue)
@@ -496,6 +543,70 @@ namespace CoffeeManagement.GUI
             else
             {
                 registerForm.Close();
+            }
+        }
+
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Hãy chọn NV cần xóa", "Thông báo");
+                return;
+            }
+
+            try
+            {
+                int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["NhanVienID"].Value);
+                selectedNV = nvBUS.GetNhanVienByID(id);
+
+                if (selectedNV != null)
+                {
+                    DialogResult dr;
+                    dr = MessageBox.Show("Bạn muốn xóa nhân viên " + selectedNV.FullName + "?", "Error",
+                            MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+                    if (dr == DialogResult.OK)
+                    {
+                        if (nvBUS.DeleteNhanVien(selectedNV))
+                        {
+                            LoadNhanVienData();
+                            MessageBox.Show("Thành công", "Thông báo",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnChangePassword_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Hãy chọn NV cần xóa", "Thông báo");
+                return;
+            }
+
+            if (selectedNV == null)
+            {
+                MessageBox.Show("Hãy chọn NV cần xóa", "Thông báo");
+                return;
+            }    
+
+            ChangePasswordForm changePasswordForm = new ChangePasswordForm(selectedNV.UserID);
+
+            if (changePasswordForm.ShowDialog() == DialogResult.OK)
+            {
+                LoadNhanVienData();
+            }
+            else
+            {
+                changePasswordForm.Close();
             }
         }
     }

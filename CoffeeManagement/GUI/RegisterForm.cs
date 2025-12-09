@@ -227,11 +227,27 @@ namespace CoffeeManagement.GUI
             txtPassword2.Text = "Nhập mật khẩu";
             txtPassword2.ForeColor = Color.Gray;
             txtPassword2.PasswordChar = '\0';
+
+            txtPassword.TextChanged += (s, e) =>
+            {
+                if (txtPassword.Text != "Nhập mật khẩu" && txtPassword.Text.Length > 0)
+                    txtPassword.PasswordChar = '●';
+                else
+                    txtPassword.PasswordChar = '\0';
+            };
+
+            txtPassword2.TextChanged += (s, e) =>
+            {
+                if (txtPassword2.Text != "Nhập mật khẩu" && txtPassword2.Text.Length > 0)
+                    txtPassword2.PasswordChar = '●';
+                else
+                    txtPassword2.PasswordChar = '\0';
+            };
         }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Close();
         }
 
         private void txtEmail_KeyDown(object sender, KeyEventArgs e)
