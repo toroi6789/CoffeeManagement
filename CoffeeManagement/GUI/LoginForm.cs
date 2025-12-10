@@ -116,6 +116,8 @@ namespace CoffeeManagement.GUI
 
                 if (user != null)
                 {
+                    
+
                     // Lưu thông tin user vào session
                     Session.Login(user);
 

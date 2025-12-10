@@ -1,5 +1,6 @@
 ﻿using CoffeeManagement.DAO;
 using CoffeeManagement.DTO;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace CoffeeManagement.BUS
                 return false;
             }
 
-            NhanVienBUS nhanVienBUS = new NhanVienBUS(new NhanVienDAO());
+            NhanVienBUS nhanVienBUS = new NhanVienBUS();
             if (nhanVienBUS.PhoneExists(nhanVien.Phone))
             {
                 MessageBox.Show("SDT đã tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -135,13 +136,63 @@ namespace CoffeeManagement.BUS
 
         public bool DeleteUser(int userID)
         {
+            UserDTO user = GetUserByID(userID);
+            if (user != null)
+            {
+                int adminCount = GetUsers().Count(u => u.RoleID == 1);
+
+                // Nếu user là admin và chỉ còn 1 admin
+                if (user.RoleID == 1 && adminCount == 1)
+                {
+                    MessageBox.Show("Không thể xóa Admin cuối cùng trong hệ thống!");
+                    return false;
+                }
+            }
+
             return userDAO.DeleteUser(userID);
         }
 
+        public bool SoftDeleteUser(int userID)
+        {
+            UserDTO user = GetUserByID(userID);
+            if (user != null)
+            {
+                int adminCount = GetUsers().Count(u => u.RoleID == 1);
+
+                // Nếu user là admin và chỉ còn 1 admin
+                if (user.RoleID == 1 && adminCount == 1)
+                {
+                    MessageBox.Show("Không thể xóa Admin cuối cùng trong hệ thống!");
+                    return false;
+                }
+            }
+
+            return userDAO.SoftDeleteUser(userID);
+        }
+
+
         public bool UpdateUser(UserDTO user)
         {
+            if (user != null)
+            {
+                // Lấy user cũ trong DB
+                var oldUser = GetUserByID(user.UserID);
+
+                int adminCount = GetUsers().Count(u => u.RoleID == 1);
+
+                // Nếu user cũ là Admin
+                // Và muốn đổi sang role khác
+                // Và trong hệ thống chỉ còn đúng 1 Admin
+                if (oldUser.RoleID == 1 && user.RoleID != 1 && adminCount == 1)
+                {
+                    MessageBox.Show("Không thể thay đổi role của Admin cuối cùng trong hệ thống!");
+                    return false;
+                }
+            }
+
             return userDAO.UpdateUserByID(user);
         }
+
     }
 
 

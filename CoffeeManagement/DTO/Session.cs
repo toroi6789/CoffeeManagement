@@ -1,3 +1,4 @@
+using CoffeeManagement.BUS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,28 @@ namespace CoffeeManagement.DTO
         public static UserDTO CurrentUser { get; set; }
         public static bool IsLoggedIn => CurrentUser != null;
 
+
         public static void Login(UserDTO user)
         {
+            NhanVienBUS nhanVienBUS = new NhanVienBUS();
+            // Set trạng thái nhân viên
+            NhanVienDTO nv = nhanVienBUS.ConvertRowToDTO(
+                NhanVienBUS.LayNV_userID(user.UserID).Rows[0]);
+            nv.TrangThai = "Đang làm việc";
+            nhanVienBUS.UpdateNhanVien(nv);
+
             CurrentUser = user;
         }
 
         public static void Logout()
         {
+            NhanVienBUS nhanVienBUS = new NhanVienBUS();
+            // Set trạng thái nhân viên
+            NhanVienDTO nv = nhanVienBUS.ConvertRowToDTO(
+                NhanVienBUS.LayNV_userID(CurrentUser.UserID).Rows[0]);
+            nv.TrangThai = "Trống lịch";
+            nhanVienBUS.UpdateNhanVien(nv);
+
             CurrentUser = null;
         }
     }

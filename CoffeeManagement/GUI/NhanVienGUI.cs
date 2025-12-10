@@ -25,7 +25,7 @@ namespace CoffeeManagement.GUI
             InitializeComponent();
 
             // Khởi tạo BUS với DAO
-            nvBUS = new NhanVienBUS(new NhanVienDAO());
+            nvBUS = new NhanVienBUS();
 
             dataGridView1.DataBindingComplete += DataGridViewNhanVien_DataBindingComplete;
             cbTrangThai.SelectedIndex = 1;
@@ -125,6 +125,7 @@ namespace CoffeeManagement.GUI
             dataGridView1.MultiSelect = false;
 
             dataGridView1.ClearSelection();
+            selectedNV = null; // RẤT QUAN TRỌNG
         }
 
         private bool ValidateInput()
@@ -178,7 +179,7 @@ namespace CoffeeManagement.GUI
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtUserID.Text) || string.IsNullOrWhiteSpace(txtNhanVienID.Text))
+            if (selectedNV == null)
             {
                 MessageBox.Show("Vui lòng nhập chọn Nhân Viên cần sửa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtHo.Focus();
@@ -237,11 +238,22 @@ namespace CoffeeManagement.GUI
             userDTO.TrangThai = trangThaiTK;
             userDTO.RoleID = roleID;
 
-            if (nvBUS.UpdateNhanVien(selectedNV) && userBUS.UpdateUser(userDTO))
+            int oldUserID = selectedNV.UserID;
+            if (!nvBUS.UpdateNhanVien(selectedNV))
             {
-                MessageBox.Show("Update thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadNhanVienData();
+                return;
             }
+            // vì ngăn chặn việc update userID mà đã tồn tại trong nv khác (và cả chính admin sửa admin)
+            // mà selectedNV.userID đã bị chuyển thành -1 cho DAO xử lý
+            // nên phải hoàn trả lại userID đã bị thay đổi ở UpdateNhanVien
+            selectedNV.UserID = oldUserID;
+            if (!userBUS.UpdateUser(userDTO))
+            {
+                return;
+            }
+
+            MessageBox.Show("Update thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadNhanVienData();
         }
 
         private void cellClicked(object sender, DataGridViewCellEventArgs e)
@@ -255,7 +267,7 @@ namespace CoffeeManagement.GUI
 
             int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["NhanVienID"].Value);
 
-            selectedNV = nvBUS.GetNhanVienByID(id);
+            selectedNV = nvBUS.GetNhanVienByNhanVienID(id);
 
             if (selectedNV == null) return;
 
@@ -324,7 +336,7 @@ namespace CoffeeManagement.GUI
             try
             {
                 // Lấy danh sách nhân viên
-                NhanVienBUS nhanVienBUS = new NhanVienBUS(new NhanVienDAO());
+                NhanVienBUS nhanVienBUS = new NhanVienBUS();
                 List<NhanVienDTO> listNV = nhanVienBUS.GetAllNhanVien();
 
                 if (listNV == null || listNV.Count == 0)
@@ -420,7 +432,7 @@ namespace CoffeeManagement.GUI
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Excel Files|*.xlsx";
 
-            NhanVienBUS nhanVienBUS = new NhanVienBUS(new NhanVienDAO());
+            NhanVienBUS nhanVienBUS = new NhanVienBUS();
 
             if (open.ShowDialog() == DialogResult.OK)
             {
@@ -429,7 +441,7 @@ namespace CoffeeManagement.GUI
                 foreach (var item in listImport)
                 {
                     // hiện tại có NV cùng id thì update, không thì thêm mới
-                    if (nhanVienBUS.GetNhanVienByID(item.NhanVienID) != null)
+                    if (nhanVienBUS.GetNhanVienByNhanVienID(item.NhanVienID) != null)
                     {
                         nhanVienBUS.UpdateNhanVien(item);
                     }
@@ -557,7 +569,7 @@ namespace CoffeeManagement.GUI
             try
             {
                 int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["NhanVienID"].Value);
-                selectedNV = nvBUS.GetNhanVienByID(id);
+                selectedNV = nvBUS.GetNhanVienByNhanVienID(id);
 
                 if (selectedNV != null)
                 {
@@ -569,9 +581,33 @@ namespace CoffeeManagement.GUI
                     {
                         if (nvBUS.DeleteNhanVien(selectedNV))
                         {
-                            LoadNhanVienData();
-                            MessageBox.Show("Thành công", "Thông báo",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // nếu tự xóa chính mình thì phải đăng nhập lại
+                            if (selectedNV.UserID == Session.CurrentUser.UserID)
+                            {
+                                // Xóa session
+                                Session.Logout();
+                                // Hiển thị form đăng nhập
+                                LoginForm loginForm = new LoginForm();
+                                ParentForm.Hide();
+
+                                if (loginForm.ShowDialog() == DialogResult.OK)
+                                {
+                                    // Nếu đăng nhập thành công, mở MainForm
+                                    Application.Run(new MainForm());
+                                    ParentForm.Close();
+                                }
+                                else
+                                {
+                                    // Nếu không đăng nhập, thoát ứng dụng
+                                    Application.Exit();
+                                }
+                            }
+                            else
+                            {
+                                LoadNhanVienData();
+                                MessageBox.Show("Thành công", "Thông báo",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
                         }
                     }
                     

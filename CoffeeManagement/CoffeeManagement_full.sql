@@ -273,11 +273,11 @@ INSERT INTO `User` (TrangThai, Email, MatKhau, RoleID) VALUES
 
 -- 3. Nhân viên
 INSERT INTO NhanVien (Ho, Ten, Phone, TrangThai, DateJoin, UserID) VALUES
-('Nguyễn', 'An', '0909000001', 'Đang làm', '2024-01-10', 1),
-('Trần', 'Bình', '0909000002', 'Đang làm', '2024-02-05', 2),
-('Lê', 'Cường', '0909000003', 'Đang làm', '2024-02-20', 3),
-('Phạm', 'Duyên', '0909000004', 'Đang làm', '2024-03-01', 4),
-('Hoàng', 'Em', '0909000005', 'Đang làm', '2024-03-15', 5);
+('Nguyễn', 'An', '0909000001', 'Trống lịch', '2024-01-10', 1),
+('Trần', 'Bình', '0909000002', 'Trống lịch', '2024-02-05', 2),
+('Lê', 'Cường', '0909000003', 'Trống lịch', '2024-02-20', 3),
+('Phạm', 'Duyên', '0909000004', 'Trống lịch', '2024-03-01', 4),
+('Hoàng', 'Em', '0909000005', 'Trống lịch', '2024-03-15', 5);
 
 -- 4. Bàn
 INSERT INTO Ban (TenBan, SucChua, TrangThai) VALUES

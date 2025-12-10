@@ -12,12 +12,12 @@ namespace CoffeeManagement.BUS
 {
     public class NhanVienBUS
     {
-        private readonly NhanVienDAO nhanVienDAO;
+        private readonly NhanVienDAO nhanVienDAO = new NhanVienDAO();
         private UserBUS userBUS = new UserBUS();
 
-        public NhanVienBUS(NhanVienDAO dao)
+        public NhanVienBUS()
         {
-            this.nhanVienDAO = dao;
+
         }
 
         // Get all employees
@@ -40,7 +40,7 @@ namespace CoffeeManagement.BUS
             UserDTO user = userBUS.GetUserByID(nv.UserID);
             if (user != null)
             {
-                NhanVienDTO nhanVienDTO = GetNhanVienByID(user.UserID);
+                NhanVienDTO nhanVienDTO = GetNhanVienByNhanVienID(user.UserID);
                 if (nhanVienDTO != null)
                 {   
                     MessageBox.Show("Không thể tạo NV:" + nhanVienDTO.FullName + "đã sở hữu tài khoản này!", "Thông báo",
@@ -68,14 +68,13 @@ namespace CoffeeManagement.BUS
             if (user != null)
             {
                 // Nếu tồn tại 1 NV đã đc gán vào user
-                if (GetNhanVienByID(user.UserID) != null)
+                if (GetNhanVienByNhanVienID(user.UserID) != null)
                 {
                     // không cho cập nhật userID nếu có 1 nv đã sở hữu userID đó
                     nv.UserID = -1;
-                    MessageBox.Show("Không thể update userID của:" + nv.FullName + " vì NV khác đã sở hữu tài khoản này!", "Thông báo",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    //MessageBox.Show("Không thể update userID của:" + nv.FullName + " vì NV khác đã sở hữu tài khoản này!", "Thông báo",
+                    //    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
             }
 
            
@@ -86,27 +85,47 @@ namespace CoffeeManagement.BUS
         // Delete employee
         public bool DeleteNhanVien(NhanVienDTO nhanVien)
         {
-            if (nhanVienDAO.Delete(nhanVien.NhanVienID))
+            UserDTO user = userBUS.GetUserByID(nhanVien.UserID);
+
+            if (user != null)
             {
-                if (userBUS.DeleteUser(nhanVien.UserID))
+                int adminCount = userBUS.GetUsers().Count(u => u.RoleID == 1);
+
+                if (user.RoleID == 1 && adminCount == 1)
                 {
-                    return true;
+                    MessageBox.Show("Không thể xóa Admin cuối cùng trong hệ thống!");
+                    return false;
                 }
             }
 
-            return false;
+            // check nếu NV có hóa đơn thì soft delete
+            int soHDMaNVSoHuu = HoaDonBUS.GetAllListHD()
+                .Count(h => h.NhanVienID == nhanVien.NhanVienID);
+            if (soHDMaNVSoHuu > 0) 
+            {
+                return userBUS.SoftDeleteUser(nhanVien.UserID);
+            }
+            else
+            {
+                // Xóa nhân viên trước
+                if (!nhanVienDAO.Delete(nhanVien.NhanVienID))
+                    return false;
+                // Sau đó xóa user liên kết
+                return userBUS.DeleteUser(nhanVien.UserID);
+            }
         }
+
         public static DataTable LayNV_userID(int UserID)
         {
             return NhanVienDAO.LayNV_userID(UserID);
         }
 
-        public NhanVienDTO GetNhanVienByID(int nhanVienID)
+        public NhanVienDTO GetNhanVienByNhanVienID(int nhanVienID)
         {
             return nhanVienDAO.GetByNhanVienID(nhanVienID);
         }
 
-        private NhanVienDTO ConvertRowToDTO(DataRow row)
+        public NhanVienDTO ConvertRowToDTO(DataRow row)
         {
             NhanVienDTO nv = new NhanVienDTO();
 

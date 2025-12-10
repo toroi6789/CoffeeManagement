@@ -15,7 +15,7 @@ namespace CoffeeManagement.GUI
     public partial class RegisterForm: Form
     {
         private UserBUS userBUS = new UserBUS();
-        private NhanVienBUS nhanVienBUS = new NhanVienBUS(new DAO.NhanVienDAO());
+        private NhanVienBUS nhanVienBUS = new NhanVienBUS();
         public RegisterForm()
         {
             InitializeComponent();
