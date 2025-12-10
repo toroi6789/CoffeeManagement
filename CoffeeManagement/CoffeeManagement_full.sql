@@ -202,7 +202,7 @@ CREATE TABLE ChiTietHoaDon (
     ChiTietHoaDonID INT AUTO_INCREMENT PRIMARY KEY,
     SoLuong         INT           NOT NULL,
     DonGia          DECIMAL(18,2) NOT NULL,
-    ThanhTien       DECIMAL(18,2) NOT NULL,
+    ThanhTien       DECIMAL(18,2) NULL,
     HoaDonID        INT           NOT NULL,
     SanPhamID       INT           NOT NULL,
     CONSTRAINT fk_cthd_hoadon
@@ -210,6 +210,15 @@ CREATE TABLE ChiTietHoaDon (
     CONSTRAINT fk_cthd_sanpham
         FOREIGN KEY (SanPhamID) REFERENCES SanPham(SanPhamID)
 ) ENGINE=InnoDB;
+
+DELIMITER //
+CREATE TRIGGER trg_CTHD_ThanhTien
+BEFORE INSERT ON ChiTietHoaDon
+FOR EACH ROW
+BEGIN
+    SET NEW.ThanhTien = NEW.SoLuong * NEW.DonGia;
+END //
+DELIMITER ;
 
 -- ======================================
 -- 13. SẢN PHẨM – NGUYÊN LIỆU
@@ -338,17 +347,199 @@ INSERT INTO KhuyenMai (TenKhuyenMai, LoaiKhuyenMai, MoTa, GiaTri, NgayBatDau, Ng
 ('Giảm 5.000đ đồ uống', 'Tiền mặt', 'Không áp dụng combo', 5000, '2024-05-10', '2024-05-20', 'Hoạt động');
 
 -- 12. Hóa đơn
-INSERT INTO HoaDon (TrangThai, TongTien, PhuongThucThanhToan, BanID, NhanVienID, KhuyenMaiID) VALUES
-('Đã thanh toán', 60000, 'Tiền mặt', 1, 2, NULL),
-('Đang phục vụ', 0, NULL, 2, 4, NULL),
-('Đã thanh toán', 55000, 'Chuyển khoản', 3, 2, 1);
+INSERT INTO HoaDon (TrangThai, TongTien, PhuongThucThanhToan, BanID, NhanVienID, KhuyenMaiID, NgayKhoiTao) VALUES
+('Đã thanh toán', 100000, 'Tiền mặt', 1, 1, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 105000, 'Chuyển khoản', 2, 2, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 78000, 'Tiền mặt', 3, 3, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 115000, 'Ví điện tử', 4, 4, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 97000, 'Tiền mặt', 1, 2, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 95000, 'Chuyển khoản', 2, 3, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 101000, 'Tiền mặt', 3, 4, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 127000, 'Ví điện tử', 4, 1, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 60000, 'Tiền mặt', 1, 2, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 112000, 'Tiền mặt', 2, 3, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 103000, 'Chuyển khoản', 3, 4, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 97000, 'Tiền mặt', 4, 1, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 86000, 'Ví điện tử', 1, 2, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 90000, 'Tiền mặt', 2, 3, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 80000, 'Chuyển khoản', 3, 4, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 115000, 'Tiền mặt', 4, 1, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 67000, 'Ví điện tử', 1, 2, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 83000, 'Tiền mặt', 2, 3, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 101000, 'Chuyển khoản', 3, 4, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY),
+('Đã thanh toán', 91000, 'Tiền mặt', 4, 1, NULL, CURRENT_TIMESTAMP - INTERVAL 1 DAY);
+
+-- Thêm 20 hóa đơn (ID 21 - 40)
+INSERT INTO HoaDon (TrangThai, TongTien, PhuongThucThanhToan, BanID, NhanVienID, KhuyenMaiID, NgayKhoiTao) VALUES
+('Đã thanh toán', 75000,  'Tiền mặt',       1, 2, NULL, '2021-03-12 09:15:00'),
+('Đã thanh toán', 83000,  'Chuyển khoản',   2, 3, NULL, '2021-08-21 14:40:00'),
+('Đã thanh toán', 48000,  'Tiền mặt',       3, 4, NULL, '2021-10-02 11:22:00'),
+('Đã thanh toán', 65000,  'Ví điện tử',     4, 1, NULL, '2021-12-11 16:55:00'),
+
+('Đã thanh toán', 67000,  'Tiền mặt',       1, 3, NULL, '2022-03-05 10:12:00'),
+('Đã thanh toán', 58000,  'Tiền mặt',       2, 4, NULL, '2022-07-19 17:20:00'),
+('Đã thanh toán', 96000,  'Chuyển khoản',   3, 1, NULL, '2022-10-08 09:45:00'),
+('Đã thanh toán', 45000,  'Ví điện tử',     4, 2, NULL, '2022-12-28 20:30:00'),
+
+('Đã thanh toán', 54000,  'Tiền mặt',       1, 3, NULL, '2023-01-15 13:00:00'),
+('Đã thanh toán', 87000,  'Tiền mặt',       2, 4, NULL, '2023-04-20 18:32:00'),
+('Đã thanh toán', 72000,  'Ví điện tử',     3, 1, NULL, '2023-09-11 08:22:00'),
+('Đã thanh toán', 60000,  'Chuyển khoản',   4, 2, NULL, '2023-11-29 19:50:00'),
+
+('Đã thanh toán', 68000,  'Tiền mặt',       1, 3, NULL, '2024-02-18 09:10:00'),
+('Đã thanh toán', 76000,  'Ví điện tử',     2, 4, NULL, '2024-06-12 15:45:00'),
+('Đã thanh toán', 90000,  'Tiền mặt',       3, 1, NULL, '2024-09-03 11:33:00'),
+('Đã thanh toán', 52000,  'Chuyển khoản',   4, 2, NULL, '2024-12-22 20:11:00'),
+
+('Đã thanh toán', 80000,  'Ví điện tử',     1, 3, NULL, '2025-01-25 10:25:00'),
+('Đã thanh toán', 66000,  'Tiền mặt',       2, 4, NULL, '2025-04-14 16:40:00'),
+('Đã thanh toán', 97000,  'Chuyển khoản',   3, 1, NULL, '2025-07-19 09:18:00'),
+('Đã thanh toán', 84000,  'Tiền mặt',       4, 2, NULL, '2025-11-03 21:55:00');
 
 -- 13. Chi tiết hóa đơn
 INSERT INTO ChiTietHoaDon (SoLuong, DonGia, ThanhTien, HoaDonID, SanPhamID) VALUES
+-- HD1
 (2, 25000, 50000, 1, 1),
-(1, 10000, 10000, 1, 4),
-(1, 20000, 20000, 3, 5),
-(1, 35000, 35000, 3, 2);
+(1, 30000, 30000, 1, 2),
+(1, 20000, 20000, 1, 3),
+
+-- HD2
+(1, 15000, 15000, 2, 4),
+(2, 35000, 70000, 2, 5),
+(1, 20000, 20000, 2, 6),
+
+-- HD3
+(1, 32000, 32000, 3, 7),
+(1, 28000, 28000, 3, 8),
+(1, 18000, 18000, 3, 9),
+
+-- HD4
+(2, 30000, 60000, 4, 10),
+(1, 25000, 25000, 4, 1),
+(1, 30000, 30000, 4, 2),
+
+-- HD5
+(1, 35000, 35000, 5, 5),
+(1, 32000, 32000, 5, 7),
+(2, 15000, 30000, 5, 4),
+
+-- HD6
+(2, 20000, 40000, 6, 3),
+(1, 30000, 30000, 6, 10),
+(1, 25000, 25000, 6, 1),
+
+-- HD7
+(1, 30000, 30000, 7, 2),
+(2, 18000, 36000, 7, 9),
+(1, 35000, 35000, 7, 5),
+
+-- HD8
+(1, 28000, 28000, 8, 8),
+(2, 32000, 64000, 8, 7),
+(1, 35000, 35000, 8, 5),
+
+-- HD9
+(1, 20000, 20000, 9, 6),
+(1, 15000, 15000, 9, 4),
+(1, 25000, 25000, 9, 1),
+
+-- HD10
+(2, 30000, 60000, 10, 10),
+(1, 32000, 32000, 10, 7),
+(1, 20000, 20000, 10, 6),
+
+-- HD11
+(1, 35000, 35000, 11, 5),
+(2, 25000, 50000, 11, 1),
+(1, 18000, 18000, 11, 9),
+
+-- HD12
+(1, 30000, 30000, 12, 2),
+(1, 35000, 35000, 12, 5),
+(1, 32000, 32000, 12, 7),
+
+-- HD13
+(2, 15000, 30000, 13, 4),
+(2, 18000, 36000, 13, 9),
+(1, 20000, 20000, 13, 3),
+
+-- HD14
+(1, 25000, 25000, 14, 1),
+(1, 35000, 35000, 14, 5),
+(1, 30000, 30000, 14, 2),
+
+-- HD15
+(1, 28000, 28000, 15, 8),
+(1, 20000, 20000, 15, 6),
+(1, 32000, 32000, 15, 7),
+
+-- HD16
+(2, 35000, 70000, 16, 5),
+(1, 30000, 30000, 16, 2),
+(1, 15000, 15000, 16, 4),
+
+-- HD17
+(1, 20000, 20000, 17, 6),
+(1, 32000, 32000, 17, 7),
+(1, 15000, 15000, 17, 4),
+
+-- HD18
+(1, 25000, 25000, 18, 1),
+(1, 28000, 28000, 18, 8),
+(1, 30000, 30000, 18, 2),
+
+-- HD19
+(2, 18000, 36000, 19, 9),
+(1, 35000, 35000, 19, 5),
+(1, 30000, 30000, 19, 10),
+
+-- HD20
+(1, 35000, 35000, 20, 5),
+(1, 20000, 20000, 20, 3),
+(2, 18000, 36000, 20, 9);
+
+-- Chi tiết hóa đơn cho hóa đơn 21-40
+INSERT INTO ChiTietHoaDon (HoaDonID, SanPhamID, SoLuong, DonGia) VALUES
+(21, 1, 2, 25000), (21, 4, 1, 15000),
+
+(22, 2, 1, 30000), (22, 5, 1, 35000), (22, 3, 1, 20000),
+
+(23, 4, 2, 15000), (23, 9, 1, 18000),
+
+(24, 6, 2, 20000), (24, 3, 1, 20000), (24, 4, 1, 15000),
+
+(25, 1, 1, 25000), (25, 7, 1, 32000), (25, 4, 1, 15000),
+
+(26, 3, 1, 20000), (26, 9, 2, 18000),
+
+(27, 5, 1, 35000), (27, 2, 1, 30000), (27, 8, 1, 28000),
+
+(28, 4, 3, 15000),
+
+(29, 6, 1, 20000), (29, 1, 1, 25000), (29, 9, 1, 18000),
+
+(30, 2, 1, 30000), (30, 10, 1, 30000), (30, 4, 1, 15000),
+
+(31, 5, 2, 35000),
+
+(32, 3, 2, 20000), (32, 6, 1, 20000),
+
+(33, 7, 1, 32000), (33, 1, 2, 25000),
+
+(34, 8, 1, 28000), (34, 10, 1, 30000),
+
+(35, 2, 1, 30000), (35, 5, 1, 35000), (35, 6, 1, 20000),
+
+(36, 4, 2, 15000), (36, 1, 1, 25000),
+
+(37, 9, 2, 18000), (37, 7, 1, 32000), (37, 3, 1, 20000),
+
+(38, 10, 1, 30000), (38, 6, 1, 20000), (38, 8, 1, 28000),
+
+(39, 5, 1, 35000), (39, 2, 1, 30000), (39, 9, 1, 18000),
+
+(40, 1, 2, 25000), (40, 3, 2, 20000), (40, 4, 1, 15000);
+
 
 -- 14. Sản phẩm – Nguyên liệu
 INSERT INTO SanPhamNguyenLieu (SanPhamID, NguyenLieuID, SoLuongSuDung) VALUES
@@ -376,10 +567,59 @@ INSERT INTO SanPhamNguyenLieu (SanPhamID, NguyenLieuID, SoLuongSuDung) VALUES
 (10, 10, 0.05),   -- Trà đen
 (10, 11, 0.03);   -- Sữa đặc
 
--- 15. Thanh toán
-INSERT INTO ThanhToan (SoTien, PhuongThuc, TrangThai, HoaDonID, NhanVienID) VALUES
-(60000, 'Tiền mặt', 'Hoàn tất', 1, 2),
-(55000, 'Chuyển khoản', 'Hoàn tất', 3, 2);
+-- 15. Thanh toán (khớp ngày với Hóa đơn)
+INSERT INTO ThanhToan (SoTien, PhuongThuc, TrangThai, HoaDonID, NhanVienID, NgayThanhToan) VALUES
+(100000, 'Tiền mặt',       'Hoàn tất', 1, 1, '2021-02-15 10:12:00'),
+(105000, 'Chuyển khoản',   'Hoàn tất', 2, 2, '2021-07-03 14:45:00'),
+(78000,  'Tiền mặt',       'Hoàn tất', 3, 3, '2021-11-22 09:20:00'),
+(115000, 'Ví điện tử',     'Hoàn tất', 4, 4, '2021-12-30 18:10:00'),
+
+(97000,  'Tiền mặt',       'Hoàn tất', 5, 2, '2022-01-12 13:30:00'),
+(95000,  'Chuyển khoản',   'Hoàn tất', 6, 3, '2022-04-08 16:05:00'),
+(101000, 'Tiền mặt',       'Hoàn tất', 7, 4, '2022-09-25 11:50:00'),
+(127000, 'Ví điện tử',     'Hoàn tất', 8, 1, '2022-12-18 20:22:00'),
+
+(60000,  'Tiền mặt',       'Hoàn tất', 9, 2, '2023-03-02 08:40:00'),
+(112000, 'Tiền mặt',       'Hoàn tất', 10, 3, '2023-06-14 15:18:00'),
+(103000, 'Chuyển khoản',   'Hoàn tất', 11, 4, '2023-09-07 17:52:00'),
+(97000,  'Tiền mặt',       'Hoàn tất', 12, 1, '2023-12-29 10:05:00'),
+
+(86000,  'Ví điện tử',     'Hoàn tất', 13, 2, '2024-02-09 12:00:00'),
+(90000,  'Tiền mặt',       'Hoàn tất', 14, 3, '2024-05-23 19:40:00'),
+(80000,  'Chuyển khoản',   'Hoàn tất', 15, 4, '2024-08-11 09:28:00'),
+(115000, 'Tiền mặt',       'Hoàn tất', 16, 1, '2024-11-05 21:12:00'),
+
+(67000,  'Ví điện tử',     'Hoàn tất', 17, 2, '2025-01-16 11:45:00'),
+(83000,  'Tiền mặt',       'Hoàn tất', 18, 3, '2025-03-20 15:10:00'),
+(101000, 'Chuyển khoản',   'Hoàn tất', 19, 4, '2025-06-30 17:35:00'),
+(91000,  'Tiền mặt',       'Hoàn tất', 20, 1, '2025-10-08 20:55:00');
+
+-- Thanh toán 20 hóa đơn mới (21-40)
+INSERT INTO ThanhToan (SoTien, PhuongThuc, TrangThai, HoaDonID, NhanVienID, NgayThanhToan) VALUES
+(75000,  'Tiền mặt',      'Hoàn tất', 21, 2, '2021-03-12 09:15:00'),
+(83000,  'Chuyển khoản',  'Hoàn tất', 22, 3, '2021-08-21 14:40:00'),
+(48000,  'Tiền mặt',      'Hoàn tất', 23, 4, '2021-10-02 11:22:00'),
+(65000,  'Ví điện tử',    'Hoàn tất', 24, 1, '2021-12-11 16:55:00'),
+
+(67000,  'Tiền mặt',      'Hoàn tất', 25, 3, '2022-03-05 10:12:00'),
+(58000,  'Tiền mặt',      'Hoàn tất', 26, 4, '2022-07-19 17:20:00'),
+(96000,  'Chuyển khoản',  'Hoàn tất', 27, 1, '2022-10-08 09:45:00'),
+(45000,  'Ví điện tử',    'Hoàn tất', 28, 2, '2022-12-28 20:30:00'),
+
+(54000,  'Tiền mặt',      'Hoàn tất', 29, 3, '2023-01-15 13:00:00'),
+(87000,  'Tiền mặt',      'Hoàn tất', 30, 4, '2023-04-20 18:32:00'),
+(72000,  'Ví điện tử',    'Hoàn tất', 31, 1, '2023-09-11 08:22:00'),
+(60000,  'Chuyển khoản',  'Hoàn tất', 32, 2, '2023-11-29 19:50:00'),
+
+(68000,  'Tiền mặt',      'Hoàn tất', 33, 3, '2024-02-18 09:10:00'),
+(76000,  'Ví điện tử',    'Hoàn tất', 34, 4, '2024-06-12 15:45:00'),
+(90000,  'Tiền mặt',      'Hoàn tất', 35, 1, '2024-09-03 11:33:00'),
+(52000,  'Chuyển khoản',  'Hoàn tất', 36, 2, '2024-12-22 20:11:00'),
+
+(80000,  'Ví điện tử',    'Hoàn tất', 37, 3, '2025-01-25 10:25:00'),
+(66000,  'Tiền mặt',      'Hoàn tất', 38, 4, '2025-04-14 16:40:00'),
+(97000,  'Chuyển khoản',  'Hoàn tất', 39, 1, '2025-07-19 09:18:00'),
+(84000,  'Tiền mặt',      'Hoàn tất', 40, 2, '2025-11-03 21:55:00');
 
 -- 16. đặt bàn
 INSERT INTO DatBan (BanID, Ngay, GioBatDau, GioKetThuc) VALUES

@@ -73,6 +73,7 @@ namespace CoffeeManagement
             nguyênLiệuToolStripMenuItem.Visible = false;
             nguyênLiệuToolStripMenuItem1.Visible = false;
             danhSáchHóaĐơnToolStripMenuItem.Visible = false;
+            thốngKêToolStripMenuItem.Visible = false;
 
             switch (Session.CurrentUser.RoleID) {
                 case 1:
@@ -88,6 +89,7 @@ namespace CoffeeManagement
                     nguyênLiệuToolStripMenuItem.Visible = true;
                     nguyênLiệuToolStripMenuItem1.Visible = true;
                     danhSáchHóaĐơnToolStripMenuItem.Visible = true;
+                    thốngKêToolStripMenuItem.Visible = true;
                     break;
 
                 default: // thu ngân, pha chế, phục vụ (case 2,3,4)
@@ -469,6 +471,14 @@ namespace CoffeeManagement
             phieuNhap.Show();
             phieuNhap.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(phieuNhap);
+        }
+
+        private void doanhThuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            GUI.ThongKe.DoanhThuGUI doanhThu = new GUI.ThongKe.DoanhThuGUI();
+            this.pnlBody.Controls.Add(doanhThu);
+            doanhThu.Dock = DockStyle.Fill;
         }
     }
 }
