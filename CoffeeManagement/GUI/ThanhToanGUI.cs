@@ -103,7 +103,7 @@ namespace CoffeeManagement.GUI
                 BUS.HoaDonBUS.Capnhatphuongthuc(hoaDonID, comboBox1.SelectedItem.ToString());
 
                 // Trừ nguyên liệu sử dụng cho sp
-                DataTable sp = HoaDonBUS.ChiTietHoaDonID(hoaDonID);
+                DataTable sp = HoaDonBUS.GetChiTietHoaDonByID(hoaDonID);
                 
                 foreach (DataRow row in sp.Rows)
                 {

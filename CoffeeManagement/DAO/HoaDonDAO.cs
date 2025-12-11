@@ -91,7 +91,7 @@ namespace CoffeeManagement.DAO
         public static DataTable LaySanPhamCuaHoaDon(int hoaDonID)
         {
             string query =
-            @"SELECT CTHD.SanPhamID, SP.TenSanPham, CTHD.SoLuong, SP.GiaBan
+            @"SELECT CTHD.HoaDonID, CTHD.SanPhamID, SP.TenSanPham, CTHD.DonGia, CTHD.SoLuong, SP.GiaBan, CTHD.ThanhTien
               FROM chitiethoadon CTHD
               JOIN sanpham SP ON CTHD.SanPhamID = SP.SanPhamID
               WHERE CTHD.HoaDonID = @id";

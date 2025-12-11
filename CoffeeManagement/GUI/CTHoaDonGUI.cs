@@ -27,7 +27,7 @@ namespace CoffeeManagement.GUI
 
         private void Order_Load(object sender, EventArgs e)
         {
-            HoaDon.DataSource = HoaDonBUS.ChiTietHoaDonID(hoaDonID);
+            HoaDon.DataSource = HoaDonBUS.GetChiTietHoaDonByID(hoaDonID);
             txtID_HD.Text = hoaDonID.ToString();
             int total = 0;
             foreach (DataGridViewRow row in HoaDon.Rows)

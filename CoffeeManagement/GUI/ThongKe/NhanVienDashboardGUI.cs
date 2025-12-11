@@ -70,5 +70,13 @@ namespace CoffeeManagement.GUI.ThongKe
                 listNV.Count(n => n.TrangThai == "Trống lịch");
         }
 
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            listNV = nvBUS.GetAllNhanVien();
+            listUser = userBUS.GetUsers();
+
+            ShowThongTinChung();
+            LoadPieChartNhanVien();
+        }
     }
 }

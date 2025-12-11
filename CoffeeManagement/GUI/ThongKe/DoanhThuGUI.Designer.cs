@@ -31,15 +31,20 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.cbDate = new System.Windows.Forms.ComboBox();
             this.lblTongDoanhThu = new System.Windows.Forms.Label();
             this.dtpNgay = new System.Windows.Forms.DateTimePicker();
             this.chartDoanhThu = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnRefresh = new System.Windows.Forms.Button();
+            this.chartBieuDoDuong = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartBieuDoDuong)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -63,20 +68,33 @@
             this.panel1.Controls.Add(this.lblTongDoanhThu);
             this.panel1.Controls.Add(this.dtpNgay);
             this.panel1.Controls.Add(this.chartDoanhThu);
+            this.panel1.Controls.Add(this.chartBieuDoDuong);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 40);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(814, 492);
             this.panel1.TabIndex = 2;
             // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.Image = global::CoffeeManagement.Properties.Resources.refresh;
+            this.btnRefresh.Location = new System.Drawing.Point(627, 11);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(33, 30);
+            this.btnRefresh.TabIndex = 42;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // cbDate
             // 
+            this.cbDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbDate.FormattingEnabled = true;
             this.cbDate.Items.AddRange(new object[] {
             "Ngày",
             "Tháng",
             "Năm"});
-            this.cbDate.Location = new System.Drawing.Point(522, 122);
+            this.cbDate.Location = new System.Drawing.Point(500, 17);
             this.cbDate.Name = "cbDate";
             this.cbDate.Size = new System.Drawing.Size(121, 21);
             this.cbDate.TabIndex = 41;
@@ -87,7 +105,7 @@
             this.lblTongDoanhThu.BackColor = System.Drawing.SystemColors.Control;
             this.lblTongDoanhThu.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTongDoanhThu.ForeColor = System.Drawing.Color.Black;
-            this.lblTongDoanhThu.Location = new System.Drawing.Point(286, 112);
+            this.lblTongDoanhThu.Location = new System.Drawing.Point(264, 7);
             this.lblTongDoanhThu.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTongDoanhThu.Name = "lblTongDoanhThu";
             this.lblTongDoanhThu.Size = new System.Drawing.Size(118, 31);
@@ -98,7 +116,7 @@
             // dtpNgay
             // 
             this.dtpNgay.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNgay.Location = new System.Drawing.Point(91, 115);
+            this.dtpNgay.Location = new System.Drawing.Point(69, 10);
             this.dtpNgay.MinimumSize = new System.Drawing.Size(4, 28);
             this.dtpNgay.Name = "dtpNgay";
             this.dtpNgay.Size = new System.Drawing.Size(176, 28);
@@ -112,26 +130,37 @@
             this.chartDoanhThu.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.chartDoanhThu.Legends.Add(legend1);
-            this.chartDoanhThu.Location = new System.Drawing.Point(25, 149);
+            this.chartDoanhThu.Location = new System.Drawing.Point(3, 44);
             this.chartDoanhThu.Name = "chartDoanhThu";
             this.chartDoanhThu.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chartDoanhThu.Series.Add(series1);
-            this.chartDoanhThu.Size = new System.Drawing.Size(757, 300);
+            this.chartDoanhThu.Size = new System.Drawing.Size(757, 212);
             this.chartDoanhThu.TabIndex = 0;
             this.chartDoanhThu.Text = "chart1";
             // 
-            // btnRefresh
+            // chartBieuDoDuong
             // 
-            this.btnRefresh.Image = global::CoffeeManagement.Properties.Resources.refresh;
-            this.btnRefresh.Location = new System.Drawing.Point(649, 116);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(33, 30);
-            this.btnRefresh.TabIndex = 42;
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            this.chartBieuDoDuong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chartBieuDoDuong.BackColor = System.Drawing.SystemColors.Control;
+            chartArea2.Name = "ChartArea1";
+            this.chartBieuDoDuong.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartBieuDoDuong.Legends.Add(legend2);
+            this.chartBieuDoDuong.Location = new System.Drawing.Point(3, 277);
+            this.chartBieuDoDuong.Name = "chartBieuDoDuong";
+            this.chartBieuDoDuong.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            series2.YValuesPerPoint = 2;
+            this.chartBieuDoDuong.Series.Add(series2);
+            this.chartBieuDoDuong.Size = new System.Drawing.Size(757, 212);
+            this.chartBieuDoDuong.TabIndex = 43;
+            this.chartBieuDoDuong.Text = "chart1";
             // 
             // DoanhThuGUI
             // 
@@ -142,8 +171,10 @@
             this.Name = "DoanhThuGUI";
             this.Size = new System.Drawing.Size(814, 532);
             this.Load += new System.EventHandler(this.DoanhThuGUI_Load);
+            this.SizeChanged += new System.EventHandler(this.DoanhThuGUI_SizeChanged);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartDoanhThu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartBieuDoDuong)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -157,5 +188,6 @@
         private System.Windows.Forms.Label lblTongDoanhThu;
         private System.Windows.Forms.ComboBox cbDate;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartBieuDoDuong;
     }
 }

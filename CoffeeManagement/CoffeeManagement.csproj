@@ -320,6 +320,12 @@
     <Compile Include="GUI\ThongKe\NhanVienDashboardGUI.Designer.cs">
       <DependentUpon>NhanVienDashboardGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ThongKe\SanPhamDashboardGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\ThongKe\SanPhamDashboardGUI.Designer.cs">
+      <DependentUpon>SanPhamDashboardGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -393,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ThongKe\NhanVienDashboardGUI.resx">
       <DependentUpon>NhanVienDashboardGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThongKe\SanPhamDashboardGUI.resx">
+      <DependentUpon>SanPhamDashboardGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

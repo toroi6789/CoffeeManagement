@@ -33,11 +33,11 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnRefresh = new System.Windows.Forms.Button();
+            this.lblTongTrongLich = new System.Windows.Forms.Label();
+            this.lblTongDangLam = new System.Windows.Forms.Label();
             this.lblTong = new System.Windows.Forms.Label();
             this.chartNhanVien = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.lblTongDangLam = new System.Windows.Forms.Label();
-            this.lblTongTrongLich = new System.Windows.Forms.Label();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartNhanVien)).BeginInit();
             this.SuspendLayout();
@@ -69,14 +69,31 @@
             this.panel1.Size = new System.Drawing.Size(814, 492);
             this.panel1.TabIndex = 3;
             // 
-            // btnRefresh
+            // lblTongTrongLich
             // 
-            this.btnRefresh.Image = global::CoffeeManagement.Properties.Resources.refresh;
-            this.btnRefresh.Location = new System.Drawing.Point(649, 116);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(33, 30);
-            this.btnRefresh.TabIndex = 42;
-            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.lblTongTrongLich.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTongTrongLich.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTongTrongLich.ForeColor = System.Drawing.Color.Black;
+            this.lblTongTrongLich.Location = new System.Drawing.Point(48, 171);
+            this.lblTongTrongLich.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTongTrongLich.Name = "lblTongTrongLich";
+            this.lblTongTrongLich.Size = new System.Drawing.Size(100, 31);
+            this.lblTongTrongLich.TabIndex = 44;
+            this.lblTongTrongLich.Text = "Tổng";
+            this.lblTongTrongLich.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblTongDangLam
+            // 
+            this.lblTongDangLam.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTongDangLam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTongDangLam.ForeColor = System.Drawing.Color.Black;
+            this.lblTongDangLam.Location = new System.Drawing.Point(48, 130);
+            this.lblTongDangLam.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTongDangLam.Name = "lblTongDangLam";
+            this.lblTongDangLam.Size = new System.Drawing.Size(100, 31);
+            this.lblTongDangLam.TabIndex = 43;
+            this.lblTongDangLam.Text = "Tổng";
+            this.lblTongDangLam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblTong
             // 
@@ -110,31 +127,15 @@
             this.chartNhanVien.TabIndex = 0;
             this.chartNhanVien.Text = "chart1";
             // 
-            // lblTongDangLam
+            // btnRefresh
             // 
-            this.lblTongDangLam.BackColor = System.Drawing.SystemColors.Control;
-            this.lblTongDangLam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTongDangLam.ForeColor = System.Drawing.Color.Black;
-            this.lblTongDangLam.Location = new System.Drawing.Point(48, 130);
-            this.lblTongDangLam.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblTongDangLam.Name = "lblTongDangLam";
-            this.lblTongDangLam.Size = new System.Drawing.Size(100, 31);
-            this.lblTongDangLam.TabIndex = 43;
-            this.lblTongDangLam.Text = "Tổng";
-            this.lblTongDangLam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblTongTrongLich
-            // 
-            this.lblTongTrongLich.BackColor = System.Drawing.SystemColors.Control;
-            this.lblTongTrongLich.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTongTrongLich.ForeColor = System.Drawing.Color.Black;
-            this.lblTongTrongLich.Location = new System.Drawing.Point(48, 171);
-            this.lblTongTrongLich.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblTongTrongLich.Name = "lblTongTrongLich";
-            this.lblTongTrongLich.Size = new System.Drawing.Size(100, 31);
-            this.lblTongTrongLich.TabIndex = 44;
-            this.lblTongTrongLich.Text = "Tổng";
-            this.lblTongTrongLich.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRefresh.Image = global::CoffeeManagement.Properties.Resources.refresh;
+            this.btnRefresh.Location = new System.Drawing.Point(641, 29);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(33, 30);
+            this.btnRefresh.TabIndex = 42;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // NhanVienDashboardGUI
             // 

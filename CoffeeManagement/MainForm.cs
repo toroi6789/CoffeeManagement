@@ -485,9 +485,17 @@ namespace CoffeeManagement
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.pnlBody.Controls.Clear();
-            GUI.ThongKe.NhanVienDashboardGUI dashboard = new GUI.ThongKe.NhanVienDashboardGUI();
-            this.pnlBody.Controls.Add(dashboard);
-            dashboard.Dock = DockStyle.Fill;
+            GUI.ThongKe.NhanVienDashboardGUI nvDashboard = new GUI.ThongKe.NhanVienDashboardGUI();
+            this.pnlBody.Controls.Add(nvDashboard);
+            nvDashboard.Dock = DockStyle.Fill;
+        }
+
+        private void sảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            GUI.ThongKe.SanPhamDashboardGUI spDashboard = new GUI.ThongKe.SanPhamDashboardGUI();
+            this.pnlBody.Controls.Add(spDashboard);
+            spDashboard.Dock = DockStyle.Fill;
         }
     }
 }

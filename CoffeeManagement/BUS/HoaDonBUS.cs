@@ -12,7 +12,7 @@ namespace CoffeeManagement.BUS
 {
     public class HoaDonBUS
     {
-        public static DataTable ChiTietHoaDonID(int ID)
+        public static DataTable GetChiTietHoaDonByID(int ID)
         {
             return HoaDonDAO.LaySanPhamCuaHoaDon(ID);
         }
@@ -105,7 +105,6 @@ namespace CoffeeManagement.BUS
             {
                 ChiTietHoaDonDTO item = new ChiTietHoaDonDTO()
                 {
-                    ChiTietID = Convert.ToInt32(row["ChiTietID"]),
                     HoaDonID = Convert.ToInt32(row["HoaDonID"]),
                     SanPhamID = Convert.ToInt32(row["SanPhamID"]),
                     SoLuong = Convert.ToInt32(row["SoLuong"]),

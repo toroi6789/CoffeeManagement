@@ -8,7 +8,6 @@ namespace CoffeeManagement.DTO
 {
     public class ChiTietHoaDonDTO
     {
-        public int ChiTietID { get; set; }
         public int HoaDonID { get; set; }
         public int SanPhamID { get; set; }
         public int SoLuong { get; set; }
