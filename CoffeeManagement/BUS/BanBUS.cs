@@ -12,26 +12,40 @@ namespace CoffeeManagement.BUS
 {
     public class BanBUS
     {
+        // Event để UI đăng ký khi dữ liệu bàn thay đổi
+        public static event Action TablesChanged;
+
+        public static void RaiseTablesChanged()
+        {
+            TablesChanged?.Invoke();
+        }
+
         public static void CapNhatTrangThaiBan(int BanID, string TrangThai)
         {
             BanDAO.CapNhatTrangThaiBan(BanID, TrangThai);
         }
+
         public static DataTable LayTatCaBanHoatDong()
         {
-            //ResetTatCaBan();
-
             return BanDAO.LayTatCaBanHoatDong();
         }
+
+        public static DataTable LayTatCaBan()
+        {
+            return BanDAO.LayTatCaBan();
+        }
+
+        // ResetTatCaBan chỉ cập nhật DB, KHÔNG tự raise event để tránh recursion.
         public static void ResetTatCaBan()
         {
-            List<BanDTO> list = ChuyenDataTableSangDTO(LayTatCaBan());
+            DataTable dt = LayTatCaBan();
+            List<BanDTO> list = ChuyenDataTableSangDTO(dt);
             DateTime now = DateTime.Now;
             DateTime twoHoursLater = now.AddHours(2);
 
             foreach (var item in list)
             {
-                List<DatBanDTO> dsDatBan = DatBanBUS.ChuyenDataTableSangDTO(
-                                            DatBanBUS.LayDatBanTheoBan(item.BanID));
+                List<DatBanDTO> dsDatBan = DatBanBUS.ChuyenDataTableSangDTO(DatBanBUS.LayDatBanTheoBan(item.BanID));
 
                 bool hasBookingInNext2Hours = false;
                 bool hasActiveBooking = false;
@@ -43,58 +57,65 @@ namespace CoffeeManagement.BUS
                         DateTime start = datBan.Ngay.Date + datBan.GioBatDau;
                         DateTime end = datBan.Ngay.Date + datBan.GioKetThuc;
 
-                        // 1. Hiện tại có người đang dùng bàn
-                        if (start <= now && now < end)
-                        {
-                            hasActiveBooking = true;
-                        }
-
-                        // 2. Có đặt bàn trong vòng 2h tới
-                        if (end >= now && start <= twoHoursLater)
-                        {
-                            hasBookingInNext2Hours = true;
-                        }
+                        if (start <= now && now < end) hasActiveBooking = true;
+                        if (end >= now && start <= twoHoursLater) hasBookingInNext2Hours = true;
                     }
                 }
 
-                // ❗ Điều kiện để set Trống:
-                // Không có người đang ngồi AND không có booking trong 2 giờ tới
                 if (!hasActiveBooking && !hasBookingInNext2Hours)
                 {
                     CapNhatTrangThaiBan(item.BanID, "Trống");
                 }
+                else if (hasActiveBooking)
+                {
+                    CapNhatTrangThaiBan(item.BanID, "Có người");
+                }
             }
         }
 
-        public static DataTable LayTatCaBan()
+
+
+        public static List<BanDTO> LayTatCaBan2()
         {
-            return BanDAO.LayTatCaBan();
+            DataTable dt = BanDAO.LayTatCaBan(); // Lấy dữ liệu bàn từ DAO
+            List<BanDTO> list = new List<BanDTO>(); // Khởi tạo danh sách các BanDTO
+
+            foreach (DataRow row in dt.Rows)
+            {
+                // Tạo đối tượng BanDTO từ mỗi dòng trong DataTable
+                list.Add(new BanDTO(
+                    Convert.ToInt32(row["BanID"]),
+                    row["TenBan"].ToString(),
+                    Convert.ToInt32(row["SucChua"]),
+                    row["TrangThai"].ToString()
+                ));
+            }
+
+            return list;
         }
+
 
         public static void ThemBan(BanDTO newBan)
         {
             BanDAO.ThemBan(newBan.TenBan, newBan.SucChua, newBan.TrangThai);
+            RaiseTablesChanged();
         }
 
         public static void SuaBan(BanDTO updatedBan)
         {
             BanDAO.SuaBan(updatedBan.BanID, updatedBan.TenBan, updatedBan.SucChua, updatedBan.TrangThai);
+            RaiseTablesChanged();
         }
 
         public static void XoaBan(int banID)
         {
             BanDAO.XoaBan(banID);
+            RaiseTablesChanged();
         }
 
         public static DataTable TimKiemBan(string keyword)
         {
             return BanDAO.TimKiemBan(keyword);
-        }
-
-        // Kiểm tra nếu bàn có người ngồi hay không
-        public static bool CheckBanAvailability(int banID)
-        {
-            return BanDAO.IsBanAvailable(banID);
         }
 
         public static BanDTO LayBanTheoID(int banID)

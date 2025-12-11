@@ -11,6 +11,17 @@ namespace CoffeeManagement.BUS
         public static void DatBan(DatBanDTO dat)
         {
             DatBanDAO.DatBan(dat.BanID, dat.Ngay, dat.GioBatDau, dat.GioKetThuc);
+
+            // Sau khi insert booking vào DB, cập nhật trạng thái bàn trong DB rồi notify UI
+            BanBUS.ResetTatCaBan();       // cập nhật trạng thái trong bảng Ban nếu cần
+            BanBUS.RaiseTablesChanged();  // thông báo cho mọi UI đã đăng ký (BanGUI/DatBanGUI)
+        }
+
+        // Gọi hàm xóa đặt bàn từ DAO
+        public static bool XoaDatBan(int datBanID)
+        {
+            // Gọi phương thức DAO để xóa đặt bàn
+            return DatBanDAO.XoaDatBan(datBanID);
         }
 
         public static bool KiemTraTrung(int banID, DateTime ngay, TimeSpan gioBD, TimeSpan gioKT)

@@ -25,7 +25,7 @@ namespace CoffeeManagement.DAO
         // Lấy tất cả các bàn
         public static DataTable LayTatCaBan()
         {
-            string query = "SELECT BanID, TenBan, SucChua, TrangThai FROM Ban;";
+            string query = "SELECT * FROM Ban;";
             return DBConnect.ExecuteQuery(query);
         }
 
@@ -60,12 +60,6 @@ namespace CoffeeManagement.DAO
             return DBConnect.ExecuteQuery(query);
         }
 
-        // Reset AutoIncrement
-        public static void ResetAutoIncrement()
-        {
-            string query = "ALTER TABLE Ban AUTO_INCREMENT = 1;";
-            DBConnect.ExecuteNonQuery(query);
-        }
 
         // Kiểm tra xem bàn có người hay không
         public static bool IsBanAvailable(int banID)

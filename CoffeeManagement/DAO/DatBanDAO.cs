@@ -16,6 +16,28 @@ namespace CoffeeManagement.DAO
             DBConnect.ExecuteNonQuery(query);
         }
 
+        // Xóa đặt bàn theo DatBanID
+        public static bool XoaDatBan(int datBanID)
+        {
+            // Truy vấn SQL xóa đặt bàn
+            string query = $"DELETE FROM DatBan WHERE DatBanID = {datBanID};";
+
+            try
+            {
+                // Thực thi truy vấn xóa, không cần gán kết quả vì ExecuteNonQuery không trả về giá trị
+                DBConnect.ExecuteNonQuery(query);
+
+                // Nếu không xảy ra lỗi, trả về true (đã xóa thành công)
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi hoặc thông báo lỗi nếu cần
+                Console.WriteLine("Lỗi khi xóa đặt bàn: " + ex.Message);
+                return false; // Trả về false nếu có lỗi xảy ra
+            }
+        }
+
         public static bool KiemTraTrung(int banID, DateTime ngay, TimeSpan gioBD, TimeSpan gioKT)
         {
             string query =

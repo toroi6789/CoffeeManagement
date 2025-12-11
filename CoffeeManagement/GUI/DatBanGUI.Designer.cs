@@ -40,6 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dtpNgay = new System.Windows.Forms.DateTimePicker();
+            this.btnHuy = new System.Windows.Forms.Button();
             this.btnDatBan = new System.Windows.Forms.Button();
             this.error = new System.Windows.Forms.ErrorProvider(this.components);
             this.pnTitle.SuspendLayout();
@@ -104,7 +105,7 @@
             this.dgvDatban.RowTemplate.Height = 24;
             this.dgvDatban.Size = new System.Drawing.Size(1077, 206);
             this.dgvDatban.TabIndex = 1;
-            this.dgvDatban.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBan_CellClick);
+            this.dgvDatban.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDatban_CellClick);
             this.dgvDatban.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDatban_CellFormatting);
             // 
             // dgvBan
@@ -131,6 +132,7 @@
             this.panelInfo.Controls.Add(this.label2);
             this.panelInfo.Controls.Add(this.label3);
             this.panelInfo.Controls.Add(this.dtpNgay);
+            this.panelInfo.Controls.Add(this.btnHuy);
             this.panelInfo.Controls.Add(this.btnDatBan);
             this.panelInfo.Location = new System.Drawing.Point(641, 68);
             this.panelInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -177,10 +179,21 @@
             this.dtpNgay.Size = new System.Drawing.Size(120, 22);
             this.dtpNgay.TabIndex = 6;
             // 
+            // btnHuy
+            // 
+            this.btnHuy.AutoSize = true;
+            this.btnHuy.Location = new System.Drawing.Point(226, 113);
+            this.btnHuy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnHuy.Name = "btnHuy";
+            this.btnHuy.Size = new System.Drawing.Size(92, 47);
+            this.btnHuy.TabIndex = 3;
+            this.btnHuy.Text = "Hủy đặt";
+            this.btnHuy.UseVisualStyleBackColor = true;
+            this.btnHuy.Click += new System.EventHandler(this.btnXoaDatBan_Click);
+            // 
             // btnDatBan
             // 
-            this.btnDatBan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDatBan.Location = new System.Drawing.Point(171, 113);
+            this.btnDatBan.Location = new System.Drawing.Point(128, 113);
             this.btnDatBan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDatBan.Name = "btnDatBan";
             this.btnDatBan.Size = new System.Drawing.Size(92, 47);
@@ -230,5 +243,6 @@
         private System.Windows.Forms.DateTimePicker dtpGioBD;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.DataGridView dgvDatban;
+        private System.Windows.Forms.Button btnHuy;
     }
 }

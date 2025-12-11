@@ -16,18 +16,47 @@ namespace CoffeeManagement.GUI
             InitializeComponent();
             dgvBan.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBan.MultiSelect = false;
-            LoadBan();
             cboStatus.Items.Add("Trống");
             cboStatus.Items.Add("Có người");
-            cboStatus.SelectedIndex = 0;
+
+            // subscribe to updates from BUS
+            BanBUS.TablesChanged += OnTablesChanged;
+
+            LoadBan();
         }
 
-        // Tải danh sách bàn
-        private void LoadBan()
+        private void OnTablesChanged()
         {
-            BanBUS.ResetTatCaBan();
-            dgvBan.DataSource = BanBUS.LayTatCaBan();
-            BanDAO.ResetAutoIncrement();
+            if (this.InvokeRequired) this.BeginInvoke(new Action(LoadBan));
+            else LoadBan();
+        }
+
+        public event Action BanDataChanged; // Sự kiện thông báo khi dữ liệu bàn thay đổi
+
+        // Tải danh sách bàn
+        public void LoadBan()
+        {
+            // Re-bind fresh DataTable from DB
+            var dt = BanBUS.LayTatCaBan();
+            dgvBan.DataSource = dt;
+
+            
+            if (dgvBan.Columns.Contains("BanID") && dgvBan.Columns.Contains("TrangThai"))
+            {
+                foreach (DataGridViewRow row in dgvBan.Rows)
+                {
+                    if (row.IsNewRow) continue;
+                    var cell = row.Cells["BanID"].Value;
+                    if (cell == null) continue;
+                    if (!int.TryParse(cell.ToString(), out int banID)) continue;
+
+                    // Recompute status based on booking table
+                    bool coNguoi = DatBanBUS.BanDangCoNguoi(banID);
+                    row.Cells["TrangThai"].Value = coNguoi ? "Có người" : "Trống";
+                }
+            }
+
+            dgvBan.Refresh(); // force repaint so CellFormatting runs with new values
         }
 
         bool isAdding = false;
@@ -91,6 +120,7 @@ namespace CoffeeManagement.GUI
 
                 MessageBox.Show("Đã thêm bàn mới!");
                 LoadBan();
+                //BanDataChanged?.Invoke();
 
                 // Reset lại
                 ResetAllModes();
@@ -122,8 +152,12 @@ namespace CoffeeManagement.GUI
                 var updatedBan = new BanDTO(selectedBanID, txtTenBan.Text, (int)updownSucchua.Value, cboStatus.SelectedItem.ToString());
                 BanBUS.SuaBan(updatedBan);
 
+                // Cập nhật trạng thái bàn sau khi sửa
+                //BanBUS.CapNhatTrangThaiBan(selectedBanID, cboStatus.SelectedItem.ToString());
+
                 MessageBox.Show("Đã sửa bàn!");
                 LoadBan(); // Tải lại danh sách bàn
+                //BanDataChanged?.Invoke();
 
                 // Reset lại
                 ResetAllModes();
@@ -157,6 +191,7 @@ namespace CoffeeManagement.GUI
                         BanBUS.XoaBan(selectedBanID); // Xóa bàn
                         LoadBan(); // Tải lại danh sách bàn
                         MessageBox.Show("Đã xóa!");
+                        //BanDAO.ResetAutoIncrement();
                     }
                     catch (Exception ex)
                     {
@@ -164,6 +199,7 @@ namespace CoffeeManagement.GUI
                     }
                 }
 
+                //BanDataChanged?.Invoke();
                 // Reset lại
                 ResetAllModes();
             }
@@ -175,12 +211,16 @@ namespace CoffeeManagement.GUI
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvBan.Rows[e.RowIndex];
-
             selectedBanID = Convert.ToInt32(row.Cells["BanID"].Value);
             txtID.Text = row.Cells["BanID"].Value.ToString();
-            txtTenBan.Text = row.Cells["TenBan"].Value.ToString();
+            txtTenBan.Text = row.Cells["TenBan"].Value?.ToString() ?? "";
             updownSucchua.Value = Convert.ToInt32(row.Cells["SucChua"].Value);
-            cboStatus.SelectedItem = row.Cells["TrangThai"].Value.ToString();
+
+            string trangThai = row.Cells["TrangThai"].Value?.ToString()?.Trim();
+            if (trangThai == "Có người")
+                cboStatus.SelectedIndex = 1;
+            else
+                cboStatus.SelectedIndex = 0;
         }
 
         // Tìm kiếm bàn
@@ -385,5 +425,18 @@ namespace CoffeeManagement.GUI
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                BanBUS.TablesChanged -= OnTablesChanged;
+            }
+            base.Dispose(disposing);
+        }
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            BanBUS.TablesChanged -= OnTablesChanged;
+            base.OnHandleDestroyed(e);
+        }
     }
 }

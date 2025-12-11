@@ -13,17 +13,34 @@ namespace CoffeeManagement.GUI
         public DatBanGUI()
         {
             InitializeComponent();
+            // Đăng ký để nhận thông báo khi có thay đổi dữ liệu bàn từ BUS
+            BanBUS.TablesChanged += OnTablesChanged;
+            dgvDatban.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             LoadBan();
             InitPickers();
+        }
+
+        private void OnTablesChanged()
+        {
+            // Refresh lại danh sách bàn khi có thông báo
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new Action(LoadBan));
+            }
+            else
+            {
+                LoadBan();
+            }
         }
 
         // Load toàn bộ bàn
         private void LoadBan()
         {
-            BanBUS.ResetTatCaBan();
+            // Không gọi ResetTatCaBan() ở đây — Reset có thể được gọi chủ động sau khi thao tác đặt/hủy,
+            // và việc gọi Reset trong Load khi kết hợp với event TablesChanged có thể gây vòng lặp.
             dgvBan.DataSource = BanBUS.LayTatCaBan();
 
-            // Cập nhật trạng thái thực tế
+            // Cập nhật trạng thái thực tế (tạm thời hiển thị theo lịch đặt)
             foreach (DataGridViewRow row in dgvBan.Rows)
             {
                 int banID = Convert.ToInt32(row.Cells["BanID"].Value);
@@ -88,12 +105,76 @@ namespace CoffeeManagement.GUI
             DatBanDTO dat = new DatBanDTO(0, selectedBanID, ngay, gioBD, gioKT);
             DatBanBUS.DatBan(dat);
 
+            // Nếu thời gian đặt trùng với thời điểm hiện tại -> cập nhật trạng thái bàn thành "Có người"
+            DateTime now2 = DateTime.Now;
+            bool isActiveNow =
+                dat.Ngay.Date == now2.Date &&
+                dat.GioBatDau <= now2.TimeOfDay &&
+                now2.TimeOfDay < dat.GioKetThuc;
+
+            if (isActiveNow)
+            {
+                // Cập nhật DB cho bàn này nếu chưa là "Có người"
+                BanBUS.CapNhatTrangThaiBan(selectedBanID, "Có người");
+            }
+
+            // Thông báo cho UI refresh (ResetTatCaBan chỉ cập nhật DB; Raise để UI load lại)
+            BanBUS.ResetTatCaBan();
+            BanBUS.RaiseTablesChanged();
+
             MessageBox.Show("Đặt bàn thành công!");
 
             // Load lại lịch đặt của bàn
             LoadBan();
             dgvDatban.DataSource = DatBanBUS.LayDatBanTheoBan(selectedBanID);
         }
+
+        // Ví dụ gọi phương thức xóa đặt bàn
+        private void btnXoaDatBan_Click(object sender, EventArgs e)
+        {
+            btnHuy.Text = "Thực hiện";
+
+            // Kiểm tra nếu không có hàng nào được chọn
+            if (dgvDatban.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một đặt bàn để xóa.");
+                return; // Dừng lại nếu không có hàng nào được chọn
+            }
+
+            // Lấy thông tin đặt bàn được chọn
+            int datBanID = Convert.ToInt32(dgvDatban.SelectedRows[0].Cells["DatBanID"].Value);
+
+            // Xác nhận người dùng muốn hủy đặt bàn
+            var confirm = MessageBox.Show("Bạn có chắc chắn muốn hủy đặt bàn này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (confirm == DialogResult.Yes)
+            {
+                // Thực hiện xóa đặt bàn
+                bool isDeleted = DatBanBUS.XoaDatBan(datBanID);
+
+                if (isDeleted)
+                {
+                    MessageBox.Show("Đặt bàn đã được hủy thành công!");
+
+                    // Cập nhật lại danh sách đặt bàn
+                    dgvDatban.DataSource = DatBanBUS.LayDatBanTheoBan(selectedBanID);
+
+                    // Cập nhật lại trạng thái bàn: tính toán lại DB rồi notify UI
+                    BanBUS.ResetTatCaBan();
+                    BanBUS.RaiseTablesChanged();
+
+                    // Refresh local view
+                    LoadBan();
+                    btnHuy.Text = "Hủy đặt";
+                }
+                else
+                {
+                    MessageBox.Show("Không thể hủy đặt bàn. Vui lòng thử lại.");
+                }
+            }
+
+        }
+
 
         // Khi click vào bất kỳ ô nào trong bảng bàn
         private void dgvBan_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -203,7 +284,7 @@ namespace CoffeeManagement.GUI
                 gioBD <= now.TimeOfDay &&
                 now.TimeOfDay < gioKT;
 
-            // Nếu KHÔNG trùng giờ → trả về màu mặc định
+            // Nếu KHÔNG trùng giờ → trả về màu mặc định (bỏ màu lightgreen)
             if (!trungGio)
             {
                 row.DefaultCellStyle.BackColor = dgvDatban.DefaultCellStyle.BackColor;
@@ -211,28 +292,47 @@ namespace CoffeeManagement.GUI
                 return;
             }
 
-            // Nếu trùng giờ → kiểm tra trạng thái bàn bên dgvBan
-            if (selectedBanID != -1)
+            // Nếu trùng giờ → đánh dấu luôn là Có người và tô LightSalmon cho hàng đặt
+            row.DefaultCellStyle.BackColor = Color.LightSalmon;
+            row.DefaultCellStyle.ForeColor = Color.Black;
+
+            // Cập nhật trạng thái bàn tương ứng (nếu chưa là "Có người")
+            // Lấy banID từ row đặt bàn
+            int banIdOfBooking;
+            if (int.TryParse(row.Cells["BanID"].Value?.ToString(), out banIdOfBooking))
             {
-                // Tìm hàng bàn tương ứng
-                foreach (DataGridViewRow r in dgvBan.Rows)
+                // Cập nhật ô TrangThai trong dgvBan nếu có
+                foreach (DataGridViewRow banRow in dgvBan.Rows)
                 {
-                    if (Convert.ToInt32(r.Cells["BanID"].Value) == selectedBanID)
+                    if (banRow.IsNewRow) continue;
+                    object cell = banRow.Cells["BanID"].Value;
+                    if (cell == null) continue;
+
+                    int banIdInBanGrid;
+                    if (!int.TryParse(cell.ToString(), out banIdInBanGrid)) continue;
+
+                    if (banIdInBanGrid == banIdOfBooking)
                     {
-                        string trangThai = r.Cells["TrangThai"].Value.ToString();
-
-                        if (trangThai == "Có người")
+                        string current = banRow.Cells["TrangThai"].Value?.ToString();
+                        if (current != "Có người")
                         {
-                            row.DefaultCellStyle.BackColor = Color.LightSalmon;
-                            row.DefaultCellStyle.ForeColor = Color.Black;
-                        }
-                        else
-                        {
-                            row.DefaultCellStyle.BackColor = Color.LightGreen;
-                            row.DefaultCellStyle.ForeColor = Color.Black;
+                            // Update UI cell
+                            banRow.Cells["TrangThai"].Value = "Có người";
+                            // Update DB once
+                            try
+                            {
+                                BanBUS.CapNhatTrangThaiBan(banIdOfBooking, "Có người");
+                            }
+                            catch
+                            {
+                                // ignore DB update errors here to avoid crashing during formatting
+                            }
                         }
 
-                        return;
+                        // ensure banRow is repainted with correct color
+                        banRow.DefaultCellStyle.BackColor = Color.LightSalmon;
+                        banRow.DefaultCellStyle.ForeColor = Color.Black;
+                        break;
                     }
                 }
             }
@@ -241,6 +341,22 @@ namespace CoffeeManagement.GUI
         private void DatBanGUI_Load(object sender, EventArgs e)
         {
             LoadBan();
+        }
+
+        // Thay vì override Dispose (designer partial thường đã có Dispose),
+        // override OnHandleDestroyed để hủy đăng ký event một cách an toàn
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            BanBUS.TablesChanged -= OnTablesChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void dgvDatban_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;  // Kiểm tra xem có chọn đúng dòng hợp lệ không
+
+            // Lấy dòng được chọn
+            DataGridViewRow selectedRow = dgvDatban.Rows[e.RowIndex];
         }
     }
 }

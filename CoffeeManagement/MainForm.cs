@@ -448,6 +448,7 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Clear();
             ban.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(ban);
+            ban.LoadBan();
         }
 
         private void nhàCungCấpToolStripMenuItem_Click(object sender, EventArgs e)
