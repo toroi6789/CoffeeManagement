@@ -224,6 +224,12 @@
     <Compile Include="GUI\ListSanPham.Designer.cs">
       <DependentUpon>ListSanPham.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\KhuyenMaiGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\KhuyenMaiGUI.Designer.cs">
+      <DependentUpon>KhuyenMaiGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\NCCGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -360,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ListSanPham.resx">
       <DependentUpon>ListSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\KhuyenMaiGUI.resx">
+      <DependentUpon>KhuyenMaiGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\NCCGUI.resx">
       <DependentUpon>NCCGUI.cs</DependentUpon>

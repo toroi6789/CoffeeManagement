@@ -43,7 +43,6 @@ namespace CoffeeManagement.GUI
             this.TenSanPham = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GiaBan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SoLuong = new CoffeeManagement.DTO.DataGridViewNumericUpDownColumn();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtTong = new System.Windows.Forms.TextBox();
             this.btnThanhToan = new System.Windows.Forms.Button();
@@ -143,15 +142,6 @@ namespace CoffeeManagement.GUI
             this.SoLuong.MinimumWidth = 6;
             this.SoLuong.Name = "SoLuong";
             this.SoLuong.Width = 125;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 430);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(287, 16);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "________________________________________\r\n";
             // 
             // label4
             // 
@@ -277,7 +267,6 @@ namespace CoffeeManagement.GUI
             this.Controls.Add(this.btnThanhToan);
             this.Controls.Add(this.txtTong);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label5);
@@ -300,7 +289,6 @@ namespace CoffeeManagement.GUI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtTong;
         private System.Windows.Forms.Button btnThanhToan;

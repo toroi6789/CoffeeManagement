@@ -25,6 +25,7 @@ namespace CoffeeManagement
         const int WM_NCLBUTTONDOWN = 0xA1;
         const int HT_CAPTION = 0x2;
 
+        GUI.KhuyenMaiGUI khuyenMai = new GUI.KhuyenMaiGUI();
         GUI.BanHangGUI banHang = new GUI.BanHangGUI();
         GUI.DSHoaDonGUI dSHoaDon = new GUI.DSHoaDonGUI();
         GUI.SanPhamADMIN quanlySanPham = new GUI.SanPhamADMIN();
@@ -74,6 +75,7 @@ namespace CoffeeManagement
             nguyênLiệuToolStripMenuItem1.Visible = false;
             danhSáchHóaĐơnToolStripMenuItem.Visible = false;
             thốngKêToolStripMenuItem.Visible = false;
+            kuyếnMãiToolStripMenuItem.Visible = false;
 
             switch (Session.CurrentUser.RoleID) {
                 case 1:
@@ -90,6 +92,7 @@ namespace CoffeeManagement
                     nguyênLiệuToolStripMenuItem1.Visible = true;
                     danhSáchHóaĐơnToolStripMenuItem.Visible = true;
                     thốngKêToolStripMenuItem.Visible = true;
+                    kuyếnMãiToolStripMenuItem.Visible = true;
                     break;
 
                 default: // thu ngân, pha chế, phục vụ (case 2,3,4)
@@ -504,6 +507,13 @@ namespace CoffeeManagement
             GUI.ThongKe.NguyenLieuDashboardGUI nlDashboard = new GUI.ThongKe.NguyenLieuDashboardGUI();
             this.pnlBody.Controls.Add(nlDashboard);
             nlDashboard.Dock = DockStyle.Fill;
+        }
+
+        private void kuyếnMãiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            khuyenMai.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(khuyenMai);
         }
     }
 }

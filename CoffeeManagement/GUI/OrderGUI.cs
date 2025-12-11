@@ -202,7 +202,7 @@ namespace CoffeeManagement.GUI
         private void OrderGUI_Load(object sender, EventArgs e)
         {   
             DataTable banTable = BanBUS.LayTatCaBanHoatDong();
-            DataTable Km = KhuyenMaiBUS.GetAllKM();
+            DataTable Km = KhuyenMaiBUS.GetActiveKM();
             
             cbb_Ban.Items.Clear();
             cbb_KM.Items.Clear();   
@@ -226,9 +226,8 @@ namespace CoffeeManagement.GUI
 
             label1.Location = new Point((int)((this.Width - label1.Width) / 2), label1.Location.Y);
             label2.Location = new Point((int)((this.Width - label2.Width) / 2), label2.Location.Y);
-            label3.Location = new Point((int)((this.Width - label3.Width) / 2), dataGridView1.Location.Y + dataGridView1.Size.Height + 20);
 
-            label5.Location = new Point(label5.Location.X, label3.Location.Y + 10);
+            label5.Location = new Point(label5.Location.X, dataGridView1.Location.Y + dataGridView1.Size.Height + 20 + 10);
             label6.Location = new Point(label5.Location.X, label5.Location.Y + 40);
             label4.Location = new Point(label4.Location.X, label6.Location.Y + 40);
             label5.Size = label5.Size;
