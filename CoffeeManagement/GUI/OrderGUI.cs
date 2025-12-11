@@ -27,8 +27,12 @@ namespace CoffeeManagement.GUI
 
         Decimal tongTien = 0;
 
+
+
         private void btnThanhToan_Click(object sender, EventArgs e) 
         {
+
+
             //kiểm tra giỏ hàng có sản phẩm không
             if (dataGridView1.Rows.Count <= 1)  
             {

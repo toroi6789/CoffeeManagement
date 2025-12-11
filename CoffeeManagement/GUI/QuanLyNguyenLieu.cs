@@ -28,6 +28,7 @@ namespace CoffeeManagement.GUI
         {
             InitializeComponent();
             this.Load += QuanLyNguyenLieu_Load;
+            this.VisibleChanged += QuanLyNguyenLieu_VisibleChanged;
             txtTenNguyenLieu.TextChanged += Control_TextChanged;
             txtGiaNhap.TextChanged += Control_TextChanged;
             txtMoTa.TextChanged += Control_TextChanged;
@@ -131,6 +132,15 @@ namespace CoffeeManagement.GUI
             }
             LoadDanhMucVaoComboBox();
             LocNguyenLieu();
+        }
+
+        private void QuanLyNguyenLieu_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                LoadDanhMucVaoComboBox();
+                LocNguyenLieu();
+            }
         }
 
         private void LoadDanhMucVaoComboBox()
