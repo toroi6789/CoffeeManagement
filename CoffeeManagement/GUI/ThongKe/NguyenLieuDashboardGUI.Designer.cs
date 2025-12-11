@@ -1,6 +1,6 @@
 ﻿namespace CoffeeManagement.GUI.ThongKe
 {
-    partial class SanPhamDashboardGUI
+    partial class NguyenLieuDashboardGUI
     {
         /// <summary> 
         /// Required designer variable.
@@ -34,10 +34,10 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.lblTongDoanhThu = new System.Windows.Forms.Label();
-            this.chartSanPham = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.lblTongNL = new System.Windows.Forms.Label();
+            this.chartNguyenLieu = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartSanPham)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartNguyenLieu)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -50,20 +50,20 @@
             this.lblTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(814, 40);
-            this.lblTitle.TabIndex = 2;
+            this.lblTitle.TabIndex = 3;
             this.lblTitle.Text = "THỐNG KÊ SẢN PHẨM";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnRefresh);
-            this.panel1.Controls.Add(this.lblTongDoanhThu);
-            this.panel1.Controls.Add(this.chartSanPham);
+            this.panel1.Controls.Add(this.lblTongNL);
+            this.panel1.Controls.Add(this.chartNguyenLieu);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 40);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(814, 492);
-            this.panel1.TabIndex = 3;
+            this.panel1.TabIndex = 4;
             // 
             // btnRefresh
             // 
@@ -76,51 +76,51 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // lblTongDoanhThu
+            // lblTongNL
             // 
-            this.lblTongDoanhThu.BackColor = System.Drawing.SystemColors.Control;
-            this.lblTongDoanhThu.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTongDoanhThu.ForeColor = System.Drawing.Color.Black;
-            this.lblTongDoanhThu.Location = new System.Drawing.Point(49, 9);
-            this.lblTongDoanhThu.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblTongDoanhThu.Name = "lblTongDoanhThu";
-            this.lblTongDoanhThu.Size = new System.Drawing.Size(169, 31);
-            this.lblTongDoanhThu.TabIndex = 40;
-            this.lblTongDoanhThu.Text = "Doanh thu";
-            this.lblTongDoanhThu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTongNL.BackColor = System.Drawing.SystemColors.Control;
+            this.lblTongNL.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTongNL.ForeColor = System.Drawing.Color.Black;
+            this.lblTongNL.Location = new System.Drawing.Point(49, 9);
+            this.lblTongNL.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTongNL.Name = "lblTongNL";
+            this.lblTongNL.Size = new System.Drawing.Size(169, 31);
+            this.lblTongNL.TabIndex = 40;
+            this.lblTongNL.Text = "Tong";
+            this.lblTongNL.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // chartSanPham
+            // chartNguyenLieu
             // 
-            this.chartSanPham.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chartSanPham.BackColor = System.Drawing.SystemColors.Control;
+            this.chartNguyenLieu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chartNguyenLieu.BackColor = System.Drawing.SystemColors.Control;
             chartArea3.Name = "ChartArea1";
-            this.chartSanPham.ChartAreas.Add(chartArea3);
+            this.chartNguyenLieu.ChartAreas.Add(chartArea3);
             legend3.Name = "Legend1";
-            this.chartSanPham.Legends.Add(legend3);
-            this.chartSanPham.Location = new System.Drawing.Point(37, 43);
-            this.chartSanPham.Name = "chartSanPham";
-            this.chartSanPham.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            this.chartNguyenLieu.Legends.Add(legend3);
+            this.chartNguyenLieu.Location = new System.Drawing.Point(37, 43);
+            this.chartNguyenLieu.Name = "chartNguyenLieu";
+            this.chartNguyenLieu.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
             series3.ChartArea = "ChartArea1";
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             series3.YValuesPerPoint = 2;
-            this.chartSanPham.Series.Add(series3);
-            this.chartSanPham.Size = new System.Drawing.Size(743, 432);
-            this.chartSanPham.TabIndex = 0;
-            this.chartSanPham.Text = "chart1";
+            this.chartNguyenLieu.Series.Add(series3);
+            this.chartNguyenLieu.Size = new System.Drawing.Size(743, 432);
+            this.chartNguyenLieu.TabIndex = 0;
+            this.chartNguyenLieu.Text = "chart1";
             // 
-            // SanPhamDashboardGUI
+            // NguyenLieuDashboardGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblTitle);
-            this.Name = "SanPhamDashboardGUI";
+            this.Name = "NguyenLieuDashboardGUI";
             this.Size = new System.Drawing.Size(814, 532);
-            this.Load += new System.EventHandler(this.SanPhamDashboardGUI_Load);
-            this.SizeChanged += new System.EventHandler(this.SanPhamDashboardGUI_SizeChanged);
+            this.Load += new System.EventHandler(this.NguyenLieuDashboardGUI_Load);
+            this.SizeChanged += new System.EventHandler(this.NguyenLieuDashboardGUI_SizeChanged);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartSanPham)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartNguyenLieu)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -130,7 +130,7 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Label lblTongDoanhThu;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartSanPham;
+        private System.Windows.Forms.Label lblTongNL;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartNguyenLieu;
     }
 }

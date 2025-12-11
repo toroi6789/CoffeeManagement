@@ -314,6 +314,12 @@
     <Compile Include="GUI\ThongKe\DoanhThuGUI.Designer.cs">
       <DependentUpon>DoanhThuGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ThongKe\NguyenLieuDashboardGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\ThongKe\NguyenLieuDashboardGUI.Designer.cs">
+      <DependentUpon>NguyenLieuDashboardGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ThongKe\NhanVienDashboardGUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -396,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ThongKe\DoanhThuGUI.resx">
       <DependentUpon>DoanhThuGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThongKe\NguyenLieuDashboardGUI.resx">
+      <DependentUpon>NguyenLieuDashboardGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ThongKe\NhanVienDashboardGUI.resx">
       <DependentUpon>NhanVienDashboardGUI.cs</DependentUpon>

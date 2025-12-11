@@ -334,6 +334,7 @@
             this.nguyênLiệuToolStripMenuItem2.Name = "nguyênLiệuToolStripMenuItem2";
             this.nguyênLiệuToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
             this.nguyênLiệuToolStripMenuItem2.Text = "Nguyên liệu";
+            this.nguyênLiệuToolStripMenuItem2.Click += new System.EventHandler(this.nguyênLiệuToolStripMenuItem2_Click);
             // 
             // bànToolStripMenuItem1
             // 

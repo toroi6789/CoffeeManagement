@@ -497,5 +497,13 @@ namespace CoffeeManagement
             this.pnlBody.Controls.Add(spDashboard);
             spDashboard.Dock = DockStyle.Fill;
         }
+
+        private void nguyênLiệuToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            GUI.ThongKe.NguyenLieuDashboardGUI nlDashboard = new GUI.ThongKe.NguyenLieuDashboardGUI();
+            this.pnlBody.Controls.Add(nlDashboard);
+            nlDashboard.Dock = DockStyle.Fill;
+        }
     }
 }
