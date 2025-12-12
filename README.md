@@ -1,0 +1,4 @@
+- Chọn Configure Startup Projects - tại Single Startup Project - chọn GUI
+- Chạy project lần đầu -> sẽ báo lỗi không có file ảnh
+- Sau đó copy folder Images vào GUI - bin - Debug
+- Start lại
