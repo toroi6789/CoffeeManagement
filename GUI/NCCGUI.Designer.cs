@@ -170,7 +170,7 @@
             this.cboTrangThai.Location = new System.Drawing.Point(217, 261);
             this.cboTrangThai.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboTrangThai.Name = "cboTrangThai";
-            this.cboTrangThai.Size = new System.Drawing.Size(103, 24);
+            this.cboTrangThai.Size = new System.Drawing.Size(0, 24);
             this.cboTrangThai.TabIndex = 8;
             // 
             // panelInfo
@@ -195,6 +195,7 @@
             this.panelInfo.Location = new System.Drawing.Point(715, 153);
             this.panelInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelInfo.Name = "panelInfo";
+            this.panelInfo.Padding = new System.Windows.Forms.Padding(0, 0, 125, 0);
             this.panelInfo.Size = new System.Drawing.Size(365, 537);
             this.panelInfo.TabIndex = 3;
             // 
@@ -206,7 +207,7 @@
             this.txtWebsite.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtWebsite.Name = "txtWebsite";
             this.txtWebsite.ReadOnly = true;
-            this.txtWebsite.Size = new System.Drawing.Size(103, 22);
+            this.txtWebsite.Size = new System.Drawing.Size(0, 22);
             this.txtWebsite.TabIndex = 7;
             // 
             // txtSDT
@@ -217,7 +218,7 @@
             this.txtSDT.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSDT.Name = "txtSDT";
             this.txtSDT.ReadOnly = true;
-            this.txtSDT.Size = new System.Drawing.Size(103, 22);
+            this.txtSDT.Size = new System.Drawing.Size(0, 22);
             this.txtSDT.TabIndex = 7;
             // 
             // txtTen
@@ -228,7 +229,7 @@
             this.txtTen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTen.Name = "txtTen";
             this.txtTen.ReadOnly = true;
-            this.txtTen.Size = new System.Drawing.Size(103, 22);
+            this.txtTen.Size = new System.Drawing.Size(0, 22);
             this.txtTen.TabIndex = 7;
             // 
             // txtEmail
@@ -239,7 +240,7 @@
             this.txtEmail.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.ReadOnly = true;
-            this.txtEmail.Size = new System.Drawing.Size(103, 22);
+            this.txtEmail.Size = new System.Drawing.Size(0, 22);
             this.txtEmail.TabIndex = 6;
             // 
             // txtDiaChi
@@ -250,7 +251,7 @@
             this.txtDiaChi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtDiaChi.Name = "txtDiaChi";
             this.txtDiaChi.ReadOnly = true;
-            this.txtDiaChi.Size = new System.Drawing.Size(103, 22);
+            this.txtDiaChi.Size = new System.Drawing.Size(0, 22);
             this.txtDiaChi.TabIndex = 6;
             // 
             // txtID
@@ -261,7 +262,7 @@
             this.txtID.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtID.Name = "txtID";
             this.txtID.ReadOnly = true;
-            this.txtID.Size = new System.Drawing.Size(103, 22);
+            this.txtID.Size = new System.Drawing.Size(0, 22);
             this.txtID.TabIndex = 6;
             // 
             // label2
@@ -271,7 +272,7 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(3, 2);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(144, 33);
+            this.label2.Size = new System.Drawing.Size(19, 33);
             this.label2.TabIndex = 2;
             this.label2.Text = "Mã NCC";
             // 
@@ -282,7 +283,7 @@
             this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(3, 44);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(144, 33);
+            this.label3.Size = new System.Drawing.Size(19, 33);
             this.label3.TabIndex = 2;
             this.label3.Text = "Tên NCC";
             // 
@@ -293,7 +294,7 @@
             this.label8.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(3, 213);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(144, 33);
+            this.label8.Size = new System.Drawing.Size(19, 33);
             this.label8.TabIndex = 2;
             this.label8.Text = "Website";
             // 
@@ -304,7 +305,7 @@
             this.label5.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(3, 128);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(144, 31);
+            this.label5.Size = new System.Drawing.Size(19, 31);
             this.label5.TabIndex = 2;
             this.label5.Text = "SDT";
             // 
@@ -315,7 +316,7 @@
             this.label9.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(0, 254);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(147, 38);
+            this.label9.Size = new System.Drawing.Size(22, 38);
             this.label9.TabIndex = 2;
             this.label9.Text = "Trạng thái";
             // 
@@ -326,7 +327,7 @@
             this.label6.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(3, 171);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(144, 33);
+            this.label6.Size = new System.Drawing.Size(19, 33);
             this.label6.TabIndex = 2;
             this.label6.Text = "Email";
             // 
@@ -337,7 +338,7 @@
             this.label4.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(3, 85);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(144, 33);
+            this.label4.Size = new System.Drawing.Size(19, 33);
             this.label4.TabIndex = 2;
             this.label4.Text = "Địa chỉ";
             // 
