@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Windows;
 
 namespace BUS
 {
@@ -114,6 +115,7 @@ namespace BUS
             if (soHD > 0)
             {
                 Result r = userBUS.SoftDeleteUser(nhanVien.UserID);
+                MessageBox.Show("Tạm dừng hoạt động vì NV ảnh hưởng đến nhiều HĐ", "Thông báo");
                 return r;
             }
             else

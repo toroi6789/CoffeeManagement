@@ -296,7 +296,11 @@ namespace GUI
             txtSdt.Text = selectedNV.Phone;
             cbTrangThai.Text = selectedNV.TrangThai;
 
-            cbTrangThaiTaiKhoan.SelectedIndex = userDTO.TrangThai - 1;
+            if (userDTO.TrangThai == 1)
+            {
+                cbTrangThaiTaiKhoan.SelectedIndex = 0;
+            }
+            else cbTrangThaiTaiKhoan.SelectedIndex = 1;
             cbRole.SelectedIndex = userDTO.RoleID - 1;
             txtEmail.Text = userDTO.Email;
 
