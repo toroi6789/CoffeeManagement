@@ -173,6 +173,21 @@ namespace GUI
                 return false;
             }
 
+            // check email
+            if (string.IsNullOrEmpty(txtEmail.Text) || txtEmail.Text == "Nhập email của bạn")
+            {
+                MessageBox.Show("Vui lòng nhập email!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return false; 
+            }
+
+            // Check email format
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                MessageBox.Show("Email không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return false;
+            }
             return true; // Passed all checks
         }
 
@@ -236,6 +251,7 @@ namespace GUI
             UserDTO userDTO = userBUS.GetUserByID(selectedNV.UserID);
             userDTO.TrangThai = trangThaiTK;
             userDTO.RoleID = roleID;
+            userDTO.Email = txtEmail.Text;
 
             int oldUserID = selectedNV.UserID;
             if (!nvBUS.UpdateNhanVien(selectedNV).Success)
@@ -282,6 +298,7 @@ namespace GUI
 
             cbTrangThaiTaiKhoan.SelectedIndex = userDTO.TrangThai - 1;
             cbRole.SelectedIndex = userDTO.RoleID - 1;
+            txtEmail.Text = userDTO.Email;
 
             // DateJoin
             if (selectedNV.DateJoin.HasValue)
@@ -646,6 +663,11 @@ namespace GUI
         }
 
         private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
