@@ -30,7 +30,7 @@ namespace DAO
         public static void InsertPN(DateTime NgayNhap, Decimal TongTien, string GhiChu,string TrangThai, int NhanVienID, int NhaCungCapID)
         {
             String query = $"INSERT INTO coffeemanagement.PhieuNhap (NgayNhap, TongTien, GhiChu, TrangThai, NhanVienID, NhaCungCapID) " +
-                $"VALUES ('{NgayNhap.ToString("yyyy-MM-dd")}', '{TongTien}', '{GhiChu}', '{TrangThai}', '{TrangThai}', '{NhanVienID}', '{NhaCungCapID}');";
+                $"VALUES ('{NgayNhap.ToString("yyyy-MM-dd")}', '{TongTien}', '{GhiChu}', '{TrangThai}', '{NhanVienID}', '{NhaCungCapID}');";
             DBConnect.ExecuteNonQuery(query);
         }
 
