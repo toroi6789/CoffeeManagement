@@ -210,17 +210,34 @@ namespace GUI
             if (e.RowIndex < 0) return;
 
             DataGridViewRow row = dgvBan.Rows[e.RowIndex];
-            selectedBanID = Convert.ToInt32(row.Cells["BanID"].Value);
-            txtID.Text = row.Cells["BanID"].Value.ToString();
-            txtTenBan.Text = row.Cells["TenBan"].Value?.ToString() ?? "";
-            updownSucchua.Value = Convert.ToInt32(row.Cells["SucChua"].Value);
 
+            // Lấy ID bàn
+            selectedBanID = Convert.ToInt32(row.Cells["BanID"].Value);
+
+            // Lấy và gán các giá trị vào các ô TextBox
+            txtID.Text = row.Cells["BanID"].Value.ToString();
+            txtTenBan.Text = row.Cells["TenBan"].Value?.ToString() ?? ""; // Kiểm tra null và tránh lỗi
+
+            // Kiểm tra và gán giá trị cho updownSucchua
+            var sucChuaValue = row.Cells["SucChua"].Value;
+            if (sucChuaValue != null && int.TryParse(sucChuaValue.ToString(), out int sucChua))
+            {
+                updownSucchua.Value = sucChua;
+            }
+            else
+            {
+                updownSucchua.Value = 0; // Giá trị mặc định khi cột "SucChua" là null hoặc không hợp lệ
+            }
+
+            // Kiểm tra trạng thái bàn và gán giá trị cho cboStatus
             string trangThai = row.Cells["TrangThai"].Value?.ToString()?.Trim();
             if (trangThai == "Có người")
                 cboStatus.SelectedIndex = 1;
             else
                 cboStatus.SelectedIndex = 0;
+
         }
+
 
         // Tìm kiếm bàn
         private void btnTimKiem_Click(object sender, EventArgs e)
