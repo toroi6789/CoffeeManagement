@@ -352,6 +352,13 @@ namespace GUI
             }
         }
 
+        private void ResetDanhSachNguyenLieu()
+        {
+            dtNguyenLieu.DefaultView.RowFilter = ""; // Xóa filter
+            AllNguyenLieu.DataSource = dtNguyenLieu;  // Đảm bảo trỏ đúng vào DataTable gốc
+            LocTatCaNguyenLieu(); // Tải lại dữ liệu mới nhất nếu cần
+        }
+
         // Load tất cả nguyên liệu vào AllNguyenLieu
         private void LocTatCaNguyenLieu()
         {
@@ -471,7 +478,7 @@ namespace GUI
             if (string.IsNullOrWhiteSpace(txtSearch_ID.Text))
             {
                 errorProvider1.SetError(txtSearch_ID, "Vui lòng nhập ID nguyên liệu cần tìm!");
-                LocTatCaNguyenLieu();
+                ResetDanhSachNguyenLieu();
                 return;
             }
             errorProvider1.Clear();
@@ -479,9 +486,10 @@ namespace GUI
             if (!int.TryParse(txtSearch_ID.Text.Trim(), out idCanTim))
             {
                 errorProvider1.SetError(txtSearch_ID, "ID phải là số nguyên!");
-                LocTatCaNguyenLieu();
+                ResetDanhSachNguyenLieu();
                 return;
             }
+            ResetDanhSachNguyenLieu();
             DataView dv = dtNguyenLieu.DefaultView;
             dv.RowFilter = $"NguyenLieuID = {idCanTim}";
             dv.Sort = "STT ASC";
