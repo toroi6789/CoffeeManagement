@@ -111,11 +111,17 @@ namespace BUS
 
             // Nếu NV có hoá đơn → soft delete
             int soHD = HoaDonBUS.GetAllListHD().Count(h => h.NhanVienID == nhanVien.NhanVienID);
-
+            int soPN = PhieuNhapBUS.ConvertToDTO(PhieuNhapBUS.PhieuNhap()).Count(pn => pn.NhanVienID == nhanVien.NhanVienID);
             if (soHD > 0)
             {
                 Result r = userBUS.SoftDeleteUser(nhanVien.UserID);
                 MessageBox.Show("Tạm dừng hoạt động vì NV ảnh hưởng đến nhiều HĐ", "Thông báo");
+                return r;
+            }
+            else if (soPN > 0)
+            {
+                Result r = userBUS.SoftDeleteUser(nhanVien.UserID);
+                MessageBox.Show("Tạm dừng hoạt động vì NV ảnh hưởng đến nhiều PN", "Thông báo");
                 return r;
             }
             else

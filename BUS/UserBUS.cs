@@ -127,6 +127,8 @@ namespace BUS
         public Result SoftDeleteUser(int userID)
         {
             UserDTO user = GetUserByID(userID);
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            NhanVienDTO nv = nvBUS.ConvertRowToDTO(NhanVienBUS.LayNV_userID(userID).Rows[0]);
 
             if (user != null)
             {
@@ -139,7 +141,11 @@ namespace BUS
             }
 
             bool ok = userDAO.SoftDeleteUser(userID);
-
+            if (ok)
+            {
+                nv.TrangThai = "Trống lịch";
+                nvBUS.UpdateNhanVien(nv);
+            }
             return new Result
             {
                 Success = ok,
