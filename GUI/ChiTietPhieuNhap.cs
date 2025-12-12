@@ -35,10 +35,12 @@ namespace CoffeeManagement.GUI
             dtChitietPN.Columns.Add("STT", typeof(int));
             dtChitietPN.Columns.Add("NguyenLieuID", typeof(int));
             dtChitietPN.Columns.Add("TenNguyenLieu", typeof(string));
-            dtChitietPN.Columns.Add("GiaNhap", typeof(decimal));
+            dtChitietPN.Columns.Add("SoLuong", typeof(decimal));
             dtChitietPN.Columns.Add("MoTa", typeof(string));
-            CTPN.AutoGenerateColumns = false;
-            CTPN.DataSource = dtChitietPN;
+            //CTPN.AutoGenerateColumns = false;
+            //CTPN.DataSource = dtChitietPN;
+            txtIDPN.Text = phieunhapID.ToString();
+            LoadChiTietPhieuNhap();
         }
 
         
@@ -57,7 +59,7 @@ namespace CoffeeManagement.GUI
             pictureBox1.Width = panel2.Width - 6;
             pictureBox1.Height = (int)(panel2.Height * 0.4);
 
-            txtID_HD.Location = new Point((panel1.Width - txtID_HD.Width) / 2, txtID_HD.Location.Y);
+            txtIDPN.Location = new Point((panel1.Width - txtIDPN.Width) / 2, txtIDPN.Location.Y);
             txtTotal.Location = new Point((panel1.Width - txtTotal.Width) / 2, txtTotal.Location.Y);
 
             label2.Location = new Point(label2.Location.X, pictureBox1.Location.Y + pictureBox1.Height + 20);
@@ -79,13 +81,82 @@ namespace CoffeeManagement.GUI
             if (e.RowIndex < 0) return;
 
             var row = CTPN.Rows[e.RowIndex];
-            int selectedID = Convert.ToInt32(row.Cells["PhieuNhapID"].Value);
-            txtID.Text = selectedID.ToString();
-            txtIDNL.Text = row.Cells["NgayNhap"].Value.ToString();
-            txtTenNL.Text = row.Cells["TongTien"].Value.ToString();
-            txtSoLuong.Text = row.Cells["GhiChu"].Value.ToString();
-            txtPrice.Text = row.Cells["NhanVienID"].Value.ToString();
-            txtTotal.Text = row.Cells["NhanVienID"].Value.ToString();
+
+            object idValue = row.Cells["CTPN_ID"].Value;
+            if (idValue == null || idValue == DBNull.Value)
+            {
+                txtID.Text = "";
+                txtIDNL.Text = "";
+                txtTenNL.Text = "";
+                txtSoLuong.Text = "";
+                txtPrice.Text = "";
+                return; 
+            }
+
+            txtID.Text = idValue.ToString();
+            txtIDNL.Text = row.Cells["NguyenLieuID"].Value?.ToString();
+            txtTenNL.Text = row.Cells["TenNguyenLieu"].Value?.ToString();
+            txtSoLuong.Text = row.Cells["SoLuong"].Value?.ToString();
+            txtPrice.Text = row.Cells["DonGia"].Value?.ToString();
+        }
+
+        private void LoadChiTietPhieuNhap()
+        {
+            if (phieunhapID <= 0)
+            {
+                MessageBox.Show("Không có phiếu nhập nào được chọn!");
+                return;
+            }
+
+            // Lấy danh sách chi tiết phiếu nhập (đã join với tên nguyên liệu)
+            var listChiTiet = chitietphieunhap.LayChiTietTheoPhieuNhapID(phieunhapID);
+
+            // Tạo DataTable để hiển thị
+            dtChitietPN = new DataTable();
+            dtChitietPN.Columns.Add("STT", typeof(int));            
+            dtChitietPN.Columns.Add("CTPN_ID", typeof(int));
+            dtChitietPN.Columns.Add("PhieuNhapID", typeof(int));
+            dtChitietPN.Columns.Add("NguyenLieuID", typeof(int));
+            dtChitietPN.Columns.Add("TenNguyenLieu", typeof(string));
+            dtChitietPN.Columns.Add("DonGia", typeof(decimal));
+            dtChitietPN.Columns.Add("ThanhTien", typeof(decimal));
+            dtChitietPN.Columns.Add("SoLuong", typeof(int));
+
+            int stt = 1;
+            decimal tongTien = 0;
+
+            foreach (var ct in listChiTiet)
+            {
+                DataRow row = dtChitietPN.NewRow();
+                row["STT"] = stt++;
+                row["CTPN_ID"] = ct.ChiTietPhieuNhapID;
+                row["PhieuNhapID"] = ct.PhieuNhapID;
+                row["NguyenLieuID"] = ct.NguyenLieuID;
+                row["TenNguyenLieu"] = ct.TenNguyenLieu;
+                row["SoLuong"] = ct.SoLuong;
+                row["DonGia"] = ct.DonGia;
+                row["ThanhTien"] = ct.ThanhTien;
+
+                tongTien += ct.ThanhTien;
+                dtChitietPN.Rows.Add(row);
+            }
+
+            // Gán vào DataGridView
+            CTPN.DataSource = dtChitietPN;
+
+            // Cập nhật thông tin phiếu nhập
+            txtIDPN.Text = phieunhapID.ToString();
+            txtTotal.Text = tongTien.ToString("N0") + " ₫";
+
+            if (CTPN.Columns.Contains("STT"))
+            {
+                CTPN.Columns["STT"].Width = 50;
+                CTPN.Columns["TenNguyenLieu"].Width = 200;
+                CTPN.Columns["SoLuong"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                CTPN.Columns["DonGia"].DefaultCellStyle.Format = "N0";
+                CTPN.Columns["ThanhTien"].DefaultCellStyle.Format = "N0";
+                CTPN.Columns["ThanhTien"].DefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            }
         }
     }
 }

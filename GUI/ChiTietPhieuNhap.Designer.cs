@@ -32,7 +32,7 @@
             this.CTPN = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtID_HD = new System.Windows.Forms.TextBox();
+            this.txtIDPN = new System.Windows.Forms.TextBox();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -59,7 +59,7 @@
             this.panel1.Controls.Add(this.CTPN);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.txtID_HD);
+            this.panel1.Controls.Add(this.txtIDPN);
             this.panel1.Controls.Add(this.txtTotal);
             this.panel1.Location = new System.Drawing.Point(42, 80);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -101,14 +101,14 @@
             this.label8.TabIndex = 1;
             this.label8.Text = "Tong Tien:";
             // 
-            // txtID_HD
+            // txtIDPN
             // 
-            this.txtID_HD.Location = new System.Drawing.Point(127, 24);
-            this.txtID_HD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtID_HD.Name = "txtID_HD";
-            this.txtID_HD.ReadOnly = true;
-            this.txtID_HD.Size = new System.Drawing.Size(153, 22);
-            this.txtID_HD.TabIndex = 2;
+            this.txtIDPN.Location = new System.Drawing.Point(127, 24);
+            this.txtIDPN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtIDPN.Name = "txtIDPN";
+            this.txtIDPN.ReadOnly = true;
+            this.txtIDPN.Size = new System.Drawing.Size(153, 22);
+            this.txtIDPN.TabIndex = 2;
             // 
             // txtTotal
             // 
@@ -282,7 +282,7 @@
         private System.Windows.Forms.DataGridView CTPN;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtID_HD;
+        private System.Windows.Forms.TextBox txtIDPN;
         private System.Windows.Forms.TextBox txtTotal;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
