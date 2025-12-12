@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{671C181D-2EA7-4DF7-A37F-313C885DBB55}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GUI</RootNamespace>
+    <AssemblyName>GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.6.2\lib\netstandard2.0\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML">
+      <HintPath>..\packages\ClosedXML.0.105.0\lib\netstandard2.1\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.4.5.3.3\lib\netstandard2.1\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="FontAwesome.Sharp">
+      <HintPath>..\packages\FontAwesome.Sharp.6.6.0\lib\net472\FontAwesome.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BanGUI.Designer.cs">
+      <DependentUpon>BanGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BanHangGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BanHangGUI.Designer.cs">
+      <DependentUpon>BanHangGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangePasswordForm.Designer.cs">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CTHoaDonGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CTHoaDonGUI.Designer.cs">
+      <DependentUpon>CTHoaDonGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DanhMucGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DanhMucGUI.Designer.cs">
+      <DependentUpon>DanhMucGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataGridViewNumericUpDownColumn.cs" />
+    <Compile Include="DatBanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DatBanGUI.Designer.cs">
+      <DependentUpon>DatBanGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DSHoaDonGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DSHoaDonGUI.Designer.cs">
+      <DependentUpon>DSHoaDonGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KhuyenMaiGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="KhuyenMaiGUI.Designer.cs">
+      <DependentUpon>KhuyenMaiGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ListSanPham.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ListSanPham.Designer.cs">
+      <DependentUpon>ListSanPham.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NCCGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NCCGUI.Designer.cs">
+      <DependentUpon>NCCGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NhanVienGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NhanVienGUI.Designer.cs">
+      <DependentUpon>NhanVienGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrderGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OrderGUI.Designer.cs">
+      <DependentUpon>OrderGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PhieuNhapGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PhieuNhapGUI.Designer.cs">
+      <DependentUpon>PhieuNhapGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Product.Designer.cs">
+      <DependentUpon>Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuanLyCongThuc.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QuanLyCongThuc.Designer.cs">
+      <DependentUpon>QuanLyCongThuc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuanLyNguyenLieu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QuanLyNguyenLieu.Designer.cs">
+      <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SanPhamADMIN.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SanPhamADMIN.Designer.cs">
+      <DependentUpon>SanPhamADMIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThanhToanGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThanhToanGUI.Designer.cs">
+      <DependentUpon>ThanhToanGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKeGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThongKeGUI.Designer.cs">
+      <DependentUpon>ThongKeGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKe\DoanhThuGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThongKe\DoanhThuGUI.Designer.cs">
+      <DependentUpon>DoanhThuGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKe\NguyenLieuDashboardGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThongKe\NguyenLieuDashboardGUI.Designer.cs">
+      <DependentUpon>NguyenLieuDashboardGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKe\NhanVienDashboardGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThongKe\NhanVienDashboardGUI.Designer.cs">
+      <DependentUpon>NhanVienDashboardGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThongKe\SanPhamDashboardGUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ThongKe\SanPhamDashboardGUI.Designer.cs">
+      <DependentUpon>SanPhamDashboardGUI.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BanGUI.resx">
+      <DependentUpon>BanGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BanHangGUI.resx">
+      <DependentUpon>BanHangGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangePasswordForm.resx">
+      <DependentUpon>ChangePasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CTHoaDonGUI.resx">
+      <DependentUpon>CTHoaDonGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DanhMucGUI.resx">
+      <DependentUpon>DanhMucGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatBanGUI.resx">
+      <DependentUpon>DatBanGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DSHoaDonGUI.resx">
+      <DependentUpon>DSHoaDonGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KhuyenMaiGUI.resx">
+      <DependentUpon>KhuyenMaiGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListSanPham.resx">
+      <DependentUpon>ListSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NCCGUI.resx">
+      <DependentUpon>NCCGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NhanVienGUI.resx">
+      <DependentUpon>NhanVienGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderGUI.resx">
+      <DependentUpon>OrderGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PhieuNhapGUI.resx">
+      <DependentUpon>PhieuNhapGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Product.resx">
+      <DependentUpon>Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="QuanLyCongThuc.resx">
+      <DependentUpon>QuanLyCongThuc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuanLyNguyenLieu.resx">
+      <DependentUpon>QuanLyNguyenLieu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SanPhamADMIN.resx">
+      <DependentUpon>SanPhamADMIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThanhToanGUI.resx">
+      <DependentUpon>ThanhToanGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongKeGUI.resx">
+      <DependentUpon>ThongKeGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongKe\DoanhThuGUI.resx">
+      <DependentUpon>DoanhThuGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongKe\NguyenLieuDashboardGUI.resx">
+      <DependentUpon>NguyenLieuDashboardGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongKe\NhanVienDashboardGUI.resx">
+      <DependentUpon>NhanVienDashboardGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ThongKe\SanPhamDashboardGUI.resx">
+      <DependentUpon>SanPhamDashboardGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\caphesua.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo-64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifying-glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pharmacy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\photo-gallery.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot 2023-06-24 134553.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BUS\BUS.csproj">
+      <Project>{ebc48f98-cbd6-4bf3-b9ff-e876af08b429}</Project>
+      <Name>BUS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{0ea3a762-f187-4aed-9606-4536b8290aaf}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
