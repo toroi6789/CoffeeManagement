@@ -42,6 +42,7 @@
             this.pnContainer = new System.Windows.Forms.Panel();
             this.pnChucnang = new System.Windows.Forms.Panel();
             this.pnTitle = new System.Windows.Forms.Panel();
+            this.updownSucchua = new DTO.NumericUpDownEditingControl();
             ((System.ComponentModel.ISupportInitialize)(this.error)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBan)).BeginInit();
             this.panelInfo.SuspendLayout();
