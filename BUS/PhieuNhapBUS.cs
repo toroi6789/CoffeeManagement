@@ -35,7 +35,7 @@ namespace BUS
         // xoa KM
         public static void DeletePN(int phieuNhapID)
         {
-            PhieuNhapDAO.DeletePN(phieuNhapID);
+            //PhieuNhapDAO.DeletePN(phieuNhapID);
         }
 
         public static List<PhieuNhapDTO> ConvertToDTO(DataTable dt)

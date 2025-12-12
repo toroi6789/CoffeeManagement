@@ -40,6 +40,7 @@
             this.btnTimKiem = new System.Windows.Forms.Button();
             this.dgvPN = new System.Windows.Forms.DataGridView();
             this.panelInfo = new System.Windows.Forms.Panel();
+            this.dateTimePickerNhap = new System.Windows.Forms.DateTimePicker();
             this.cboTrangThai = new System.Windows.Forms.ComboBox();
             this.txtNCCID = new System.Windows.Forms.TextBox();
             this.txtGhiChu = new System.Windows.Forms.TextBox();
@@ -54,7 +55,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.pnContainer = new System.Windows.Forms.Panel();
-            this.dateTimePickerNhap = new System.Windows.Forms.DateTimePicker();
+            this.btnHuy = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.error)).BeginInit();
             this.pnChucnang.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPN)).BeginInit();
@@ -68,6 +69,7 @@
             // 
             // pnChucnang
             // 
+            this.pnChucnang.Controls.Add(this.btnHuy);
             this.pnChucnang.Controls.Add(this.btnXoa);
             this.pnChucnang.Controls.Add(this.btnSua);
             this.pnChucnang.Controls.Add(this.btnThem);
@@ -75,17 +77,18 @@
             this.pnChucnang.Controls.Add(this.btnImport);
             this.pnChucnang.Controls.Add(this.txtSearch);
             this.pnChucnang.Controls.Add(this.btnTimKiem);
-            this.pnChucnang.Location = new System.Drawing.Point(3, 2);
+            this.pnChucnang.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnChucnang.Location = new System.Drawing.Point(0, 0);
             this.pnChucnang.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnChucnang.Name = "pnChucnang";
-            this.pnChucnang.Size = new System.Drawing.Size(747, 81);
+            this.pnChucnang.Size = new System.Drawing.Size(1214, 81);
             this.pnChucnang.TabIndex = 0;
             this.pnChucnang.Paint += new System.Windows.Forms.PaintEventHandler(this.pnChucnang_Paint);
             // 
             // btnXoa
             // 
             this.btnXoa.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnXoa.Location = new System.Drawing.Point(640, 22);
+            this.btnXoa.Location = new System.Drawing.Point(955, 23);
             this.btnXoa.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(83, 34);
@@ -97,7 +100,7 @@
             // btnSua
             // 
             this.btnSua.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSua.Location = new System.Drawing.Point(536, 22);
+            this.btnSua.Location = new System.Drawing.Point(851, 23);
             this.btnSua.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(83, 34);
@@ -109,7 +112,7 @@
             // btnThem
             // 
             this.btnThem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThem.Location = new System.Drawing.Point(436, 22);
+            this.btnThem.Location = new System.Drawing.Point(751, 23);
             this.btnThem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnThem.Name = "btnThem";
             this.btnThem.Size = new System.Drawing.Size(83, 34);
@@ -120,7 +123,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(179, 16);
+            this.btnExport.Location = new System.Drawing.Point(106, 20);
             this.btnExport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(92, 47);
@@ -131,7 +134,7 @@
             // 
             // btnImport
             // 
-            this.btnImport.Location = new System.Drawing.Point(82, 16);
+            this.btnImport.Location = new System.Drawing.Point(9, 20);
             this.btnImport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(92, 47);
@@ -142,18 +145,16 @@
             // 
             // txtSearch
             // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.Location = new System.Drawing.Point(276, 28);
+            this.txtSearch.Location = new System.Drawing.Point(203, 32);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(36, 22);
+            this.txtSearch.Size = new System.Drawing.Size(344, 22);
             this.txtSearch.TabIndex = 0;
             // 
             // btnTimKiem
             // 
             this.btnTimKiem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTimKiem.Location = new System.Drawing.Point(335, 22);
+            this.btnTimKiem.Location = new System.Drawing.Point(650, 23);
             this.btnTimKiem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnTimKiem.Name = "btnTimKiem";
             this.btnTimKiem.Size = new System.Drawing.Size(83, 34);
@@ -166,12 +167,10 @@
             // 
             this.dgvPN.AllowUserToAddRows = false;
             this.dgvPN.AllowUserToDeleteRows = false;
-            this.dgvPN.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPN.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPN.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPN.Location = new System.Drawing.Point(3, 87);
+            this.dgvPN.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dgvPN.Location = new System.Drawing.Point(0, 81);
             this.dgvPN.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvPN.MultiSelect = false;
             this.dgvPN.Name = "dgvPN";
@@ -179,15 +178,13 @@
             this.dgvPN.RowHeadersWidth = 51;
             this.dgvPN.RowTemplate.Height = 24;
             this.dgvPN.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPN.Size = new System.Drawing.Size(747, 317);
+            this.dgvPN.Size = new System.Drawing.Size(747, 484);
             this.dgvPN.TabIndex = 1;
             this.dgvPN.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPN_CellClick);
             this.dgvPN.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPN_CellContentClick);
             // 
             // panelInfo
             // 
-            this.panelInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panelInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelInfo.Controls.Add(this.dateTimePickerNhap);
             this.panelInfo.Controls.Add(this.cboTrangThai);
@@ -203,11 +200,20 @@
             this.panelInfo.Controls.Add(this.label9);
             this.panelInfo.Controls.Add(this.label6);
             this.panelInfo.Controls.Add(this.label4);
-            this.panelInfo.Location = new System.Drawing.Point(763, 87);
+            this.panelInfo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelInfo.Location = new System.Drawing.Point(772, 81);
             this.panelInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelInfo.Name = "panelInfo";
-            this.panelInfo.Size = new System.Drawing.Size(442, 438);
+            this.panelInfo.Size = new System.Drawing.Size(442, 484);
             this.panelInfo.TabIndex = 3;
+            // 
+            // dateTimePickerNhap
+            // 
+            this.dateTimePickerNhap.Location = new System.Drawing.Point(276, 59);
+            this.dateTimePickerNhap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dateTimePickerNhap.Name = "dateTimePickerNhap";
+            this.dateTimePickerNhap.Size = new System.Drawing.Size(141, 22);
+            this.dateTimePickerNhap.TabIndex = 10;
             // 
             // cboTrangThai
             // 
@@ -215,6 +221,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cboTrangThai.DisplayMember = "ds";
             this.cboTrangThai.FormattingEnabled = true;
+            this.cboTrangThai.Items.AddRange(new object[] {
+            "Hoàn tất",
+            "Chưa hoàn tất"});
             this.cboTrangThai.Location = new System.Drawing.Point(276, 309);
             this.cboTrangThai.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cboTrangThai.Name = "cboTrangThai";
@@ -359,19 +368,24 @@
             this.pnContainer.Controls.Add(this.panelInfo);
             this.pnContainer.Controls.Add(this.dgvPN);
             this.pnContainer.Controls.Add(this.pnChucnang);
-            this.pnContainer.Location = new System.Drawing.Point(3, 2);
+            this.pnContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnContainer.Location = new System.Drawing.Point(0, 0);
             this.pnContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnContainer.Name = "pnContainer";
-            this.pnContainer.Size = new System.Drawing.Size(1208, 561);
+            this.pnContainer.Size = new System.Drawing.Size(1214, 565);
             this.pnContainer.TabIndex = 3;
             // 
-            // dateTimePickerNhap
+            // btnHuy
             // 
-            this.dateTimePickerNhap.Location = new System.Drawing.Point(276, 59);
-            this.dateTimePickerNhap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dateTimePickerNhap.Name = "dateTimePickerNhap";
-            this.dateTimePickerNhap.Size = new System.Drawing.Size(141, 22);
-            this.dateTimePickerNhap.TabIndex = 10;
+            this.btnHuy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHuy.Location = new System.Drawing.Point(1049, 14);
+            this.btnHuy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnHuy.Name = "btnHuy";
+            this.btnHuy.Size = new System.Drawing.Size(130, 53);
+            this.btnHuy.TabIndex = 11;
+            this.btnHuy.Text = "HỦY THAO TÁC";
+            this.btnHuy.UseVisualStyleBackColor = true;
+            this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
             // 
             // PhieuNhapGUI
             // 
@@ -420,5 +434,6 @@
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.DateTimePicker dateTimePickerNhap;
+        private System.Windows.Forms.Button btnHuy;
     }
 }

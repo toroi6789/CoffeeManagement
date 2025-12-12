@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BUS;
+using DTO;
+using CoffeeManagement.DTO;
 namespace CoffeeManagement.GUI
 {
     public partial class PhieuNhapGUI : UserControl
@@ -28,6 +30,8 @@ namespace CoffeeManagement.GUI
             this.Load += UserControl1_Load;
             this.SizeChanged += PhieuNhapGUI_SizeChanged;
             dgvPN.CellContentClick += dgvPN_CellContentClick;
+            cboTrangThai.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboTrangThai.SelectedIndex = 0;
         }
 
         private void UserControl1_Load(object sender, EventArgs e)
@@ -43,6 +47,8 @@ namespace CoffeeManagement.GUI
                 btnView.UseColumnTextForButtonValue = true;
                 dgvPN.Columns.Add(btnView);
             }
+
+            ClearFields(false);
         }
 
         private void LoadData()
@@ -61,39 +67,17 @@ namespace CoffeeManagement.GUI
 
         private void PhieuNhapGUI_SizeChanged(object sender, EventArgs e)
         {
-            int padding = 10;
+            // Đảm bảo panelInfo giữ nguyên chiều rộng bên phải
+            int infoWidth = panelInfo.Width;
 
-            int titleHeight = 60;
-            int functionHeight = 50;
-            int rightPanelWidth = 350;
+            // Luôn cập nhật chiều rộng dgvPN để chiếm toàn bộ phần còn lại
+            dgvPN.Width = this.ClientSize.Width - infoWidth;
 
-            // CONTAINER
-            pnContainer.Location = new Point(0, 0);
-            pnContainer.Size = new Size(this.Width, this.Height);
+            // Cập nhật chiều cao panelInfo và dgvPN để khớp phần còn lại (trừ top panel)
+            int heightRest = this.ClientSize.Height - pnChucnang.Height;
 
-
-
-            // PANEL CHỨC NĂNG
-            pnChucnang.Location = new Point(0, padding);
-            pnChucnang.Size = new Size((int)(pnContainer.Width * 0.8), functionHeight);
-
-            int halfWidth = this.Width / 2;
-
-            // PANEL INFO = nửa phải
-            panelInfo.Size = new Size(halfWidth - padding * 2, this.Height - pnChucnang.Bottom - padding * 2);
-            panelInfo.Location = new Point(halfWidth + padding, pnChucnang.Bottom + padding);
-
-            // DGV = nửa trái
-            dgvPN.Location = new Point(padding, pnChucnang.Bottom + padding);
-            dgvPN.Size = new Size(
-                pnContainer.Width / 2,
-                this.Height - pnChucnang.Bottom - padding * 2
-            );
-
-            // CONTAINER
-            pnContainer.Location = new Point(0, 0);
-            pnContainer.Size = new Size(this.Width, this.Height);
-
+            dgvPN.Height = heightRest;
+            panelInfo.Height = heightRest;
         }
 
         private void ClearFields(bool enable)
@@ -202,14 +186,21 @@ namespace CoffeeManagement.GUI
 
             var row = dgvPN.Rows[e.RowIndex];
 
-            int selectedID = Convert.ToInt32(row.Cells["PhieuNhapID"].Value);
+            selectedID = Convert.ToInt32(row.Cells["PhieuNhapID"].Value);
             txtID.Text = selectedID.ToString();
             dateTimePickerNhap.Value = Convert.ToDateTime(row.Cells["NgayNhap"].Value);
             txtTotal.Text = row.Cells["TongTien"].Value.ToString();
             txtGhiChu.Text = row.Cells["GhiChu"].Value.ToString();
             txtNVID.Text = row.Cells["NhanVienID"].Value.ToString();
             txtNCCID.Text = row.Cells["NhaCungCapID"].Value.ToString();
-            cboTrangThai.Text = row.Cells["TrangThai"].Value.ToString();
+            if ( row.Cells["TrangThai"].Value.ToString() == "Hoàn tất")
+            {
+                cboTrangThai.SelectedIndex = 0;
+            }
+            else
+            {
+                cboTrangThai.SelectedIndex = 1;
+            }
 
         }
 
@@ -308,19 +299,32 @@ namespace CoffeeManagement.GUI
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            // Nếu chưa vào chế độ xóa
             if (!isDeleting)
             {
-                if (selectedID == -1)
+                // Chưa chọn dòng
+                if (selectedID < 1)
                 {
                     MessageBox.Show("Hãy chọn Phiếu nhập để xóa!");
                     return;
                 }
+
+                // Đang ở chế độ khác → chặn
+                if (isAdding || isEditing)
+                    return;
+
+                // Vào chế độ xóa
                 ForceMode("delete");
                 return;
             }
 
-            PhieuNhapBUS.DeletePN(selectedID);
-            MessageBox.Show("Đã xóa!");
+
+            PhieuNhapDTO phieuNhapDTO = PhieuNhapBUS.ConvertToDTO(PhieuNhapBUS.PhieuNhapID(selectedID))[0];
+            PhieuNhapBUS.UpdatePN(phieuNhapDTO.PhieuNhapID, phieuNhapDTO.NgayNhap, phieuNhapDTO.TongTien,
+                phieuNhapDTO.GhiChu, "Chưa hoàn tất", phieuNhapDTO.NhanVienID, phieuNhapDTO.NhaCungCapID);
+            MessageBox.Show("Đã set về chưa tất!");
+
+            //selectedID = -1; // Nếu xóa thật
 
             FinishMode();
         }
@@ -329,21 +333,38 @@ namespace CoffeeManagement.GUI
         {
             if (!isAdding)
             {
-                ForceMode("add");
+                // Nếu chưa vào chế độ thêm
+                if (!isAdding)
+                {
+                    // Nếu đang ở chế độ khác → chặn
+                    if (isEditing || isDeleting)
+                        return;
+
+                    ForceMode("add");
+                    return;
+                }
+            }
+
+            if (!ValidateInput())
+                return;
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            NhanVienDTO nv = nvBUS.ConvertRowToDTO(NhanVienBUS.LayNV_userID(Session.CurrentUser.UserID).Rows[0]);
+            try
+            {
+                PhieuNhapBUS.InsertPN(
+                    dateTimePickerNhap.Value,
+                    Convert.ToDecimal(txtTotal.Text.Trim()),
+                    txtGhiChu.Text.Trim(),
+                    cboTrangThai.SelectedItem.ToString(),
+                    nv.NhanVienID,
+                    1
+                );
+            }
+            catch (Exception ex)
+            {
                 return;
             }
 
-            if (!Validate())
-                return;
-
-            PhieuNhapBUS.InsertPN(
-                dateTimePickerNhap.Value,
-                Convert.ToDecimal(txtTotal.Text.Trim()),
-                txtGhiChu.Text.Trim(),
-                cboTrangThai.Text,
-                Convert.ToInt32(txtNVID.Text.Trim()),
-                Convert.ToInt32(txtNCCID.Text.Trim())             
-            );
 
             // Đang ở chế độ Lưu thêm
             MessageBox.Show("Đã thêm!");
@@ -355,30 +376,76 @@ namespace CoffeeManagement.GUI
         {
             if (!isEditing)
             {
-                if (selectedID == -1)
+                // Chưa vào chế độ sửa → kiểm tra trước
+
+                if (selectedID < 1)
                 {
-                    MessageBox.Show("Hãy chọn KM để sửa!");
+                    MessageBox.Show("Hãy chọn PN để sửa!");
                     return;
                 }
+
+                // Nếu đang ở chế độ khác → chặn
+                if (isAdding || isDeleting)
+                    return;
+
                 ForceMode("edit");
                 return;
             }
 
-            if (!Validate())
+            if (!ValidateInput())
                 return;
 
+            NhanVienBUS nvBUS = new NhanVienBUS();
+            NhanVienDTO nv = nvBUS.ConvertRowToDTO(NhanVienBUS.LayNV_userID(Session.CurrentUser.UserID).Rows[0]);
 
-            PhieuNhapBUS.UpdatePN(
+            try
+            {
+                PhieuNhapBUS.UpdatePN(
                 selectedID,
                 dateTimePickerNhap.Value,
                 Convert.ToDecimal(txtTotal.Text.Trim()),
                 txtGhiChu.Text.Trim(),
-                cboTrangThai.Text,
-                Convert.ToInt32(txtNVID.Text.Trim()),
-                Convert.ToInt32(txtNCCID.Text.Trim())
-            );
+                cboTrangThai.SelectedItem.ToString(),
+                nv.NhanVienID,
+                1
+                );
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+
+
             MessageBox.Show("Đã sửa!");
             FinishMode();
         }
+        private bool IsBusy()
+        {
+            return isAdding || isEditing || isDeleting;
+        }
+
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrEmpty(txtTotal.Text) || !txtTotal.Text.Trim().Replace(".", "").Replace(".", "").All(char.IsDigit))
+            {
+                MessageBox.Show("Tổng tiền chỉ được chứa số.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtTotal.Focus();
+                return false;
+            }
+            
+            if (cboTrangThai.SelectedIndex < 0)
+            {
+                MessageBox.Show("Phải chọn trạng thái.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }    
+            return true; // Passed all checks
+        }
+
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+            FinishMode();
+        }
     }
+
 }

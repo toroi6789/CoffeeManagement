@@ -77,6 +77,7 @@ namespace GUI
             danhSáchHóaĐơnToolStripMenuItem.Visible = false;
             thốngKêToolStripMenuItem.Visible = false;
             kuyếnMãiToolStripMenuItem.Visible = false;
+            phiếuNhậpToolStripMenuItem.Visible = false;
 
             switch (Session.CurrentUser.RoleID) {
                 case 1:
@@ -94,8 +95,14 @@ namespace GUI
                     danhSáchHóaĐơnToolStripMenuItem.Visible = true;
                     thốngKêToolStripMenuItem.Visible = true;
                     kuyếnMãiToolStripMenuItem.Visible = true;
+                    phiếuNhậpToolStripMenuItem.Visible = true;
                     break;
-
+                case 5: // kho
+                    nhàCungCấpToolStripMenuItem.Visible = true;
+                    nguyênLiệuToolStripMenuItem.Visible = true;
+                    sanPhamToolStripMenuItem.Visible=true;
+                    phiếuNhậpToolStripMenuItem.Visible= true;
+                    break;
                 default: // thu ngân, pha chế, phục vụ (case 2,3,4)
                     banHangToolStripMenuItem.Visible = true;
                     đặtBànToolStripMenuItem.Visible = true;
