@@ -20,12 +20,13 @@ namespace GUI.ThongKe
         public DoanhThuGUI()
         {                                       
             InitializeComponent();
+            //listHD = HoaDonBUS.MapToListHD(HoaDonBUS.TatCaHoaDon());
             cbDate.DropDownStyle = ComboBoxStyle.DropDownList;
             cbDate.SelectedIndex = 0;                               
             chartDoanhThu.Series[0].Name = "VNĐ";
             chartDoanhThu.Series[0].ToolTip = "Ngày/Tháng/Năm: #VALX\nDoanh thu: #VAL{N0} VNĐ";                              
-            chartBieuDoDuong.Series[0].Name = "VNĐ";
-            chartBieuDoDuong.Series[0].ToolTip = "Ngày/Tháng/Năm: #VALX\nDoanh thu: #VAL{N0} VNĐ";
+            chartBieuDoDuong.Series[0].Name = "Hóa đơn";
+            chartBieuDoDuong.Series[0].ToolTip = "#VAL";
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
@@ -123,99 +124,101 @@ namespace GUI.ThongKe
                 chartDoanhThu.Series[0].Points.AddXY(nam.ToString(), doanhThuNam[i]);
             }
         }
-
         private void Duong_ThongKeTheoThang()
         {
+            if (listHD == null) return;
+
             int year = dtpNgay.Value.Year;
 
-            // Lọc hóa đơn theo năm và đã thanh toán
+            // Chỉ lấy hóa đơn đã thanh toán theo năm
             var hdNam = listHD
-                .Where(h => h.NgayKhoiTao.Year == year &&
-                            h.TrangThai == "Đã thanh toán")
+                .Where(h => h.TrangThai == "Đã thanh toán" &&
+                            h.NgayKhoiTao.Year == year)
                 .ToList();
 
-            // Mảng 12 tháng
-            decimal[] doanhThuThang = new decimal[12];
+            // Mỗi ô là số hóa đơn chứ không phải tổng tiền
+            int[] soHoaDonThang = new int[12];
 
             foreach (var hd in hdNam)
             {
                 int thang = hd.NgayKhoiTao.Month;
-                doanhThuThang[thang - 1] += hd.TongTien;
+                soHoaDonThang[thang - 1]++;     // Tăng số lượng hóa đơn
             }
 
-            // Hiển thị tổng năm
-            decimal total = doanhThuThang.Sum();
-            lblTongDoanhThu.Text = total.ToString("N0") + " VNĐ";
+            lblTongDoanhThu.Text = soHoaDonThang.Sum() + " hoá đơn";
 
-            // Cấu hình chart đường
+            // Vẽ chart
             var series = chartBieuDoDuong.Series[0];
             series.Points.Clear();
-            series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series.ChartType = SeriesChartType.Line;
             series.BorderWidth = 3;
-            series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series.MarkerStyle = MarkerStyle.Circle;
             series.MarkerSize = 7;
 
             chartBieuDoDuong.ChartAreas[0].AxisX.Interval = 1;
 
-            // Vẽ 12 điểm
             for (int i = 1; i <= 12; i++)
             {
-                series.Points.AddXY("T" + i, doanhThuThang[i - 1]);
+                series.Points.AddXY("T" + i, soHoaDonThang[i - 1]);
             }
         }
         private void Duong_ThongKeTheoNam()
         {
+            if (listHD == null) return;
+
             int currentYear = DateTime.Now.Year;
             int startYear = currentYear - 9;
 
-            decimal[] doanhThuNam = new decimal[10];
+            int[] soHoaDonNam = new int[10];
 
-            // Tính doanh thu từng năm
-            foreach (var hd in listHD)
+            var hdFilter = listHD
+                .Where(h => h.TrangThai == "Đã thanh toán" &&
+                            h.NgayKhoiTao.Year >= startYear &&
+                            h.NgayKhoiTao.Year <= currentYear);
+
+            foreach (var hd in hdFilter)
             {
-                if (hd.TrangThai == "Đã thanh toán" &&
-                    hd.NgayKhoiTao.Year >= startYear &&
-                    hd.NgayKhoiTao.Year <= currentYear)
-                {
-                    int index = hd.NgayKhoiTao.Year - startYear;
-                    doanhThuNam[index] += hd.TongTien;
-                }
+                int index = hd.NgayKhoiTao.Year - startYear;
+                soHoaDonNam[index]++;     // Tăng số hóa đơn của năm đó
             }
 
-            // Tổng doanh thu 10 năm
-            decimal total = doanhThuNam.Sum();
-            lblTongDoanhThu.Text = total.ToString("N0") + " VNĐ";
+            lblTongDoanhThu.Text = soHoaDonNam.Sum() + " hoá đơn";
 
-            // Cấu hình chart
             var series = chartBieuDoDuong.Series[0];
             series.Points.Clear();
-            series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series.ChartType = SeriesChartType.Line;
             series.BorderWidth = 3;
-            series.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series.MarkerStyle = MarkerStyle.Circle;
             series.MarkerSize = 7;
 
             chartBieuDoDuong.ChartAreas[0].AxisX.Interval = 1;
 
-            // Vẽ 10 năm
             for (int i = 0; i < 10; i++)
             {
                 int nam = startYear + i;
-                series.Points.AddXY(nam.ToString(), doanhThuNam[i]);
+                series.Points.AddXY(nam.ToString(), soHoaDonNam[i]);
             }
         }
         private void Duong_ThongKeTheoNgay()
         {
+            if (listHD == null) return;
+
             DateTime date = dtpNgay.Value.Date;
 
-            decimal total = HoaDonBUS.GetTotalByDate(date);
-            lblTongDoanhThu.Text = total.ToString("N0") + " VNĐ";
+            int soHoaDon = listHD
+                .Count(h => h.TrangThai == "Đã thanh toán" &&
+                            h.NgayKhoiTao.Date == date);
+
+            lblTongDoanhThu.Text = soHoaDon + " hoá đơn";
 
             var series = chartBieuDoDuong.Series[0];
             series.Points.Clear();
-            series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series.ChartType = SeriesChartType.Line;
             series.BorderWidth = 3;
+            series.MarkerStyle = MarkerStyle.Circle;
+            series.MarkerSize = 8;
 
-            series.Points.AddXY(date.ToString("dd/MM"), total);
+            series.Points.AddXY(date.ToString("dd/MM"), soHoaDon);
         }
 
 
@@ -272,11 +275,6 @@ namespace GUI.ThongKe
             // Chart đường dưới
             chartBieuDoDuong.Location = new Point(10, topMargin + chartHeight + spacing);
             chartBieuDoDuong.Size = new Size(chartWidth, chartHeight);
-        }
-
-        private void DoanhThuGUI_Load_1(object sender, EventArgs e)
-        {
-
         }
     }
 }

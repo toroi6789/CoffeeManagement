@@ -64,13 +64,13 @@ namespace GUI
                 {
                     path = Path.Combine(Application.StartupPath, @"Images", "null.png");
                 }
-                Image img2 = null;
+                Image img2 = null;      
                 if (File.Exists(path))
                 {
                     using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                     {
                         img2 = Image.FromStream(stream);
-                    }
+                    }   
                 }
 
                 btn.Image = Compoment.ResizeImage(img2, (int)(btn.Width * 0.7), (int)(btn.Width * 0.7));

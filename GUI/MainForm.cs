@@ -524,5 +524,13 @@ namespace GUI
             khuyenMai.Dock = DockStyle.Fill;
             this.pnlBody.Controls.Add(khuyenMai);
         }
+
+        private void phiếuNhậpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            this.pnlBody.Controls.Clear();
+            GUI.ThongKe.PhieuNhapDashboardGUI pnDashboard = new GUI.ThongKe.PhieuNhapDashboardGUI();
+            this.pnlBody.Controls.Add(pnDashboard);
+            pnDashboard.Dock = DockStyle.Fill;
+        }
     }
 }
