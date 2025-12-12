@@ -35,6 +35,7 @@ namespace GUI
         GUI.DatBanGUI datban = new GUI.DatBanGUI();
         GUI.QuanLyNguyenLieu quanLyNguyenLieu = new GUI.QuanLyNguyenLieu();
         BUS.SanPhamBUS spBUS = new BUS.SanPhamBUS();
+        CoffeeManagement.GUI.PhieuNhapGUI phieunhap = new CoffeeManagement.GUI.PhieuNhapGUI();
         public MainForm()
         {
             InitializeComponent();
@@ -50,6 +51,7 @@ namespace GUI
             //lắng nghe sự kiện mở chi tiết hóa đơn từ control user DSHoaDonGUI
             dSHoaDon.RequestOpenCTHoaDon += OnRequestOpenCTHoaDon;
             quanlySanPham.RequestOpenCTSP += OnRequestOpenCTSP;
+            phieunhap.RequestOpenCTPN += OnRequestOpenCTPN;
 
             ShowMenuItemBaseOnUser();
 
@@ -426,6 +428,15 @@ namespace GUI
             this.pnlBody.Controls.Add(congthuc);
         }
 
+        public void OnRequestOpenCTPN(int ID)
+        {
+            // Xóa nội dung hiện tại trong pnlBody
+            this.pnlBody.Controls.Clear();
+            CoffeeManagement.GUI.ChiTietPhieuNhap chitietpn = new CoffeeManagement.GUI.ChiTietPhieuNhap(ID);
+            chitietpn.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(chitietpn);
+        }
+
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -469,11 +480,10 @@ namespace GUI
 
         private void phiếuNhậpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.pnlBody.Controls.Clear();
-            GUI.PhieuNhapGUI phieuNhap = new GUI.PhieuNhapGUI();    
-            phieuNhap.Show();
-            phieuNhap.Dock = DockStyle.Fill;
-            this.pnlBody.Controls.Add(phieuNhap);
+            this.pnlBody.Controls.Clear(); 
+            phieunhap.Show();
+            phieunhap.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(phieunhap);
         }
 
         private void doanhThuToolStripMenuItem_Click(object sender, EventArgs e)

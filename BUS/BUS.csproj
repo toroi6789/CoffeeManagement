@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BanBUS.cs" />
+    <Compile Include="ChiTietPhieuNhapBUS.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Compoment.cs" />
     <Compile Include="DanhMucBUS.cs" />

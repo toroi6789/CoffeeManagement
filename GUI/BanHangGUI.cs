@@ -102,9 +102,9 @@ namespace GUI
         // xử lý sự kiện khi thay đổi kích thước của BanHangGUI
         private void BanHangGUI_SizeChanged(object sender, EventArgs e)
         {
-            orderGUI1.Size = new Size((int)(this.Width * 0.3), this.Height );
-            flowLayoutPanel1.Size = new Size(this.Width - orderGUI1.Width - 20, (int)(this.Height * 0.77));
-            orderGUI1.Location = new Point(flowLayoutPanel1.Width + flowLayoutPanel1.Location.X , 3);
+            orderGUI1.Size = new System.Drawing.Size((int)(this.Width * 0.3), this.Height );
+            flowLayoutPanel1.Size = new System.Drawing.Size(this.Width - orderGUI1.Width - 20, (int)(this.Height * 0.77));
+            orderGUI1.Location = new System.Drawing.Point(flowLayoutPanel1.Width + flowLayoutPanel1.Location.X , 3);
             foreach (var btn in flowLayoutPanel1.Controls)
             { 
                 if(!(btn is Button)) continue;

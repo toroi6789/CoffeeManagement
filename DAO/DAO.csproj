@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BanDAO.cs" />
+    <Compile Include="ChiTietPhieuNhapDAO.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ConnectDAO.cs" />
     <Compile Include="DanhMucDAO.cs" />
