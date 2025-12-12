@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblTongTrongLich = new System.Windows.Forms.Label();
             this.lblTongDangLam = new System.Windows.Forms.Label();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.lblTong = new System.Windows.Forms.Label();
             this.chartNhanVien = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartNhanVien)).BeginInit();
             this.SuspendLayout();
@@ -51,7 +51,7 @@
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(814, 40);
+            this.lblTitle.Size = new System.Drawing.Size(1085, 49);
             this.lblTitle.TabIndex = 2;
             this.lblTitle.Text = "THỐNG KÊ NHÂN VIÊN";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -64,9 +64,10 @@
             this.panel1.Controls.Add(this.lblTong);
             this.panel1.Controls.Add(this.chartNhanVien);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 40);
+            this.panel1.Location = new System.Drawing.Point(0, 49);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(814, 492);
+            this.panel1.Size = new System.Drawing.Size(1085, 606);
             this.panel1.TabIndex = 3;
             // 
             // lblTongTrongLich
@@ -74,10 +75,9 @@
             this.lblTongTrongLich.BackColor = System.Drawing.SystemColors.Control;
             this.lblTongTrongLich.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTongTrongLich.ForeColor = System.Drawing.Color.Black;
-            this.lblTongTrongLich.Location = new System.Drawing.Point(48, 171);
-            this.lblTongTrongLich.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTongTrongLich.Location = new System.Drawing.Point(64, 208);
             this.lblTongTrongLich.Name = "lblTongTrongLich";
-            this.lblTongTrongLich.Size = new System.Drawing.Size(100, 31);
+            this.lblTongTrongLich.Size = new System.Drawing.Size(133, 38);
             this.lblTongTrongLich.TabIndex = 44;
             this.lblTongTrongLich.Text = "Tổng";
             this.lblTongTrongLich.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -87,23 +87,32 @@
             this.lblTongDangLam.BackColor = System.Drawing.SystemColors.Control;
             this.lblTongDangLam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTongDangLam.ForeColor = System.Drawing.Color.Black;
-            this.lblTongDangLam.Location = new System.Drawing.Point(48, 130);
-            this.lblTongDangLam.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTongDangLam.Location = new System.Drawing.Point(64, 158);
             this.lblTongDangLam.Name = "lblTongDangLam";
-            this.lblTongDangLam.Size = new System.Drawing.Size(100, 31);
+            this.lblTongDangLam.Size = new System.Drawing.Size(133, 38);
             this.lblTongDangLam.TabIndex = 43;
             this.lblTongDangLam.Text = "Tổng";
             this.lblTongDangLam.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Image = global::GUI.Properties.Resources.refresh;
+            this.btnRefresh.Location = new System.Drawing.Point(855, 36);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(44, 37);
+            this.btnRefresh.TabIndex = 42;
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // lblTong
             // 
             this.lblTong.BackColor = System.Drawing.SystemColors.Control;
             this.lblTong.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTong.ForeColor = System.Drawing.Color.Black;
-            this.lblTong.Location = new System.Drawing.Point(48, 88);
-            this.lblTong.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTong.Location = new System.Drawing.Point(64, 106);
             this.lblTong.Name = "lblTong";
-            this.lblTong.Size = new System.Drawing.Size(62, 31);
+            this.lblTong.Size = new System.Drawing.Size(83, 38);
             this.lblTong.TabIndex = 40;
             this.lblTong.Text = "Tổng";
             this.lblTong.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -111,41 +120,34 @@
             // chartNhanVien
             // 
             this.chartNhanVien.BackColor = System.Drawing.SystemColors.Control;
-            chartArea1.Name = "ChartArea1";
-            this.chartNhanVien.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartNhanVien.Legends.Add(legend1);
-            this.chartNhanVien.Location = new System.Drawing.Point(15, 65);
+            chartArea3.Name = "ChartArea1";
+            this.chartNhanVien.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chartNhanVien.Legends.Add(legend3);
+            this.chartNhanVien.Location = new System.Drawing.Point(20, 80);
+            this.chartNhanVien.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chartNhanVien.Name = "chartNhanVien";
             this.chartNhanVien.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartNhanVien.Series.Add(series1);
-            this.chartNhanVien.Size = new System.Drawing.Size(767, 384);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chartNhanVien.Series.Add(series3);
+            this.chartNhanVien.Size = new System.Drawing.Size(1023, 473);
             this.chartNhanVien.TabIndex = 0;
             this.chartNhanVien.Text = "chart1";
             // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Image = global::GUI.Properties.Resources.refresh;
-            this.btnRefresh.Location = new System.Drawing.Point(641, 29);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(33, 30);
-            this.btnRefresh.TabIndex = 42;
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-            // 
             // NhanVienDashboardGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblTitle);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "NhanVienDashboardGUI";
-            this.Size = new System.Drawing.Size(814, 532);
+            this.Size = new System.Drawing.Size(1085, 655);
             this.Load += new System.EventHandler(this.NhanVienDashboardGUI_Load);
+            this.SizeChanged += new System.EventHandler(this.NhanVienDashboardGUI_SizeChanged);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartNhanVien)).EndInit();
             this.ResumeLayout(false);

@@ -52,7 +52,6 @@
             this.thốngKêToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.doanhThuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nhânViênToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.phiếuNhậpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sảnPhẩmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nguyênLiệuToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlHeader = new System.Windows.Forms.Panel();
@@ -300,7 +299,6 @@
             this.thốngKêToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.doanhThuToolStripMenuItem,
             this.nhânViênToolStripMenuItem,
-            this.phiếuNhậpToolStripMenuItem1,
             this.sảnPhẩmToolStripMenuItem,
             this.nguyênLiệuToolStripMenuItem2});
             this.thốngKêToolStripMenuItem.Name = "thốngKêToolStripMenuItem";
@@ -320,13 +318,6 @@
             this.nhânViênToolStripMenuItem.Size = new System.Drawing.Size(171, 26);
             this.nhânViênToolStripMenuItem.Text = "Nhân viên";
             this.nhânViênToolStripMenuItem.Click += new System.EventHandler(this.nhânViênToolStripMenuItem_Click);
-            // 
-            // phiếuNhậpToolStripMenuItem1
-            // 
-            this.phiếuNhậpToolStripMenuItem1.Name = "phiếuNhậpToolStripMenuItem1";
-            this.phiếuNhậpToolStripMenuItem1.Size = new System.Drawing.Size(171, 26);
-            this.phiếuNhậpToolStripMenuItem1.Text = "Phiếu nhập";
-            this.phiếuNhậpToolStripMenuItem1.Click += new System.EventHandler(this.phiếuNhậpToolStripMenuItem1_Click);
             // 
             // sảnPhẩmToolStripMenuItem
             // 
@@ -351,7 +342,7 @@
             this.pnlHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlHeader.Margin = new System.Windows.Forms.Padding(0);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1080, 76);
+            this.pnlHeader.Size = new System.Drawing.Size(1080, 74);
             this.pnlHeader.TabIndex = 2;
             // 
             // pnlBody
@@ -434,7 +425,6 @@
         private System.Windows.Forms.ToolStripMenuItem thốngKêToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem doanhThuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nhânViênToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem phiếuNhậpToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sảnPhẩmToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nguyênLiệuToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem kuyếnMãiToolStripMenuItem;

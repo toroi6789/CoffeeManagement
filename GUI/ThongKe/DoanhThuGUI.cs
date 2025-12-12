@@ -276,5 +276,7 @@ namespace GUI.ThongKe
             chartBieuDoDuong.Location = new Point(10, topMargin + chartHeight + spacing);
             chartBieuDoDuong.Size = new Size(chartWidth, chartHeight);
         }
+
+
     }
 }

@@ -83,5 +83,36 @@ namespace GUI.ThongKe
         {
 
         }
+
+        private void NhanVienDashboardGUI_SizeChanged(object sender, EventArgs e)
+        {
+            int padding = 10;  // Khoảng cách giữa các điều khiển
+
+            // Cập nhật kích thước và vị trí cho tiêu đề (lblTitle)
+            int titleHeight = 60;
+            lblTitle.Size = new Size(this.Width, titleHeight);
+
+            // Cập nhật vị trí và kích thước cho Panel chính (panel1)
+            panel1.Location = new Point(0, lblTitle.Bottom + padding);
+            panel1.Size = new Size(this.Width, this.Height - titleHeight - padding);
+
+            // Cập nhật vị trí và kích thước cho Chart (chartNhanVien)
+            chartNhanVien.Location = new Point(padding, 80);  // Khoảng cách từ trái và từ trên
+            chartNhanVien.Size = new Size(panel1.Width - padding * 2, panel1.Height - 160);
+
+            // Cập nhật vị trí và kích thước cho các label
+            lblTong.Location = new Point(64, 108);
+            lblTong.Size = new Size(83, 38);
+
+            lblTongDangLam.Location = new Point(64, 160);
+            lblTongDangLam.Size = new Size(133, 38);
+
+            lblTongTrongLich.Location = new Point(64, 210);
+            lblTongTrongLich.Size = new Size(133, 38);
+
+            // Cập nhật vị trí của nút refresh
+            btnRefresh.Location = new Point(this.Width - 60, 36);
+        }
+
     }
 }

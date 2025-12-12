@@ -497,32 +497,32 @@ namespace GUI
         {
             this.pnlBody.Controls.Clear();
             GUI.ThongKe.DoanhThuGUI doanhThu = new GUI.ThongKe.DoanhThuGUI();
-            this.pnlBody.Controls.Add(doanhThu);
             doanhThu.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(doanhThu);
         }
 
         private void nhânViênToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.pnlBody.Controls.Clear();
             GUI.ThongKe.NhanVienDashboardGUI nvDashboard = new GUI.ThongKe.NhanVienDashboardGUI();
-            this.pnlBody.Controls.Add(nvDashboard);
             nvDashboard.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(nvDashboard);
         }
 
         private void sảnPhẩmToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.pnlBody.Controls.Clear();
             GUI.ThongKe.SanPhamDashboardGUI spDashboard = new GUI.ThongKe.SanPhamDashboardGUI();
-            this.pnlBody.Controls.Add(spDashboard);
             spDashboard.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(spDashboard);
         }
 
         private void nguyênLiệuToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             this.pnlBody.Controls.Clear();
             GUI.ThongKe.NguyenLieuDashboardGUI nlDashboard = new GUI.ThongKe.NguyenLieuDashboardGUI();
-            this.pnlBody.Controls.Add(nlDashboard);
             nlDashboard.Dock = DockStyle.Fill;
+            this.pnlBody.Controls.Add(nlDashboard);
         }
 
         private void kuyếnMãiToolStripMenuItem_Click(object sender, EventArgs e)
